@@ -1,16 +1,11 @@
-package kopis.k_backend.global.exception;
+package kau.CalmCafe.global.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
-
-
-import kopis.k_backend.global.api_payload.ApiResponse;
-import kopis.k_backend.global.api_payload.ErrorCode;
-import kopis.k_backend.global.api_payload.ReasonDto;
+import kau.CalmCafe.global.api_payload.ApiResponse;
+import kau.CalmCafe.global.api_payload.ErrorCode;
+import kau.CalmCafe.global.api_payload.ReasonDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -23,9 +18,12 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
+
 @RestControllerAdvice(annotations = {RestController.class})
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
     @ExceptionHandler
     public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
         String errorMessage = e.getConstraintViolations().stream()

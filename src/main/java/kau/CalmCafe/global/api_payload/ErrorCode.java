@@ -1,4 +1,4 @@
-package kopis.k_backend.global.api_payload;
+package kau.CalmCafe.global.api_payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

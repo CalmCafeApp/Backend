@@ -1,4 +1,4 @@
-package kopis.k_backend.global.entity;
+package kau.CalmCafe.global.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

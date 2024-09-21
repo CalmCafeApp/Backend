@@ -1,7 +1,8 @@
-package kopis.k_backend.global.exception;
+package kau.CalmCafe.global.exception;
 
-import kopis.k_backend.global.api_payload.ErrorCode;
-import kopis.k_backend.global.api_payload.ReasonDto;
+
+import kau.CalmCafe.global.api_payload.ErrorCode;
+import kau.CalmCafe.global.api_payload.ReasonDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
