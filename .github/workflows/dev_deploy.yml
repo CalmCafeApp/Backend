@@ -1,4 +1,4 @@
-name: Travel Compass Dev CI/CD
+name: CalmCafe Dev CI/CD
 
 on:
   pull_request:
@@ -55,8 +55,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: 'KOPIS-dev' # 나의 이름으로 조정
-          environment_name: 'KOPIS-dev-env-1' # 나의 이름으로 조정
+          application_name: 'CalmCafe-dev' # 나의 이름으로 조정
+          environment_name: 'CalmCafe-dev-env' # 나의 이름으로 조정
           version_label: github-action-${{ steps.current-time.outputs.formattedTime }}
           region: 'ap-northeast-2'
           deployment_package: 'deploy/deploy.zip'
