@@ -27,22 +27,6 @@ public enum ErrorCode implements BaseCode {
     // Common
     INVALID_FILE_CONTENT_TYPE(HttpStatus.BAD_REQUEST, "COMMON_4001", "잘못된 파일 형식입니다."),
     MISMATCH_IMAGE_FILE(HttpStatus.BAD_REQUEST, "COMMON_4002", "파일 형식은 이미지(JPEG 또는 PNG)여야 합니다."),
-
-    // Review
-    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW_4041", "존재하지 않는 리뷰입니다."),
-    REVIEW_NOT_YOURS(HttpStatus.BAD_REQUEST, "REVIEW_4001", "작성자가 아니므로 삭제할 수 없습니다."),
-    REVIEW_ALREADY_LIKED(HttpStatus.BAD_REQUEST, "REVIEW_4002", "이미 좋아요를 누른 게시물입니다."),
-    REVIEW_LIKED_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW_4042", "존재하지 않는 리뷰 좋아요 입니다."),
-
-    // Performance
-    PERFORMANCE_NOT_FOUND(HttpStatus.NOT_FOUND, "PERFORMANCE_4041", "존재하지 않는 공연입니다."),
-
-    // Pair
-    PAIR_NOT_FOUND(HttpStatus.NOT_FOUND, "PAIR_4041", "존재하지 않는 페어입니다."),
-
-    // Actor
-    ACTOR_NOT_FOUND(HttpStatus.NOT_FOUND, "PAIR_4041", "존재하지 않는 배우입니다."),
-
     ;
 
     private final HttpStatus httpStatus;
