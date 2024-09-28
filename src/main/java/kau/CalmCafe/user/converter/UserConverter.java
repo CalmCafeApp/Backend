@@ -14,7 +14,6 @@ public class UserConverter {
                 .username(userReqDto.getUsername())
                 .provider(userReqDto.getProvider())
                 .nickname(nick)
-                .role(userReqDto.getRole())
                 .build();
     }
 

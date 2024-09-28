@@ -23,9 +23,6 @@ public class UserRequestDto {
 
         @Schema(description = "소셜 로그인 종류")
         private String provider;
-
-        @Schema(description = "역할")
-        private Role role;
     }
 
     @Schema(description = "UserNicknameReqDto")
