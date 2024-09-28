@@ -26,7 +26,7 @@ public class User extends BaseEntity {
     private String email;
 
     @Column(nullable = false)
-    private Role role = Role.USER;
+    private Role role;
 
     private String provider;
 
@@ -39,5 +39,4 @@ public class User extends BaseEntity {
         this.provider = provider;
         this.role = role;
     }
-
 }

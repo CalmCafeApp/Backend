@@ -1,5 +1,6 @@
 package kau.CalmCafe.user.converter;
 
+import kau.CalmCafe.user.domain.Role;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.dto.JwtDto;
 import kau.CalmCafe.user.dto.UserRequestDto.UserReqDto;
@@ -13,6 +14,7 @@ public class UserConverter {
                 .email(userReqDto.getEmail())
                 .username(userReqDto.getUsername())
                 .provider(userReqDto.getProvider())
+                .role(Role.USER)
                 .nickname(nick)
                 .build();
     }
