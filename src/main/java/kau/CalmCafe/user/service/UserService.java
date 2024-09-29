@@ -1,9 +1,12 @@
 package kau.CalmCafe.user.service;
 
 import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import kau.CalmCafe.global.UuidRepository;
+import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.entity.Uuid;
+import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.user.converter.UserConverter;
 import kau.CalmCafe.user.domain.RefreshToken;
 import kau.CalmCafe.user.domain.User;
@@ -81,6 +84,72 @@ public class UserService {
                         .refreshToken(jwt.getRefreshToken())
                         .build()
         );
+
+        return jwt;
+    }
+
+    @Transactional
+    public void logout(HttpServletRequest request) {
+        // Access Token Value 추출
+        String accessTokenValue = request.getHeader("Authorization").split(" ")[1];
+
+        // Access Token을 통해 username 찾기
+        String username = jwtTokenUtils.parseClaims(accessTokenValue).getSubject();
+
+        // username을 통해 Refresh Token 삭제
+        if (refreshTokenRepository.existsById(username)) {
+            refreshTokenRepository.deleteById(username);
+        }
+        else {
+            throw GeneralException.of(ErrorCode.WRONG_REFRESH_TOKEN);
+        }
+    }
+
+    // Access Token & Refresh Token 재발급
+    @Transactional
+    public JwtDto reissue(HttpServletRequest request) {
+        // Access Token Value 추출
+        String accessTokenValue = request.getHeader("Authorization").split(" ")[1];
+
+        // Access Token을 통해 username 찾기
+        String username = jwtTokenUtils.parseClaims(accessTokenValue).getSubject();
+
+        log.info("Access Token Value: {}", accessTokenValue);
+
+        // username을 통해 Refresh Token 객체 찾기
+        RefreshToken refreshToken = refreshTokenRepository.findById(username)
+                .orElseThrow(() -> new GeneralException(ErrorCode.WRONG_REFRESH_TOKEN));
+
+        log.info("Refresh Token 객체: {}", refreshToken);
+
+        // Refresh Token의 사용자 정보 찾기
+        UserDetails userDetails = manager.loadUserByUsername(refreshToken.getId());
+
+        // Access Token & Refresh Token 재발급
+        JwtDto jwt = jwtTokenUtils.generateToken(userDetails);
+
+        log.info("reissue: Refresh Token 재발급 완료");
+
+        // Refresh Token 정보 갱신
+        refreshToken.updateRefreshToken(jwt.getRefreshToken());
+
+        // 재발급 JWT 파싱을 통해 Claim 객체 찾기
+        Claims refreshTokenClaims = jwtTokenUtils.parseClaims(jwt.getRefreshToken());
+
+        // Refresh Token 유효 기간 찾기
+        Long validPeriod = refreshTokenClaims.getExpiration().toInstant().getEpochSecond()
+                - refreshTokenClaims.getIssuedAt().toInstant().getEpochSecond();
+
+        // Refresh Token 유효 기간 갱신
+        refreshToken.updateTtl(validPeriod);
+
+        // DB에 갱신된 Refresh Token 저장
+        refreshTokenRepository.save(refreshToken);
+
+        // DB에 갱신된 Refresh Token 저장 여부 확인
+        if (!refreshTokenRepository.existsById(refreshToken.getId())) {
+            throw GeneralException.of(ErrorCode.WRONG_REFRESH_TOKEN);
+        }
 
         return jwt;
     }
