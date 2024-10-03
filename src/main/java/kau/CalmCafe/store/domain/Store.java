@@ -46,4 +46,14 @@ public class Store extends BaseEntity {
 
     // 즐겨찾기 수
     private Integer favoriteCount;
+
+    public Integer increaseFavoriteCount() {
+        this.favoriteCount += 1;
+        return this.favoriteCount;
+    }
+
+    public Integer decreaseFavoriteCount() {
+        this.favoriteCount -= 1;
+        return this.favoriteCount;
+    }
 }

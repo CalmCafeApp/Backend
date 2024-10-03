@@ -50,5 +50,4 @@ public class StoreController {
 
         return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_SUCCESS, StoreConverter.storeDetailResDto(store, distance));
     }
-
 }
