@@ -9,6 +9,7 @@ import kau.CalmCafe.global.entity.Uuid;
 import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.user.converter.UserConverter;
 import kau.CalmCafe.user.domain.RefreshToken;
+import kau.CalmCafe.user.domain.Role;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.dto.JwtDto;
 import kau.CalmCafe.user.dto.UserRequestDto.UserReqDto;
@@ -31,6 +32,14 @@ public class UserService {
     private final JwtTokenUtils jwtTokenUtils;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UuidRepository uuidRepository;
+
+    @Transactional
+    public Role getRole(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> GeneralException.of(ErrorCode.USER_NOT_FOUND));
+
+        return user.getRole();
+    }
 
     @Transactional
     public User createUser(UserReqDto userReqDto) {
