@@ -27,6 +27,10 @@ public enum ErrorCode implements BaseCode {
     // Common
     INVALID_FILE_CONTENT_TYPE(HttpStatus.BAD_REQUEST, "COMMON_4001", "잘못된 파일 형식입니다."),
     MISMATCH_IMAGE_FILE(HttpStatus.BAD_REQUEST, "COMMON_4002", "파일 형식은 이미지(JPEG 또는 PNG)여야 합니다."),
+
+    // Store
+    STORE_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE_4041", "존재하지 않는 매장입니다."),
+
     ;
 
     private final HttpStatus httpStatus;

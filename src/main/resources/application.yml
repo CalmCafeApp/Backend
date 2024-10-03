@@ -58,7 +58,7 @@ spring:
         #        show_sql: true
         use_sql_comments: true
         hbm2ddl:
-          auto: create # 애플리케이션 실행 시 데이터베이스 구조 (update, create)
+          auto: update # 애플리케이션 실행 시 데이터베이스 구조 (update, create)
         default_batch_fetch_size: 1000
 
 ---
