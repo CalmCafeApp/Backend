@@ -19,12 +19,12 @@ public class UserConverter {
                 .build();
     }
 
-    public static JwtDto jwtDto(String access, String refresh, String signIn) {
+    public static JwtDto jwtDto(String access, String refresh, String signIn, Role role) {
         return JwtDto.builder()
                 .accessToken(access)
                 .refreshToken(refresh)
                 .signIn(signIn)
+                .role(role)
                 .build();
     }
-
 }

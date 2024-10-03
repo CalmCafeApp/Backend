@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.user.converter.UserConverter;
+import kau.CalmCafe.user.domain.Role;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.dto.JwtDto;
 import kau.CalmCafe.user.dto.UserRequestDto.UserReqDto;
@@ -64,6 +65,8 @@ public class TokenController {
             signIn = "newUser";
         }
 
-        return ApiResponse.onSuccess(SuccessCode.USER_LOGIN_SUCCESS, UserConverter.jwtDto(accessToken, refreshToken, signIn));
+        Role role = userService.getRole(userReqDto.getEmail());
+
+        return ApiResponse.onSuccess(SuccessCode.USER_LOGIN_SUCCESS, UserConverter.jwtDto(accessToken, refreshToken, signIn, role));
     }
 }
