@@ -30,6 +30,8 @@ public enum ErrorCode implements BaseCode {
 
     // Store
     STORE_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE_4041", "존재하지 않는 매장입니다."),
+    STORE_ALREADY_FAVORITE(HttpStatus.BAD_REQUEST, "STORE_4001", "이미 즐겨찾기한 매장입니다."),
+    STORE_FAVORITE_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE_4042", "존재하지 않는 매장 즐겨찾기 입니다."),
 
     ;
 
