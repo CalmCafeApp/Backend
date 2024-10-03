@@ -41,6 +41,11 @@ public class UserService {
         return user.getRole();
     }
 
+    public User findByUserName(String userName){
+        return userRepository.findByUsername(userName)
+                .orElseThrow(() -> new GeneralException(ErrorCode.USER_NOT_FOUND_BY_USERNAME));
+    }
+
     @Transactional
     public User createUser(UserReqDto userReqDto) {
         // 사용자의 고유 식별자인 uuid 생성
