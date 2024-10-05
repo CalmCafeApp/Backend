@@ -26,8 +26,15 @@ public enum SuccessCode implements BaseCode {
     STORE_DETAIL_SUCCESS(HttpStatus.OK, "STORE_2001", "매장 상세 정보 반환이 완료되었습니다."),
     STORE_FAVORITE_SUCCESS(HttpStatus.OK, "STORE_2002", "매장 즐겨찾기가 완료되었습니다."),
     STORE_UNFAVORITE_SUCCESS(HttpStatus.OK, "STORE_2003", "매장 즐겨찾기 취소가 완료되었습니다."),
-    ;
 
+    // Cafe
+    CAFE_CONGESTION_UPDATE_SUCCESS(HttpStatus.OK, "CAFE_2001", "혼잡도 업데이트가 완료되었습니다."),
+    CAFE_GET_ALL_SUCCESS(HttpStatus.OK, "CAFE_2002", "모든 카페 정보 조회가 완료되었습니다."),
+    CAFE_CREATE_SUCCESS(HttpStatus.CREATED, "CAFE_2003", "카페 생성이 완료되었습니다."),
+
+    // Congestion
+    CONGESTION_INPUT_SUCCESS(HttpStatus.OK, "CONGESTION_2011", "혼잡도 입력이 완료되었습니다."),
+    ;
     private final HttpStatus httpStatus;
     private final String code;
     private final String message;
