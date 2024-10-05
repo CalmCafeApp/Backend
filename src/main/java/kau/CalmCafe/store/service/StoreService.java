@@ -22,6 +22,12 @@ public class StoreService {
     }
 
     @Transactional
+    public Store findById(Long id) {
+        return storeRepository.findById(id)
+                .orElseThrow(() -> GeneralException.of(ErrorCode.STORE_NOT_FOUND));
+    }
+
+    @Transactional
     public Integer calDistance(Double userLatitude, Double userLongitude, Double storeLatitude, Double storeLongitude) {
         // 지구 반지름 (단위: km)
         final int EARTH_RADIUS = 6371;

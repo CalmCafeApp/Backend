@@ -1,9 +1,11 @@
 package kau.CalmCafe.store.domain;
 
 import jakarta.persistence.*;
+import kau.CalmCafe.Congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.entity.BaseEntity;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -47,6 +49,21 @@ public class Store extends BaseEntity {
     // 즐겨찾기 수
     private Integer favoriteCount;
 
+    // 매장 측 혼잡도 수치
+    private Integer storeCongestionValue;
+
+    // 매장 측 혼잡도 등급
+    private CongestionLevel storeCongestionLevel;
+
+    // 사용자 측 혼잡도 수치
+    private Integer userCongestionValue;
+
+    // 사용자 측 혼잡도 등급
+    private CongestionLevel userCongestionLevel;
+
+    // 사용자 측 혼잡도 기록 시간
+    private LocalDateTime userCongestionInputTime;
+
     public Integer increaseFavoriteCount() {
         this.favoriteCount += 1;
         return this.favoriteCount;
@@ -56,4 +73,32 @@ public class Store extends BaseEntity {
         this.favoriteCount -= 1;
         return this.favoriteCount;
     }
+
+    public CongestionLevel updateUserCongestion(Integer congestionValue) {
+        this.userCongestionValue = congestionValue;
+        this.userCongestionInputTime = LocalDateTime.now();
+        this.userCongestionLevel = calculateCongestionLevel(congestionValue);
+
+        return this.userCongestionLevel;
+    }
+
+    public CongestionLevel updateStoreCongestion(Integer congestionValue) {
+        this.storeCongestionValue = congestionValue;
+        this.storeCongestionLevel = calculateCongestionLevel(congestionValue);
+
+        return this.storeCongestionLevel;
+    }
+
+    private CongestionLevel calculateCongestionLevel(Integer congestionValue) {
+        if (congestionValue <= 25) {
+            return CongestionLevel.CALM;
+        } else if (congestionValue <= 50) {
+            return CongestionLevel.NORMAL;
+        } else if (congestionValue <= 75) {
+            return CongestionLevel.BUSY;
+        } else {
+            return CongestionLevel.VERY_BUSY;
+        }
+    }
+
 }

@@ -1,7 +1,8 @@
-package kau.CalmCafe.CafeCongestion.domain;
+package kau.CalmCafe.Congestion.domain;
 
 import jakarta.persistence.*;
 import kau.CalmCafe.global.entity.BaseEntity;
+import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.user.domain.User;
 import lombok.*;
 
@@ -22,9 +23,8 @@ public class CongestionInput extends BaseEntity {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "congestion_id")
-    private Congestion congestion;
-
+    @JoinColumn(name = "store_id")
+    private Store store;
 
     private Integer congestionInputValue;
 }

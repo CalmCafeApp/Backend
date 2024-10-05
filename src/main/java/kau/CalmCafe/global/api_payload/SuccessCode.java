@@ -30,8 +30,11 @@ public enum SuccessCode implements BaseCode {
     // Cafe
     CAFE_CONGESTION_UPDATE_SUCCESS(HttpStatus.OK, "CAFE_2001", "혼잡도 업데이트가 완료되었습니다."),
     CAFE_GET_ALL_SUCCESS(HttpStatus.OK, "CAFE_2002", "모든 카페 정보 조회가 완료되었습니다."),
-    CAFE_CREATE_SUCCESS(HttpStatus.CREATED, "CAFE_2003", "카페 생성이 완료되었습니다.");
+    CAFE_CREATE_SUCCESS(HttpStatus.CREATED, "CAFE_2003", "카페 생성이 완료되었습니다."),
 
+    // Congestion
+    CONGESTION_INPUT_SUCCESS(HttpStatus.OK, "CONGESTION_2011", "혼잡도 입력이 완료되었습니다."),
+    ;
     private final HttpStatus httpStatus;
     private final String code;
     private final String message;
