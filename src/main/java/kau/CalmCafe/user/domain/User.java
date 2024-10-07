@@ -2,6 +2,7 @@ package kau.CalmCafe.user.domain;
 
 import jakarta.persistence.*;
 import kau.CalmCafe.global.entity.BaseEntity;
+import kau.CalmCafe.store.domain.Store;
 import lombok.*;
 
 @Entity
@@ -15,6 +16,11 @@ public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_id")
+    private Store store;
+
 
     @Column(nullable = false, unique = true)
     private String username;

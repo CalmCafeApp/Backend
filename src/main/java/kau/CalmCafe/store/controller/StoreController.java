@@ -9,6 +9,7 @@ import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.store.converter.StoreConverter;
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
 import kau.CalmCafe.store.service.StoreService;
 import kau.CalmCafe.user.domain.User;
@@ -29,17 +30,17 @@ public class StoreController {
     private final StoreService storeService;
     private final UserService userService;
 
-    @Operation(summary = "매장 상세 정보 메서드", description = "매장의 상세 정보를 반환하는 메서드입니다.")
+    @Operation(summary = "유저 측 매장 상세 정보 조회", description = "유저 측에서 매장의 상세 정보를 조회하는 메서드입니다.")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2001", description = "매장 상세 정보 반환이 완료되었습니다.")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2001", description = "유저 측 매장 상세 정보 조회가 완료되었습니다.")
     })
     @Parameters({
             @Parameter(name = "address", description = "매장 주소"),
             @Parameter(name = "userLatitude", description = "사용자 위도"),
             @Parameter(name = "userLongitude", description = "사용자 경도")
     })
-    @GetMapping(value = "/detail")
-    public ApiResponse<StoreDetailResDto> storeDetail(
+    @GetMapping(value = "/detail/user")
+    public ApiResponse<StoreDetailResDto> getStoreDetailFromUSer(
             @RequestParam(name = "address") String address,
             @RequestParam(name = "userLatitude") Double userLatitude,
             @RequestParam(name = "userLongitude") Double userLongitude
@@ -50,4 +51,20 @@ public class StoreController {
 
         return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_SUCCESS, StoreConverter.storeDetailResDto(store, distance));
     }
+
+    @Operation(summary = "카페 측 매장 상세 정보 조회", description = "카페 측에서 상세 정보를 조회하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2002", description = "카페 측 매장 상세 정보 조회가 완료되었습니다.")
+    })
+    @GetMapping("/detail/cafe")
+    public ApiResponse<StoreDetailFromCafeDto> getStoreDetailFromCafe(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
+        Store store = user.getStore();
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_SUCCESS, StoreConverter.storeDetailFromCafeDto(store));
+    }
+
 }
