@@ -1,6 +1,7 @@
 package kau.CalmCafe.store.converter;
 
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
 import kau.CalmCafe.store.dto.StoreState;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,15 @@ public class StoreConverter {
                 .closingTime(store.getClosingTime())
                 .lastOrderTime(store.getLastOrderTime())
                 .storeState(storeState)
+                .build();
+    }
+
+    public static StoreDetailFromCafeDto storeDetailFromCafeDto(Store store) {
+        return StoreDetailFromCafeDto.builder()
+                .storeId(store.getId())
+                .storeName(store.getName())
+                .storeCongestionValue(store.getStoreCongestionValue())
+                .userCongestionValue(store.getUserCongestionValue())
                 .build();
     }
 }

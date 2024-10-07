@@ -39,6 +39,24 @@ public class StoreResponseDto {
 
         @Schema(description = "현재 운영 상태")
         private StoreState storeState;
+    }
 
+    @Schema(description = "StoreDetailFromCafeDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class StoreDetailFromCafeDto {
+        @Schema(description = "매장 id")
+        private Long storeId;
+
+        @Schema(description = "매장 이름")
+        private String storeName;
+
+        @Schema(description = "매장 측 혼잡도")
+        private Integer storeCongestionValue;
+
+        @Schema(description = "사용자 측 혼잡도")
+        private Integer userCongestionValue;
     }
 }

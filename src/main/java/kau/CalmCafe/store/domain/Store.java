@@ -3,6 +3,7 @@ package kau.CalmCafe.store.domain;
 import jakarta.persistence.*;
 import kau.CalmCafe.Congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.entity.BaseEntity;
+import kau.CalmCafe.user.domain.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,10 @@ public class Store extends BaseEntity {
 
     @Column(nullable = false)
     private String address;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     // 위도
     private Double latitude;
