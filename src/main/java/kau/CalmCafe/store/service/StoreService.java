@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -44,5 +46,29 @@ public class StoreService {
         // 최종 거리 (단위: m)
         return (int) Math.round(EARTH_RADIUS * c * 1000);
 
+    }
+    public Store updateStoreHours(Store store, String openingTimeStr, String closingTimeStr) {
+        if (store == null) {
+            throw new IllegalArgumentException("매장 정보가 없습니다.");
+        }
+
+        LocalTime openingTime = LocalTime.parse(openingTimeStr);
+        LocalTime closingTime = LocalTime.parse(closingTimeStr);
+
+        store.updateOpeningTime(openingTime);
+        store.updateClosingTime(closingTime);
+
+        return storeRepository.save(store);
+    }
+
+    public Store updateLastOrderTime(Store store, String lastOrderTimeStr) {
+        LocalTime lastOrderTime = LocalTime.parse(lastOrderTimeStr);
+        store.updateLastOrderTime(lastOrderTime);
+        return storeRepository.save(store);
+    }
+
+    public Store updateMaxCapacity(Store store, Integer maxCapacity) {
+        store.updateMaxCustomerCount(maxCapacity);
+        return storeRepository.save(store);
     }
 }
