@@ -23,9 +23,11 @@ public enum SuccessCode implements BaseCode {
     USER_PROFILE_IMAGE_UPDATE_SUCCESS(HttpStatus.OK, "USER_2007", "프로필 사진 이미지 업로드가 완료 되었습니다."),
 
     // Store
-    STORE_DETAIL_SUCCESS(HttpStatus.OK, "STORE_2001", "매장 상세 정보 반환이 완료되었습니다."),
-    STORE_FAVORITE_SUCCESS(HttpStatus.OK, "STORE_2002", "매장 즐겨찾기가 완료되었습니다."),
-    STORE_UNFAVORITE_SUCCESS(HttpStatus.OK, "STORE_2003", "매장 즐겨찾기 취소가 완료되었습니다."),
+    STORE_DETAIL_FROM_USER_SUCCESS(HttpStatus.OK, "STORE_2001", "유저 측 화면에서 매장 상세 정보 조회가 완료되었습니다."),
+    STORE_DETAIL_FROM_CAFE_SUCCESS(HttpStatus.OK, "STORE_2002", "카페 측 화면에서 매장 상세 정보 조회가 완료되었습니다."),
+    STORE_FAVORITE_SUCCESS(HttpStatus.OK, "STORE_2003", "매장 즐겨찾기가 완료되었습니다."),
+    STORE_UNFAVORITE_SUCCESS(HttpStatus.OK, "STORE_2004", "매장 즐겨찾기 취소가 완료되었습니다."),
+    STORE_CONGESTION_GET_SUCCESS(HttpStatus.OK, "STORE_2005", "유저 측 화면에서 매장 혼잡도 조회가 완료되었습니다."),
 
     // Congestion
     CONGESTION_INPUT_SUCCESS(HttpStatus.OK, "CONGESTION_2011", "혼잡도 입력이 완료되었습니다."),

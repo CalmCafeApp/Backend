@@ -23,7 +23,7 @@ public class StoreFavoriteController {
 
     @Operation(summary = "매장 즐겨찾기 메서드", description = "매장 즐겨찾기하는 메서드입니다.")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "FAVORITE_2001", description = "매장 즐겨찾기가 완료되었습니다.")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2003", description = "매장 즐겨찾기가 완료되었습니다.")
     })
     @PostMapping("/create")
     public ApiResponse<Integer> createFavorite(
@@ -38,7 +38,7 @@ public class StoreFavoriteController {
 
     @Operation(summary = "매장 즐겨찾기 취소 메서드", description = "매장 즐겨찾기를 취소하는 메서드입니다.")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "FAVORITE_2003", description = "매장 즐겨찾기 취소가 완료되었습니다.")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2004", description = "매장 즐겨찾기 취소가 완료되었습니다.")
     })
     @DeleteMapping("/delete")
     public ApiResponse<Integer> deleteFavorite(

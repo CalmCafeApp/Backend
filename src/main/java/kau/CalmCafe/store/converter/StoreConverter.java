@@ -1,6 +1,7 @@
 package kau.CalmCafe.store.converter;
 
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
 import kau.CalmCafe.store.dto.StoreState;
@@ -30,6 +31,8 @@ public class StoreConverter {
                 .closingTime(store.getClosingTime())
                 .lastOrderTime(store.getLastOrderTime())
                 .storeState(storeState)
+                .storeCongestionValue(store.getStoreCongestionValue())
+                .userCongestionValue(store.getUserCongestionValue())
                 .build();
     }
 
@@ -37,6 +40,13 @@ public class StoreConverter {
         return StoreDetailFromCafeDto.builder()
                 .storeId(store.getId())
                 .storeName(store.getName())
+                .storeCongestionValue(store.getStoreCongestionValue())
+                .userCongestionValue(store.getUserCongestionValue())
+                .build();
+    }
+
+    public static StoreCongestionFromUserDto storeCongestionFromUserDto(Store store) {
+        return StoreCongestionFromUserDto.builder()
                 .storeCongestionValue(store.getStoreCongestionValue())
                 .userCongestionValue(store.getUserCongestionValue())
                 .build();
