@@ -104,7 +104,7 @@ public class StoreController {
         }
 
         Store updatedStore = storeService.updateStoreHours(user.getStore(), openingTime, closingTime);
-        return ApiResponse.onSuccess(SuccessCode.STORE_HOURS_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
+        return ApiResponse.onSuccess(SuccessCode.STORE_TIME_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
     }
 
     @Operation(summary = "마지막 주문 시간 수정", description = "사장님이 매장의 마지막 주문 시간을 수정하는 메서드입니다.")
@@ -124,7 +124,7 @@ public class StoreController {
         }
 
         Store updatedStore = storeService.updateLastOrderTime(user.getStore(), lastOrderTime);
-        return ApiResponse.onSuccess(SuccessCode.STORE_HOURS_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
+        return ApiResponse.onSuccess(SuccessCode.STORE_LAST_ORDER_TIME_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
     }
 
     @Operation(summary = "매장 최대 수용 인원 수정", description = "사장님이 매장의 최대 수용 인원을 수정하는 메서드입니다.")
