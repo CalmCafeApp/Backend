@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -45,7 +47,11 @@ public class StoreService {
 
         // 최종 거리 (단위: m)
         return (int) Math.round(EARTH_RADIUS * c * 1000);
+    }
 
+    @Transactional
+    public List<Store> getNearStoreList(String userAddress) {
+        return storeRepository.findByAddressContaining(userAddress);
     }
     public Store updateStoreHours(Store store, String openingTimeStr, String closingTimeStr) {
         if (store == null) {

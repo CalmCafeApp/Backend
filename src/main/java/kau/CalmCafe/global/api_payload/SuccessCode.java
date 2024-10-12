@@ -31,6 +31,7 @@ public enum SuccessCode implements BaseCode {
     STORE_TIME_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2006", "매장 이용 시간 수정이 완료되었습니다."),
     STORE_LAST_ORDER_TIME_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2007","마지막 주문 시간 수정이 완료되었습니다."),
     STORE_CAPACITY_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2008","매장의 최대 수용 인원 수정이 완료되었습니다."),
+    STORE_NEAR_LIST_SUCCESS(HttpStatus.OK, "STORE_2006", "주변 매장 좌표 조회가 완료되었습니다."),
 
     // Congestion
     CONGESTION_INPUT_SUCCESS(HttpStatus.OK, "CONGESTION_2011", "혼잡도 입력이 완료되었습니다."),

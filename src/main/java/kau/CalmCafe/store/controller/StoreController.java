@@ -11,6 +11,7 @@ import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.store.converter.StoreConverter;
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
@@ -23,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "매장", description = "매장 관련 api입니다.")
 @Slf4j
@@ -39,17 +42,17 @@ public class StoreController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2001", description = "유저 측 화면에서 매장 상세 정보 조회가 완료되었습니다.")
     })
     @Parameters({
-            @Parameter(name = "address", description = "매장 주소"),
+            @Parameter(name = "storeId", description = "매장 id"),
             @Parameter(name = "userLatitude", description = "사용자 위도"),
             @Parameter(name = "userLongitude", description = "사용자 경도")
     })
     @GetMapping(value = "/detail/user")
     public ApiResponse<StoreDetailResDto> getStoreDetailFromUSer(
-            @RequestParam(name = "address") String address,
+            @RequestParam(name = "storeId") Long storeId,
             @RequestParam(name = "userLatitude") Double userLatitude,
             @RequestParam(name = "userLongitude") Double userLongitude
     ){
-        Store store = storeService.findByAddress(address);
+        Store store = storeService.findById(storeId);
 
         Integer distance = storeService.calDistance(userLatitude, userLongitude, store.getLatitude(), store.getLongitude());
 
@@ -118,6 +121,22 @@ public class StoreController {
             @RequestParam String lastOrderTime
     ) {
         User user = userService.findByUserName(customUserDetails.getUsername());
+
+    @Operation(summary = "사용자 화면 주소를 통한 주변 매장 좌표 조회", description = "사용자 화면 주소를 통해 주변 매장 좌표를 조회합니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2006", description = "주변 매장 좌표 조회가 완료되었습니다.")
+    })
+    @Parameters({
+            @Parameter(name = "userAddress", description = "사용자 화면의 주소 정보")
+    })
+    @GetMapping("/")
+    public ApiResponse<StorePosListDto> getNearStorePosList(
+            @RequestParam(name = "userAddress") String userAddress
+    ) {
+        List<Store> storeList = storeService.getNearStoreList(userAddress);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_NEAR_LIST_SUCCESS, StoreConverter.storePosListDto(storeList));
+    }
 
         if (user.getRole() != Role.CAFE) {
             return ApiResponse.onFailure("STORE_4002", "권한이 없습니다.", null);

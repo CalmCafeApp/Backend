@@ -1,6 +1,8 @@
 package kau.CalmCafe.store.converter;
 
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
+import kau.CalmCafe.store.dto.StoreResponseDto.StorePosDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -37,6 +40,7 @@ public class StoreConverter {
     }
 
     public static StoreDetailFromCafeDto storeDetailFromCafeDto(Store store) {
+
         return StoreDetailFromCafeDto.builder()
                 .storeId(store.getId())
                 .storeName(store.getName())
@@ -46,9 +50,32 @@ public class StoreConverter {
     }
 
     public static StoreCongestionFromUserDto storeCongestionFromUserDto(Store store) {
+
         return StoreCongestionFromUserDto.builder()
                 .storeCongestionValue(store.getStoreCongestionValue())
                 .userCongestionValue(store.getUserCongestionValue())
                 .build();
     }
+
+    public static StorePosDto storePosDto(Store store) {
+
+        return StorePosDto.builder()
+                .id(store.getId())
+                .latitude(store.getLatitude())
+                .longitude((store.getLongitude()))
+                .address(store.getAddress())
+                .build();
+    }
+
+    public static StorePosListDto storePosListDto(List<Store> storeList) {
+
+        List<StorePosDto> storePosDtoList = storeList.stream()
+                .map(StoreConverter::storePosDto)
+                .toList();
+
+        return StorePosListDto.builder()
+                .storePosDtoList(storePosDtoList)
+                .build();
+    }
+
 }

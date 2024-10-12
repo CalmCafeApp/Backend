@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @NoArgsConstructor
 public class StoreResponseDto {
@@ -16,6 +17,7 @@ public class StoreResponseDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class StoreDetailResDto {
+
         @Schema(description = "매장 id")
         private Long id;
 
@@ -53,6 +55,7 @@ public class StoreResponseDto {
     @AllArgsConstructor
     @Builder
     public static class StoreDetailFromCafeDto {
+
         @Schema(description = "매장 id")
         private Long storeId;
 
@@ -72,10 +75,43 @@ public class StoreResponseDto {
     @AllArgsConstructor
     @Builder
     public static class StoreCongestionFromUserDto {
+
         @Schema(description = "매장 측 혼잡도")
         private Integer storeCongestionValue;
 
         @Schema(description = "사용자 측 혼잡도")
         private Integer userCongestionValue;
     }
+
+    @Schema(description = "StorePosDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class StorePosDto {
+
+        @Schema(description = "매장 id")
+        private Long id;
+
+        @Schema(description = "매장 위도")
+        private Double latitude;
+
+        @Schema(description = "매장 경도")
+        private Double longitude;
+
+        @Schema(description = "매장 주소")
+        private String address;
+    }
+
+    @Schema(description = "StorePosListDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class StorePosListDto {
+
+        @Schema(description = "주변 매장 리스트")
+        private List<StorePosDto> storePosDtoList;
+    }
+
 }
