@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -43,6 +45,10 @@ public class StoreService {
 
         // 최종 거리 (단위: m)
         return (int) Math.round(EARTH_RADIUS * c * 1000);
+    }
 
+    @Transactional
+    public List<Store> getNearStoreList(String userAddress) {
+        return storeRepository.findByAddressContaining(userAddress);
     }
 }
