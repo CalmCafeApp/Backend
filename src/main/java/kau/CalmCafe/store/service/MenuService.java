@@ -22,4 +22,13 @@ public class MenuService {
         return menuRepository.findAllByStore(store);
     }
 
+    @Transactional
+    public List<Menu> getPointMenuList(Store store) {
+
+        return store.getMenuList()
+                .stream()
+                .filter(menu -> menu.getPointDiscount() != 0)
+                .toList();
+    }
+
 }

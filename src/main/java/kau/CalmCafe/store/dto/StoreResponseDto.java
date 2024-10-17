@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
+import kau.CalmCafe.store.dto.MenuResponseDto.PointMenuDetailResDto;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -56,6 +57,9 @@ public class StoreResponseDto {
         @Schema(description = "추천 카페 리스트")
         private List<RecommendStoreResDto> recommendStoreResDtoList;
 
+        @Schema(description = "포인트 상점 판매 메뉴 리스트")
+        private List<PointMenuDetailResDto> pointMenuDetailResDtoList;
+
     }
 
     @Schema(description = "RecommendStoreResDto")
@@ -64,6 +68,7 @@ public class StoreResponseDto {
     @AllArgsConstructor
     @Builder
     public static class RecommendStoreResDto {
+
         @Schema(description = "매장 id")
         private Long id;
 
@@ -78,6 +83,7 @@ public class StoreResponseDto {
 
         @Schema(description = "매장 주소")
         private String address;
+
     }
 
     @Schema(description = "StoreDetailFromCafeDto")
@@ -98,6 +104,7 @@ public class StoreResponseDto {
 
         @Schema(description = "사용자 측 혼잡도")
         private CongestionLevel userCongestionLevel;
+
     }
 
     @Schema(description = "StoreCongestionFromUserDto")
@@ -112,6 +119,7 @@ public class StoreResponseDto {
 
         @Schema(description = "사용자 측 혼잡도")
         private CongestionLevel userCongestionLevel;
+
     }
 
     @Schema(description = "StorePosDto")
@@ -132,6 +140,7 @@ public class StoreResponseDto {
 
         @Schema(description = "매장 주소")
         private String address;
+
     }
 
     @Schema(description = "StorePosListDto")
@@ -143,6 +152,7 @@ public class StoreResponseDto {
 
         @Schema(description = "주변 매장 리스트")
         private List<StorePosDto> storePosDtoList;
+
     }
 
 }

@@ -31,6 +31,9 @@ public class Menu extends BaseEntity {
     // 메뉴 이미지
     private String image;
 
-    // 포인트 스토어 등록 여부
-    private Boolean isPointStore;
+    // 메뉴 포인트 스토어 판매 할인율 (판매 중이 아니면 0)
+    private Integer pointDiscount;
+
+    // 메뉴 포인트 스토어 판매 가격
+    private Integer pointPrice;
 }
