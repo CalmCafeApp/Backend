@@ -59,7 +59,9 @@ public class StoreController {
 
         List<Menu> menuList = menuService.findMenuListByStore(store);
 
-        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance, menuList));
+        List<Store> recommendStoreList = storeService.getRecommendStoreList(store);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance, menuList, recommendStoreList));
     }
 
     @Operation(summary = "카페 측 매장 상세 정보 조회", description = "카페 측 화면에서 상세 정보를 조회하는 메서드입니다.")

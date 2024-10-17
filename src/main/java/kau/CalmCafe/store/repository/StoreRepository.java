@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface StoreRepository extends JpaRepository<Store, Long> {
     Optional<Store> findByAddress(String Address);
 
-    List<Store> findByAddressContaining(String userAddress);
+    List<Store> findByAddressContaining(String address);
 }

@@ -1,6 +1,7 @@
 package kau.CalmCafe.store.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import kau.CalmCafe.Congestion.domain.CongestionLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,14 +45,39 @@ public class StoreResponseDto {
         private StoreState storeState;
 
         @Schema(description = "매장 측 혼잡도")
-        private Integer storeCongestionValue;
+        private CongestionLevel storeCongestionLevel;
 
         @Schema(description = "사용자 측 혼잡도")
-        private Integer userCongestionValue;
+        private CongestionLevel userCongestionLevel;
 
         @Schema(description = "메뉴 상세 리스트")
         private List<MenuDetailResDto> menuDetailResDtoList;
 
+        @Schema(description = "추천 카페 리스트")
+        private List<RecommendStoreResDto> recommendStoreResDtoList;
+
+    }
+
+    @Schema(description = "RecommendStoreResDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class RecommendStoreResDto {
+        @Schema(description = "매장 id")
+        private Long id;
+
+        @Schema(description = "매장 이름")
+        private String name;
+
+        @Schema(description = "매장 측 혼잡도")
+        private CongestionLevel storeCongestionLevel;
+
+        @Schema(description = "사용자 측 혼잡도")
+        private CongestionLevel userCongestionLevel;
+
+        @Schema(description = "매장 주소")
+        private String address;
     }
 
     @Schema(description = "StoreDetailFromCafeDto")
@@ -68,10 +94,10 @@ public class StoreResponseDto {
         private String storeName;
 
         @Schema(description = "매장 측 혼잡도")
-        private Integer storeCongestionValue;
+        private CongestionLevel storeCongestionLevel;
 
         @Schema(description = "사용자 측 혼잡도")
-        private Integer userCongestionValue;
+        private CongestionLevel userCongestionLevel;
     }
 
     @Schema(description = "StoreCongestionFromUserDto")
@@ -82,10 +108,10 @@ public class StoreResponseDto {
     public static class StoreCongestionFromUserDto {
 
         @Schema(description = "매장 측 혼잡도")
-        private Integer storeCongestionValue;
+        private CongestionLevel storeCongestionLevel;
 
         @Schema(description = "사용자 측 혼잡도")
-        private Integer userCongestionValue;
+        private CongestionLevel userCongestionLevel;
     }
 
     @Schema(description = "StorePosDto")
