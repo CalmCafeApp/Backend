@@ -16,6 +16,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Table(name = "store")
 public class Store extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,6 +1,8 @@
 package kau.CalmCafe.store.converter;
 
+import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
@@ -17,13 +19,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StoreConverter {
 
-    public static StoreDetailResDto storeDetailResDto(Store store, Integer distance) {
+    public static StoreDetailResDto storeDetailResDto(Store store, Integer distance, List<Menu> menuList) {
 
         // 현재 시간
         LocalTime now = LocalTime.now();
 
         // 현재 매장 상태
         StoreState storeState = (now.isAfter(store.getOpeningTime()) && now.isBefore(store.getClosingTime())) ? StoreState.OPEN : StoreState.CLOSE;
+
+        List<MenuDetailResDto> menuDetailResDtoList = menuList.stream()
+                .map(MenuConverter::menuDetailResDto)
+                .toList();
 
         return StoreDetailResDto.builder()
                 .id(store.getId())
@@ -36,6 +42,7 @@ public class StoreConverter {
                 .storeState(storeState)
                 .storeCongestionValue(store.getStoreCongestionValue())
                 .userCongestionValue(store.getUserCongestionValue())
+                .menuDetailResDtoList(menuDetailResDtoList)
                 .build();
     }
 

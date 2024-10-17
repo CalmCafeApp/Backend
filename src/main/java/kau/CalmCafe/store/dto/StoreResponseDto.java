@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -47,6 +48,10 @@ public class StoreResponseDto {
 
         @Schema(description = "사용자 측 혼잡도")
         private Integer userCongestionValue;
+
+        @Schema(description = "메뉴 상세 리스트")
+        private List<MenuDetailResDto> menuDetailResDtoList;
+
     }
 
     @Schema(description = "StoreDetailFromCafeDto")

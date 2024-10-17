@@ -9,11 +9,13 @@ import kau.CalmCafe.Congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.store.converter.StoreConverter;
+import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
+import kau.CalmCafe.store.service.MenuService;
 import kau.CalmCafe.store.service.StoreService;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.jwt.CustomUserDetails;
@@ -34,6 +36,7 @@ public class StoreController {
 
     private final StoreService storeService;
     private final UserService userService;
+    private final MenuService menuService;
 
     @Operation(summary = "유저 측 매장 상세 정보 조회", description = "유저 측 화면에서 매장의 상세 정보를 조회하는 메서드입니다.")
     @ApiResponses(value = {
@@ -54,7 +57,9 @@ public class StoreController {
 
         Integer distance = storeService.calDistance(userLatitude, userLongitude, store.getLatitude(), store.getLongitude());
 
-        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance));
+        List<Menu> menuList = menuService.findMenuListByStore(store);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance, menuList));
     }
 
     @Operation(summary = "카페 측 매장 상세 정보 조회", description = "카페 측 화면에서 상세 정보를 조회하는 메서드입니다.")
