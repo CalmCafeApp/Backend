@@ -34,6 +34,7 @@ public class Store extends BaseEntity {
     private User user;
 
     @OneToMany(mappedBy = "store")
+    @Builder.Default
     private List<Menu> menuList = new ArrayList<>();
 
     // 위도

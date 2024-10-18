@@ -1,6 +1,8 @@
 package kau.CalmCafe.store.service;
 
 import jakarta.transaction.Transactional;
+import kau.CalmCafe.global.api_payload.ErrorCode;
+import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.repository.MenuRepository;
@@ -29,6 +31,12 @@ public class MenuService {
                 .stream()
                 .filter(menu -> menu.getPointDiscount() != 0)
                 .toList();
+    }
+
+    @Transactional
+    public Menu findById(Long id) {
+        return menuRepository.findById(id)
+                .orElseThrow(() -> GeneralException.of(ErrorCode.MENU_NOT_FOUND));
     }
 
 }

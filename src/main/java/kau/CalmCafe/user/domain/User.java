@@ -2,8 +2,12 @@ package kau.CalmCafe.user.domain;
 
 import jakarta.persistence.*;
 import kau.CalmCafe.global.entity.BaseEntity;
+import kau.CalmCafe.store.domain.PointCoupon;
 import kau.CalmCafe.store.domain.Store;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,6 +25,10 @@ public class User extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
+    // 보유 포인트 쿠폰 목록
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    private List<PointCoupon> pointCouponList = new ArrayList<>();
 
     @Column(nullable = false, unique = true)
     private String username;
