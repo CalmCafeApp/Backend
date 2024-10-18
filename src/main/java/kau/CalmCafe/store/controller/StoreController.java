@@ -5,15 +5,18 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kau.CalmCafe.Congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.store.converter.StoreConverter;
+import kau.CalmCafe.store.domain.Menu;
+import kau.CalmCafe.store.domain.PointCoupon;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
+import kau.CalmCafe.store.service.MenuService;
+import kau.CalmCafe.store.service.PointCouponService;
 import kau.CalmCafe.store.service.StoreService;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.jwt.CustomUserDetails;
@@ -34,6 +37,8 @@ public class StoreController {
 
     private final StoreService storeService;
     private final UserService userService;
+    private final MenuService menuService;
+    private final PointCouponService pointCouponService;
 
     @Operation(summary = "유저 측 매장 상세 정보 조회", description = "유저 측 화면에서 매장의 상세 정보를 조회하는 메서드입니다.")
     @ApiResponses(value = {
@@ -54,7 +59,13 @@ public class StoreController {
 
         Integer distance = storeService.calDistance(userLatitude, userLongitude, store.getLatitude(), store.getLongitude());
 
-        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance));
+        List<Menu> menuList = menuService.findMenuListByStore(store);
+
+        List<Store> recommendStoreList = storeService.getRecommendStoreList(store);
+
+        List<Menu> pointMenuList = menuService.getPointMenuList(store);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance, menuList, recommendStoreList, pointMenuList));
     }
 
     @Operation(summary = "카페 측 매장 상세 정보 조회", description = "카페 측 화면에서 상세 정보를 조회하는 메서드입니다.")
@@ -102,6 +113,26 @@ public class StoreController {
         List<Store> storeList = storeService.getNearStoreList(userAddress);
 
         return ApiResponse.onSuccess(SuccessCode.STORE_NEAR_LIST_SUCCESS, StoreConverter.storePosListDto(storeList));
+    }
+
+    @Operation(summary = "포인트 스토어 내 상품 구매", description = "포인트 스토어 내 상품을 구매합니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2007", description = "포인트 스토어 내 상품 구매가 완료되었습니다.")
+    })
+    @Parameters({
+            @Parameter(name = "menuId", description = "메뉴 id")
+    })
+    @GetMapping("/point/buy")
+    public ApiResponse<Long> buyCPointCoupon(
+            @RequestParam(name = "menuId") Long menuId,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+        Menu menu = menuService.findById(menuId);
+
+        PointCoupon pointCoupon = pointCouponService.createPointCoupon(user, menu);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_BUY_COUPON_POINT_SUCCESS, pointCoupon.getId());
     }
 
 }

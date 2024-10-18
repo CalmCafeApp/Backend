@@ -1,6 +1,10 @@
 package kau.CalmCafe.store.converter;
 
+import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.MenuResponseDto.PointMenuDetailResDto;
+import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
+import kau.CalmCafe.store.dto.StoreResponseDto.RecommendStoreResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
@@ -17,13 +21,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StoreConverter {
 
-    public static StoreDetailResDto storeDetailResDto(Store store, Integer distance) {
+    public static StoreDetailResDto storeDetailResDto(Store store, Integer distance, List<Menu> menuList, List<Store> recommendStoreList, List<Menu> pointMenuList) {
 
         // 현재 시간
         LocalTime now = LocalTime.now();
 
         // 현재 매장 상태
         StoreState storeState = (now.isAfter(store.getOpeningTime()) && now.isBefore(store.getClosingTime())) ? StoreState.OPEN : StoreState.CLOSE;
+
+        List<MenuDetailResDto> menuDetailResDtoList = menuList.stream()
+                .map(MenuConverter::menuDetailResDto)
+                .toList();
+
+        List<RecommendStoreResDto> recommendStoreResDtoList = recommendStoreList.stream()
+                .map(StoreConverter::recommendStoreResDto)
+                .toList();
+
+        List<PointMenuDetailResDto> pointMenuDetailResDtoList = pointMenuList.stream()
+                .map(MenuConverter::pointMenuDetailResDto)
+                .toList();
 
         return StoreDetailResDto.builder()
                 .id(store.getId())
@@ -34,8 +50,21 @@ public class StoreConverter {
                 .closingTime(store.getClosingTime())
                 .lastOrderTime(store.getLastOrderTime())
                 .storeState(storeState)
-                .storeCongestionValue(store.getStoreCongestionValue())
-                .userCongestionValue(store.getUserCongestionValue())
+                .storeCongestionLevel(store.getStoreCongestionLevel())
+                .userCongestionLevel(store.getUserCongestionLevel())
+                .menuDetailResDtoList(menuDetailResDtoList)
+                .recommendStoreResDtoList(recommendStoreResDtoList)
+                .pointMenuDetailResDtoList(pointMenuDetailResDtoList)
+                .build();
+    }
+
+    public static RecommendStoreResDto recommendStoreResDto(Store store) {
+        return RecommendStoreResDto.builder()
+                .id(store.getId())
+                .name(store.getName())
+                .storeCongestionLevel(store.getStoreCongestionLevel())
+                .userCongestionLevel(store.getUserCongestionLevel())
+                .address(store.getAddress())
                 .build();
     }
 
@@ -44,16 +73,16 @@ public class StoreConverter {
         return StoreDetailFromCafeDto.builder()
                 .storeId(store.getId())
                 .storeName(store.getName())
-                .storeCongestionValue(store.getStoreCongestionValue())
-                .userCongestionValue(store.getUserCongestionValue())
+                .storeCongestionLevel(store.getStoreCongestionLevel())
+                .userCongestionLevel(store.getUserCongestionLevel())
                 .build();
     }
 
     public static StoreCongestionFromUserDto storeCongestionFromUserDto(Store store) {
 
         return StoreCongestionFromUserDto.builder()
-                .storeCongestionValue(store.getStoreCongestionValue())
-                .userCongestionValue(store.getUserCongestionValue())
+                .storeCongestionLevel(store.getStoreCongestionLevel())
+                .userCongestionLevel(store.getUserCongestionLevel())
                 .build();
     }
 

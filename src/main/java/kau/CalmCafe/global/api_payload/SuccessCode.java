@@ -29,6 +29,7 @@ public enum SuccessCode implements BaseCode {
     STORE_UNFAVORITE_SUCCESS(HttpStatus.OK, "STORE_2004", "매장 즐겨찾기 취소가 완료되었습니다."),
     STORE_CONGESTION_GET_SUCCESS(HttpStatus.OK, "STORE_2005", "유저 측 화면에서 매장 혼잡도 조회가 완료되었습니다."),
     STORE_NEAR_LIST_SUCCESS(HttpStatus.OK, "STORE_2006", "주변 매장 좌표 조회가 완료되었습니다."),
+    STORE_BUY_COUPON_POINT_SUCCESS(HttpStatus.OK, "STORE_2007", "포인트 스토어 내 상품 구매가 완료되었습니다."),
 
     // Congestion
     CONGESTION_INPUT_SUCCESS(HttpStatus.OK, "CONGESTION_2011", "혼잡도 입력이 완료되었습니다."),
