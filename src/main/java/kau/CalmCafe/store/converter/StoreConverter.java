@@ -4,6 +4,8 @@ import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.dto.MenuResponseDto.PointMenuDetailResDto;
 import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
+import kau.CalmCafe.store.dto.StoreResponseDto.StoreRankingResDto;
+import kau.CalmCafe.store.dto.StoreResponseDto.StoreRankingListResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.RecommendStoreResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosDto;
@@ -11,6 +13,7 @@ import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
 import kau.CalmCafe.store.dto.StoreState;
+import kau.CalmCafe.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StoreConverter {
 
-    public static StoreDetailResDto storeDetailResDto(Store store, Integer distance, List<Menu> menuList, List<Store> recommendStoreList, List<Menu> pointMenuList) {
+    public static StoreDetailResDto storeDetailResDto(Store store, Integer distance, List<Menu> menuList, List<Store> recommendStoreList, List<Menu> pointMenuList, User user) {
 
         // 현재 시간
         LocalTime now = LocalTime.now();
@@ -44,8 +47,10 @@ public class StoreConverter {
         return StoreDetailResDto.builder()
                 .id(store.getId())
                 .name(store.getName())
+                .image(store.getImage())
                 .distance(distance)
                 .favoriteCount(store.getFavoriteCount())
+                .isFavorite(isFavorite(store, user))
                 .openingTime(store.getOpeningTime())
                 .closingTime(store.getClosingTime())
                 .lastOrderTime(store.getLastOrderTime())
@@ -61,6 +66,7 @@ public class StoreConverter {
     public static RecommendStoreResDto recommendStoreResDto(Store store) {
         return RecommendStoreResDto.builder()
                 .id(store.getId())
+                .image(store.getImage())
                 .name(store.getName())
                 .storeCongestionLevel(store.getStoreCongestionLevel())
                 .userCongestionLevel(store.getUserCongestionLevel())
@@ -105,6 +111,39 @@ public class StoreConverter {
         return StorePosListDto.builder()
                 .storePosDtoList(storePosDtoList)
                 .build();
+
+    }
+
+    public static StoreRankingResDto storeRankingResDto(Store store, User user) {
+
+        return StoreRankingResDto.builder()
+                .id(store.getId())
+                .name(store.getName())
+                .storeCongestionLevel(store.getStoreCongestionLevel())
+                .userCongestionLevel(store.getUserCongestionLevel())
+                .isFavorite(isFavorite(store, user))
+                .image(store.getImage())
+                .address(store.getAddress())
+                .build();
+
+    }
+
+    public static StoreRankingListResDto storeRankingListResDto(List<Store> storeList, User user) {
+
+        List<StoreRankingResDto> storeRankingResDtoList = storeList.stream()
+                .map(store -> storeRankingResDto(store, user))
+                .toList();
+
+        return StoreRankingListResDto.builder()
+                .StoreRankingResDtoList(storeRankingResDtoList)
+                .build();
+
+    }
+
+    // 즐겨찾기 여부
+    private static Boolean isFavorite(Store store, User user) {
+        return store.getStoreFavoriteList().stream()
+                .anyMatch(storeFavorite -> storeFavorite.getUser().equals(user));
     }
 
 }

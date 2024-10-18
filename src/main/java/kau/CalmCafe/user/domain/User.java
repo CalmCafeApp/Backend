@@ -46,6 +46,8 @@ public class User extends BaseEntity {
 
     private String profileImage;
 
+    private Integer point;
+
     public User(String username, String nickname, String email, String provider, Role role) {
         this.username = username;
         this.nickname = nickname;
