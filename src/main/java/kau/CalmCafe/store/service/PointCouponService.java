@@ -1,6 +1,8 @@
 package kau.CalmCafe.store.service;
 
 import jakarta.transaction.Transactional;
+import kau.CalmCafe.global.api_payload.ErrorCode;
+import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.store.converter.PointCouponConverter;
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.PointCoupon;
@@ -19,6 +21,10 @@ public class PointCouponService {
 
     @Transactional
     public PointCoupon createPointCoupon(User user, Menu menu) {
+
+        if (user.getPoint() < menu.getPointPrice()) {
+            throw GeneralException.of(ErrorCode.POINT_BUY_FAILED);
+        }
 
         PointCoupon pointCoupon = PointCouponConverter.savePointCoupon(user, menu);
         pointCouponRepository.save(pointCoupon);

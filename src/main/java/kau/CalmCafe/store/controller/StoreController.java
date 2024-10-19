@@ -11,6 +11,7 @@ import kau.CalmCafe.store.converter.StoreConverter;
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.PointCoupon;
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.StoreResponseDto.StoreRankingListResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
@@ -53,8 +54,11 @@ public class StoreController {
     public ApiResponse<StoreDetailResDto> getStoreDetailFromUSer(
             @RequestParam(name = "storeId") Long storeId,
             @RequestParam(name = "userLatitude") Double userLatitude,
-            @RequestParam(name = "userLongitude") Double userLongitude
+            @RequestParam(name = "userLongitude") Double userLongitude,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
     ){
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
         Store store = storeService.findById(storeId);
 
         Integer distance = storeService.calDistance(userLatitude, userLongitude, store.getLatitude(), store.getLongitude());
@@ -65,7 +69,7 @@ public class StoreController {
 
         List<Menu> pointMenuList = menuService.getPointMenuList(store);
 
-        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance, menuList, recommendStoreList, pointMenuList));
+        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance, menuList, recommendStoreList, pointMenuList, user));
     }
 
     @Operation(summary = "카페 측 매장 상세 정보 조회", description = "카페 측 화면에서 상세 정보를 조회하는 메서드입니다.")
@@ -134,5 +138,64 @@ public class StoreController {
 
         return ApiResponse.onSuccess(SuccessCode.STORE_BUY_COUPON_POINT_SUCCESS, pointCoupon.getId());
     }
+
+    @Operation(summary = "실시간 방문자 수 TOP 100 매장 반환", description = "실시간 방문자 수 TOP 100 매장 리스트를 반환합니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2008", description = "실시간 방문자 수 TOP 100 매장 리스트 반환이 완료되었습니다.")
+    })
+    @Parameters({
+            @Parameter(name = "location", description = "지역 문자열 (전국, 서울, 경기, 인천, 제주, 부산, 대구, 광주, 대전, 울산, 경상, 전라, 강원, 충청, 세종)")
+    })
+    @GetMapping("/ranking/congestion")
+    public ApiResponse<StoreRankingListResDto> getRankingByCongestion(
+            @RequestParam(name = "location") String location,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
+        List<Store> rankingStoreList = storeService.getRankingStoreListByCongestion(location);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_RANKING_CONGESTION_SUCCESS, StoreConverter.storeRankingListResDto(rankingStoreList, user));
+    }
+
+    @Operation(summary = "누적 방문자 수 TOP 100 매장 반환", description = "누적 방문자 수 TOP 100 매장 리스트를 반환합니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2009", description = "누적 방문자 수 TOP 100 매장 리스트 반환이 완료되었습니다.")
+    })
+    @Parameters({
+            @Parameter(name = "location", description = "지역 문자열 (전국, 서울, 경기, 인천, 제주, 부산, 대구, 광주, 대전, 울산, 경상, 전라, 강원, 충청, 세종)")
+    })
+    @GetMapping("/ranking/total")
+    public ApiResponse<StoreRankingListResDto> getRankingByTotalVisit(
+            @RequestParam(name = "location") String location,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
+        List<Store> rankingStoreList = storeService.getRankingStoreListByTotalVisit(location);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_RANKING_TOTAL_VISIT_SUCCESS, StoreConverter.storeRankingListResDto(rankingStoreList, user));
+    }
+
+    @Operation(summary = "즐겨찾기 수 TOP 100 매장 반환", description = "즐겨찾기 수 TOP 100 매장 리스트를 반환합니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2010", description = "즐겨찾기 수 TOP 100 매장 리스트 반환이 완료되었습니다.")
+    })
+    @Parameters({
+            @Parameter(name = "location", description = "지역 문자열 (전국, 서울, 경기, 인천, 제주, 부산, 대구, 광주, 대전, 울산, 경상, 전라, 강원, 충청, 세종)")
+    })
+    @GetMapping("/ranking/favorite")
+    public ApiResponse<StoreRankingListResDto> getRankingByFavorite(
+            @RequestParam(name = "location") String location,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
+        List<Store> rankingStoreList = storeService.getRankingStoreListByFavorite(location);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_RANKING_FAVORITE_SUCCESS, StoreConverter.storeRankingListResDto(rankingStoreList, user));
+    }
+
+
 
 }

@@ -8,6 +8,8 @@ import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +20,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class StoreService {
+
+    // Pagable 객체 수
+    private static final Integer TOP_COUNT = 100;
+
     private final StoreRepository storeRepository;
 
     @Transactional
@@ -82,6 +88,30 @@ public class StoreService {
                     return !(isBusy(storeCongestion) || isBusy(userCongestion));
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<Store> getRankingStoreListByCongestion(String location) {
+
+        Pageable pageable = PageRequest.of(0, TOP_COUNT);
+        return storeRepository.findRankingStoreListByCongestion(location, pageable);
+
+    }
+
+    @Transactional
+    public List<Store> getRankingStoreListByTotalVisit(String location) {
+
+        Pageable pageable = PageRequest.of(0, TOP_COUNT);
+        return storeRepository.findRankingStoreListByTotalVisit(location, pageable);
+
+    }
+
+    @Transactional
+    public List<Store> getRankingStoreListByFavorite(String location) {
+
+        Pageable pageable = PageRequest.of(0, TOP_COUNT);
+        return storeRepository.findRankingStoreListByFavorite(location, pageable);
+
     }
 
     // 혼잡도 상태가 혼잡 또는 매우 혼잡인지 확인

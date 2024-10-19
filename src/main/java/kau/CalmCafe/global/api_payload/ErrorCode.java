@@ -36,6 +36,9 @@ public enum ErrorCode implements BaseCode {
     // Menu
     MENU_NOT_FOUND(HttpStatus.NOT_FOUND, "MENU_4041", "존재하지 않는 메뉴입니다."),
 
+    // Point
+    POINT_BUY_FAILED(HttpStatus.BAD_REQUEST, "POINT_4001", "포인트가 부족합니다."),
+
     // Cafe
     CAFE_NOT_FOUND(HttpStatus.NOT_FOUND, "CAFE_4041", "존재하지 않는 카페입니다."),
     NO_CAFES_FOUND(HttpStatus.NOT_FOUND, "CAFE_4042", "등록된 카페가 없습니다."),

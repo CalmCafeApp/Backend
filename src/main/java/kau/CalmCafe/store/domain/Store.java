@@ -1,6 +1,7 @@
 package kau.CalmCafe.store.domain;
 
 import jakarta.persistence.*;
+import kau.CalmCafe.Congestion.domain.CongestionInput;
 import kau.CalmCafe.Congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.entity.BaseEntity;
 import kau.CalmCafe.user.domain.User;
@@ -37,8 +38,19 @@ public class Store extends BaseEntity {
     @Builder.Default
     private List<Menu> menuList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "store")
+    @Builder.Default
+    private List<StoreFavorite> storeFavoriteList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store")
+    @Builder.Default
+    private List<CongestionInput> congestionInputList = new ArrayList<>();
+
     // 위도
     private Double latitude;
+
+    // 이미지
+    private String image;
 
     // 경도
     private Double longitude;
