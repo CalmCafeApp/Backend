@@ -1,6 +1,7 @@
 package kau.CalmCafe.store.domain;
 
 import jakarta.persistence.*;
+import kau.CalmCafe.Congestion.domain.CongestionInput;
 import kau.CalmCafe.Congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.entity.BaseEntity;
 import kau.CalmCafe.user.domain.User;
@@ -8,6 +9,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,6 +19,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Table(name = "store")
 public class Store extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,8 +34,23 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "store")
+    @Builder.Default
+    private List<Menu> menuList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store")
+    @Builder.Default
+    private List<StoreFavorite> storeFavoriteList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store")
+    @Builder.Default
+    private List<CongestionInput> congestionInputList = new ArrayList<>();
+
     // 위도
     private Double latitude;
+
+    // 이미지
+    private String image;
 
     // 경도
     private Double longitude;

@@ -33,6 +33,13 @@ public enum ErrorCode implements BaseCode {
     STORE_ALREADY_FAVORITE(HttpStatus.BAD_REQUEST, "STORE_4001", "이미 즐겨찾기한 매장입니다."),
     STORE_FAVORITE_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE_4042", "존재하지 않는 매장 즐겨찾기 입니다."),
     UNAUTHORIZED_ACCESS(HttpStatus.FORBIDDEN,"STORE_4002", "권한이 없습니다."),
+
+    // Menu
+    MENU_NOT_FOUND(HttpStatus.NOT_FOUND, "MENU_4041", "존재하지 않는 메뉴입니다."),
+
+    // Point
+    POINT_BUY_FAILED(HttpStatus.BAD_REQUEST, "POINT_4001", "포인트가 부족합니다."),
+
     // Cafe
     CAFE_NOT_FOUND(HttpStatus.NOT_FOUND, "CAFE_4041", "존재하지 않는 카페입니다."),
     NO_CAFES_FOUND(HttpStatus.NOT_FOUND, "CAFE_4042", "등록된 카페가 없습니다."),

@@ -1,10 +1,13 @@
 package kau.CalmCafe.store.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import kau.CalmCafe.Congestion.domain.CongestionLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
+import kau.CalmCafe.store.dto.MenuResponseDto.PointMenuDetailResDto;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -24,11 +27,17 @@ public class StoreResponseDto {
         @Schema(description = "매장 이름")
         private String name;
 
+        @Schema(description = "매장 이미지")
+        private String image;
+
         @Schema(description = "사용자-매장 거리 (m)")
         private Integer distance;
 
         @Schema(description = "즐겨찾기 수")
         private Integer favoriteCount;
+
+        @Schema(description = "즐겨찾기 여부")
+        private Boolean isFavorite;
 
         @Schema(description = "운영 시작 시간")
         private LocalTime openingTime;
@@ -43,10 +52,47 @@ public class StoreResponseDto {
         private StoreState storeState;
 
         @Schema(description = "매장 측 혼잡도")
-        private Integer storeCongestionValue;
+        private CongestionLevel storeCongestionLevel;
 
         @Schema(description = "사용자 측 혼잡도")
-        private Integer userCongestionValue;
+        private CongestionLevel userCongestionLevel;
+
+        @Schema(description = "메뉴 상세 리스트")
+        private List<MenuDetailResDto> menuDetailResDtoList;
+
+        @Schema(description = "추천 카페 리스트")
+        private List<RecommendStoreResDto> recommendStoreResDtoList;
+
+        @Schema(description = "포인트 상점 판매 메뉴 리스트")
+        private List<PointMenuDetailResDto> pointMenuDetailResDtoList;
+
+    }
+
+    @Schema(description = "RecommendStoreResDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class RecommendStoreResDto {
+
+        @Schema(description = "매장 id")
+        private Long id;
+
+        @Schema(description = "매장 이름")
+        private String name;
+
+        @Schema(description = "매장 측 혼잡도")
+        private CongestionLevel storeCongestionLevel;
+
+        @Schema(description = "사용자 측 혼잡도")
+        private CongestionLevel userCongestionLevel;
+
+        @Schema(description = "매장 주소")
+        private String address;
+
+        @Schema(description = "매장 이미지")
+        private String image;
+
     }
 
     @Schema(description = "StoreDetailFromCafeDto")
@@ -63,10 +109,11 @@ public class StoreResponseDto {
         private String storeName;
 
         @Schema(description = "매장 측 혼잡도")
-        private Integer storeCongestionValue;
+        private CongestionLevel storeCongestionLevel;
 
         @Schema(description = "사용자 측 혼잡도")
-        private Integer userCongestionValue;
+        private CongestionLevel userCongestionLevel;
+
     }
 
     @Schema(description = "StoreCongestionFromUserDto")
@@ -77,10 +124,11 @@ public class StoreResponseDto {
     public static class StoreCongestionFromUserDto {
 
         @Schema(description = "매장 측 혼잡도")
-        private Integer storeCongestionValue;
+        private CongestionLevel storeCongestionLevel;
 
         @Schema(description = "사용자 측 혼잡도")
-        private Integer userCongestionValue;
+        private CongestionLevel userCongestionLevel;
+
     }
 
     @Schema(description = "StorePosDto")
@@ -101,6 +149,7 @@ public class StoreResponseDto {
 
         @Schema(description = "매장 주소")
         private String address;
+
     }
 
     @Schema(description = "StorePosListDto")
@@ -112,6 +161,49 @@ public class StoreResponseDto {
 
         @Schema(description = "주변 매장 리스트")
         private List<StorePosDto> storePosDtoList;
+
+    }
+
+    @Schema(description = "StoreRankingResDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class StoreRankingResDto {
+
+        @Schema(description = "매장 id")
+        private Long id;
+
+        @Schema(description = "매장 이름")
+        private String name;
+
+        @Schema(description = "매장 측 혼잡도")
+        private CongestionLevel storeCongestionLevel;
+
+        @Schema(description = "사용자 측 혼잡도")
+        private CongestionLevel userCongestionLevel;
+
+        @Schema(description = "즐겨찾기 여부")
+        private Boolean isFavorite;
+
+        @Schema(description = "매장 이미지")
+        private String image;
+
+        @Schema(description = "매장 주소")
+        private String address;
+
+    }
+
+    @Schema(description = "StoreRankingListResDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class StoreRankingListResDto {
+
+        @Schema(description = "주변 매장 리스트")
+        private List<StoreRankingResDto> StoreRankingResDtoList;
+
     }
 
 }
