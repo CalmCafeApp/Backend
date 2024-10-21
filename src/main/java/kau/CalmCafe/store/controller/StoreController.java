@@ -200,7 +200,7 @@ public class StoreController {
 
     @Operation(summary = "매장 영업 시간 수정", description = "사장님이 매장의 영업 시간을 수정하는 메서드입니다.")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2006", description = "매장 영업 시간 수정이 완료되었습니다."),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2011", description = "매장 영업 시간 수정이 완료되었습니다."),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_4001", description = "권한이 없습니다.")
     })
     @PatchMapping("/modify/hours")
@@ -221,7 +221,7 @@ public class StoreController {
 
     @Operation(summary = "마지막 주문 시간 수정", description = "사장님이 매장의 마지막 주문 시간을 수정하는 메서드입니다.")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2007", description = "매장 영업 시간 수정이 완료되었습니다."),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2012", description = "매장 영업 시간 수정이 완료되었습니다."),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_4001", description = "권한이 없습니다.")
     })
     @PatchMapping("/modify/lastordertime")
@@ -241,7 +241,7 @@ public class StoreController {
 
     @Operation(summary = "매장 최대 수용 인원 수정", description = "사장님이 매장의 최대 수용 인원을 수정하는 메서드입니다.")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2008", description = "매장 최대 수용 인원 수정이 완료되었습니다."),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2013", description = "매장 최대 수용 인원 수정이 완료되었습니다."),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_4002", description = "권한이 없습니다.")
     })
     @PatchMapping("/modify/max-capacity")
