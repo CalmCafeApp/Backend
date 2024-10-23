@@ -2,6 +2,7 @@ package kau.CalmCafe.store.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kau.CalmCafe.Congestion.domain.CongestionLevel;
+import kau.CalmCafe.store.dto.PromotionResponseDto.PromotionDetailResDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -65,6 +66,9 @@ public class StoreResponseDto {
 
         @Schema(description = "포인트 상점 판매 메뉴 리스트")
         private List<PointMenuDetailResDto> pointMenuDetailResDtoList;
+
+        @Schema(description = "진행 중인 프로모션 리스트")
+        private List<PromotionDetailResDto> promotionDetailResDtoList;
 
     }
 

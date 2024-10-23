@@ -46,6 +46,10 @@ public class Store extends BaseEntity {
     @Builder.Default
     private List<CongestionInput> congestionInputList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "store")
+    @Builder.Default
+    private List<Promotion> promotionList = new ArrayList<>();
+
     // 위도
     private Double latitude;
 
