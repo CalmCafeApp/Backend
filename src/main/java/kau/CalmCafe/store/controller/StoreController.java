@@ -200,8 +200,7 @@ public class StoreController {
 
     @Operation(summary = "매장 영업 시간 수정", description = "사장님이 매장의 영업 시간을 수정하는 메서드입니다.")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2011", description = "매장 영업 시간 수정이 완료되었습니다."),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_4001", description = "권한이 없습니다.")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2011", description = "매장 영업 시간 수정이 완료되었습니다.")
     })
     @PatchMapping("/modify/hours")
     public ApiResponse<StoreDetailFromCafeDto> updateStoreHours(
@@ -211,18 +210,14 @@ public class StoreController {
     ) {
         User user = userService.findByUserName(customUserDetails.getUsername());
 
-        if (user.getRole() != Role.CAFE) {
-            return ApiResponse.onFailure(ErrorCode.UNAUTHORIZED_ACCESS.getCode(), ErrorCode.UNAUTHORIZED_ACCESS.getMessage(), null);
-        }
-
         Store updatedStore = storeService.updateStoreHours(user.getStore(), openingTime, closingTime);
+
         return ApiResponse.onSuccess(SuccessCode.STORE_TIME_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
     }
 
     @Operation(summary = "마지막 주문 시간 수정", description = "사장님이 매장의 마지막 주문 시간을 수정하는 메서드입니다.")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2012", description = "매장 영업 시간 수정이 완료되었습니다."),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_4001", description = "권한이 없습니다.")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2012", description = "매장 영업 시간 수정이 완료되었습니다.")
     })
     @PatchMapping("/modify/lastordertime")
     public ApiResponse<StoreDetailFromCafeDto> updateLastOrderTime(
@@ -231,18 +226,14 @@ public class StoreController {
     ) {
         User user = userService.findByUserName(customUserDetails.getUsername());
 
-        if (user.getRole() != Role.CAFE) {
-            return ApiResponse.onFailure("STORE_4002", "권한이 없습니다.", null);
-        }
-
         Store updatedStore = storeService.updateLastOrderTime(user.getStore(), lastOrderTime);
+
         return ApiResponse.onSuccess(SuccessCode.STORE_LAST_ORDER_TIME_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
     }
 
     @Operation(summary = "매장 최대 수용 인원 수정", description = "사장님이 매장의 최대 수용 인원을 수정하는 메서드입니다.")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2013", description = "매장 최대 수용 인원 수정이 완료되었습니다."),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_4002", description = "권한이 없습니다.")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2013", description = "매장 최대 수용 인원 수정이 완료되었습니다.")
     })
     @PatchMapping("/modify/max-capacity")
     public ApiResponse<StoreDetailFromCafeDto> updateMaxCapacity(
@@ -251,10 +242,8 @@ public class StoreController {
     ) {
         User user = userService.findByUserName(customUserDetails.getUsername());
 
-        if (user.getRole() != Role.CAFE) {
-            return ApiResponse.onFailure(ErrorCode.UNAUTHORIZED_ACCESS.getCode(), ErrorCode.UNAUTHORIZED_ACCESS.getMessage(), null);
-        }
         Store updatedStore = storeService.updateMaxCapacity(user.getStore(), maxCapacity);
+
         return ApiResponse.onSuccess(SuccessCode.STORE_CAPACITY_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
     }
 }
