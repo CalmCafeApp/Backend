@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -119,4 +121,28 @@ public class StoreService {
         return level == CongestionLevel.VERY_BUSY || level == CongestionLevel.BUSY;
     }
 
+    public Store updateStoreHours(Store store, String openingTimeStr, String closingTimeStr) {
+        if (store == null) {
+            throw new IllegalArgumentException("매장 정보가 없습니다.");
+        }
+
+        LocalTime openingTime = LocalTime.parse(openingTimeStr);
+        LocalTime closingTime = LocalTime.parse(closingTimeStr);
+
+        store.updateOpeningTime(openingTime);
+        store.updateClosingTime(closingTime);
+
+        return storeRepository.save(store);
+    }
+
+    public Store updateLastOrderTime(Store store, String lastOrderTimeStr) {
+        LocalTime lastOrderTime = LocalTime.parse(lastOrderTimeStr);
+        store.updateLastOrderTime(lastOrderTime);
+        return storeRepository.save(store);
+    }
+
+    public Store updateMaxCapacity(Store store, Integer maxCapacity) {
+        store.updateMaxCustomerCount(maxCapacity);
+        return storeRepository.save(store);
+    }
 }

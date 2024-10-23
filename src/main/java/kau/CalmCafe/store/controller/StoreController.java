@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kau.CalmCafe.global.api_payload.ApiResponse;
+import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.store.converter.StoreConverter;
 import kau.CalmCafe.store.domain.Menu;
@@ -19,6 +20,7 @@ import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
 import kau.CalmCafe.store.service.MenuService;
 import kau.CalmCafe.store.service.PointCouponService;
 import kau.CalmCafe.store.service.StoreService;
+import kau.CalmCafe.user.domain.Role;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.jwt.CustomUserDetails;
 import kau.CalmCafe.user.service.UserService;
@@ -196,6 +198,53 @@ public class StoreController {
         return ApiResponse.onSuccess(SuccessCode.STORE_RANKING_FAVORITE_SUCCESS, StoreConverter.storeRankingListResDto(rankingStoreList, user));
     }
 
+    @Operation(summary = "매장 영업 시간 수정", description = "사장님이 매장의 영업 시간을 수정하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2011", description = "매장 영업 시간 수정이 완료되었습니다.")
+    })
+    @PatchMapping("/modify/hours")
+    public ApiResponse<StoreDetailFromCafeDto> updateStoreHours(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam String openingTime,
+            @RequestParam String closingTime
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
 
+        Store updatedStore = storeService.updateStoreHours(user.getStore(), openingTime, closingTime);
 
+        return ApiResponse.onSuccess(SuccessCode.STORE_TIME_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
+    }
+
+    @Operation(summary = "마지막 주문 시간 수정", description = "사장님이 매장의 마지막 주문 시간을 수정하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2012", description = "매장 영업 시간 수정이 완료되었습니다.")
+    })
+    @PatchMapping("/modify/lastordertime")
+    public ApiResponse<StoreDetailFromCafeDto> updateLastOrderTime(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam String lastOrderTime
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
+        Store updatedStore = storeService.updateLastOrderTime(user.getStore(), lastOrderTime);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_LAST_ORDER_TIME_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
+    }
+
+    @Operation(summary = "매장 최대 수용 인원 수정", description = "사장님이 매장의 최대 수용 인원을 수정하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2013", description = "매장 최대 수용 인원 수정이 완료되었습니다.")
+    })
+    @PatchMapping("/modify/max-capacity")
+    public ApiResponse<StoreDetailFromCafeDto> updateMaxCapacity(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam Integer maxCapacity
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
+        Store updatedStore = storeService.updateMaxCapacity(user.getStore(), maxCapacity);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_CAPACITY_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
+    }
 }
+

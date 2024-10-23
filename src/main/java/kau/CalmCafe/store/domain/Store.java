@@ -124,5 +124,19 @@ public class Store extends BaseEntity {
             return CongestionLevel.VERY_BUSY;
         }
     }
+    public void updateOpeningTime(LocalTime openingTime) {
+        this.openingTime = openingTime;
+    }
 
+    public void updateClosingTime(LocalTime closingTime) {
+        this.closingTime = closingTime;
+    }
+
+    public void updateLastOrderTime(LocalTime lastOrderTime) {
+        this.lastOrderTime = lastOrderTime;
+    }
+
+    public void updateMaxCustomerCount(Integer maxCustomerCount) {
+        this.maxCustomerCount = maxCustomerCount;
+    }
 }
