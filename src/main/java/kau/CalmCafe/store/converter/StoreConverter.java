@@ -1,11 +1,11 @@
 package kau.CalmCafe.store.converter;
 
+import kau.CalmCafe.promotion.converter.PromotionConverter;
 import kau.CalmCafe.store.domain.Menu;
-import kau.CalmCafe.store.domain.Promotion;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.dto.MenuResponseDto.PointMenuDetailResDto;
 import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
-import kau.CalmCafe.store.dto.PromotionResponseDto.PromotionDetailResDto;
+import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreRankingResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreRankingListResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.RecommendStoreResDto;

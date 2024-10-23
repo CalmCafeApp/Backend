@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class StoreFavoriteConverter {
+
     public static StoreFavorite storeFavorite(User user, Store store) {
         return StoreFavorite.builder()
                 .store(store)
                 .user(user)
                 .build();
     }
+
 }

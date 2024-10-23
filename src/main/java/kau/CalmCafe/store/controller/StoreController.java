@@ -246,5 +246,7 @@ public class StoreController {
 
         return ApiResponse.onSuccess(SuccessCode.STORE_CAPACITY_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
     }
+
+
 }
 

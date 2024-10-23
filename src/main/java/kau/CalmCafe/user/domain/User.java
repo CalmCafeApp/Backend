@@ -3,7 +3,7 @@ package kau.CalmCafe.user.domain;
 import jakarta.persistence.*;
 import kau.CalmCafe.global.entity.BaseEntity;
 import kau.CalmCafe.store.domain.PointCoupon;
-import kau.CalmCafe.store.domain.PromotionUsed;
+import kau.CalmCafe.promotion.domain.PromotionUsed;
 import kau.CalmCafe.store.domain.Store;
 import lombok.*;
 

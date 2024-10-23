@@ -1,7 +1,7 @@
-package kau.CalmCafe.store.converter;
+package kau.CalmCafe.promotion.converter;
 
-import kau.CalmCafe.store.domain.Promotion;
-import kau.CalmCafe.store.dto.PromotionResponseDto.PromotionDetailResDto;
+import kau.CalmCafe.promotion.domain.Promotion;
+import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import kau.CalmCafe.store.dto.PromotionUsedState;
 import kau.CalmCafe.user.domain.User;
 import lombok.RequiredArgsConstructor;

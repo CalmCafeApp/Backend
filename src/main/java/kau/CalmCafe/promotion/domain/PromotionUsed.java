@@ -1,4 +1,4 @@
-package kau.CalmCafe.store.domain;
+package kau.CalmCafe.promotion.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import kau.CalmCafe.global.entity.BaseEntity;
+import kau.CalmCafe.promotion.domain.Promotion;
 import kau.CalmCafe.user.domain.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

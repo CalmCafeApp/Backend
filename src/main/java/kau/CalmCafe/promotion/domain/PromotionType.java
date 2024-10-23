@@ -1,4 +1,4 @@
-package kau.CalmCafe.store.domain;
+package kau.CalmCafe.promotion.domain;
 
 public enum PromotionType {
     TAKE_OUT,

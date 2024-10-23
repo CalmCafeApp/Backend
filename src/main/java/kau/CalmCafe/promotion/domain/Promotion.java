@@ -1,4 +1,4 @@
-package kau.CalmCafe.store.domain;
+package kau.CalmCafe.promotion.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,10 +13,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import kau.CalmCafe.global.entity.BaseEntity;
+import kau.CalmCafe.store.domain.Store;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

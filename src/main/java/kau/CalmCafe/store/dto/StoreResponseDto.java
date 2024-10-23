@@ -2,7 +2,7 @@ package kau.CalmCafe.store.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kau.CalmCafe.Congestion.domain.CongestionLevel;
-import kau.CalmCafe.store.dto.PromotionResponseDto.PromotionDetailResDto;
+import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
