@@ -1,6 +1,7 @@
 package kau.CalmCafe.store.service;
 
 import jakarta.transaction.Transactional;
+import java.util.List;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.store.converter.StoreFavoriteConverter;

@@ -168,4 +168,37 @@ public class StoreResponseDto {
 
     }
 
+    @Schema(description = "FavoriteStoreDetailDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class FavoriteStoreDetailResDto {
+
+        @Schema(description = "매장 id")
+        private Long id;
+
+        @Schema(description = "매장 주소")
+        private String address;
+
+        @Schema(description = "매장 측 혼잡도 등급")
+        private CongestionLevel storeCongestionLevel;
+
+        @Schema(description = "사용자 측 혼잡도 등급")
+        private CongestionLevel userCongestionLevel;
+
+    }
+
+    @Schema(description = "StorePosListDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class FavoriteStoreDetailListResDto {
+
+        @Schema(description = "주변 매장 리스트")
+        private List<FavoriteStoreDetailResDto> favoriteStoreDetailResDtoList;
+
+    }
+
 }

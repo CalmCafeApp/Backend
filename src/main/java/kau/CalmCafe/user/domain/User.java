@@ -5,6 +5,7 @@ import kau.CalmCafe.global.entity.BaseEntity;
 import kau.CalmCafe.store.domain.PointCoupon;
 import kau.CalmCafe.promotion.domain.PromotionUsed;
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.domain.StoreFavorite;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -35,6 +36,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     @Builder.Default
     private List<PromotionUsed> promotionUsedList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    private List<StoreFavorite> storeFavoriteList = new ArrayList<>();
 
     @Column(nullable = false, unique = true)
     private String username;
