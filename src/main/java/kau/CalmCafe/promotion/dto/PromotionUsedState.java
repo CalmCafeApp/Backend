@@ -1,4 +1,4 @@
-package kau.CalmCafe.store.dto;
+package kau.CalmCafe.promotion.dto;
 
 public enum PromotionUsedState {
     USED,

@@ -1,8 +1,8 @@
 package kau.CalmCafe.store.domain;
 
 import jakarta.persistence.*;
-import kau.CalmCafe.Congestion.domain.CongestionInput;
-import kau.CalmCafe.Congestion.domain.CongestionLevel;
+import kau.CalmCafe.congestion.domain.CongestionInput;
+import kau.CalmCafe.congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.entity.BaseEntity;
 import kau.CalmCafe.promotion.domain.Promotion;
 import kau.CalmCafe.user.domain.User;

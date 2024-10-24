@@ -1,4 +1,4 @@
-package kau.CalmCafe.store.repository;
+package kau.CalmCafe.point.repository;
 
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.PointCoupon;

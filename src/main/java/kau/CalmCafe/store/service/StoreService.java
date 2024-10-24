@@ -1,7 +1,7 @@
 package kau.CalmCafe.store.service;
 
 import jakarta.transaction.Transactional;
-import kau.CalmCafe.Congestion.domain.CongestionLevel;
+import kau.CalmCafe.congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.store.domain.Store;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,9 +21,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class StoreService {
-
-    // Pagable 객체 수
-    private static final Integer TOP_COUNT = 100;
 
     private final StoreRepository storeRepository;
 
@@ -90,30 +86,6 @@ public class StoreService {
                     return !(isBusy(storeCongestion) || isBusy(userCongestion));
                 })
                 .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public List<Store> getRankingStoreListByCongestion(String location) {
-
-        Pageable pageable = PageRequest.of(0, TOP_COUNT);
-        return storeRepository.findRankingStoreListByCongestion(location, pageable);
-
-    }
-
-    @Transactional
-    public List<Store> getRankingStoreListByTotalVisit(String location) {
-
-        Pageable pageable = PageRequest.of(0, TOP_COUNT);
-        return storeRepository.findRankingStoreListByTotalVisit(location, pageable);
-
-    }
-
-    @Transactional
-    public List<Store> getRankingStoreListByFavorite(String location) {
-
-        Pageable pageable = PageRequest.of(0, TOP_COUNT);
-        return storeRepository.findRankingStoreListByFavorite(location, pageable);
-
     }
 
     // 혼잡도 상태가 혼잡 또는 매우 혼잡인지 확인

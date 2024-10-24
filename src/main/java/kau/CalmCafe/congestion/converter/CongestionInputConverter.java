@@ -1,6 +1,6 @@
-package kau.CalmCafe.Congestion.converter;
+package kau.CalmCafe.congestion.converter;
 
-import kau.CalmCafe.Congestion.domain.CongestionInput;
+import kau.CalmCafe.congestion.domain.CongestionInput;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.user.domain.User;
 import lombok.RequiredArgsConstructor;

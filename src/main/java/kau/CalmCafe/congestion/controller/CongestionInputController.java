@@ -1,12 +1,12 @@
-package kau.CalmCafe.Congestion.controller;
+package kau.CalmCafe.congestion.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kau.CalmCafe.Congestion.domain.CongestionLevel;
-import kau.CalmCafe.Congestion.service.CongestionInputService;
+import kau.CalmCafe.congestion.domain.CongestionLevel;
+import kau.CalmCafe.congestion.service.CongestionInputService;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.store.domain.Store;

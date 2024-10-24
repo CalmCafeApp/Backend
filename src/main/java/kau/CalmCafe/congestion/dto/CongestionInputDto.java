@@ -1,4 +1,4 @@
-package kau.CalmCafe.Congestion.dto;
+package kau.CalmCafe.congestion.dto;
 
 public class CongestionInputDto {
 }

@@ -1,9 +1,9 @@
-package kau.CalmCafe.Congestion.service;
+package kau.CalmCafe.congestion.service;
 
-import kau.CalmCafe.Congestion.converter.CongestionInputConverter;
-import kau.CalmCafe.Congestion.domain.CongestionInput;
-import kau.CalmCafe.Congestion.domain.CongestionLevel;
-import kau.CalmCafe.Congestion.repository.CongestionInputRepository;
+import kau.CalmCafe.congestion.converter.CongestionInputConverter;
+import kau.CalmCafe.congestion.domain.CongestionInput;
+import kau.CalmCafe.congestion.domain.CongestionLevel;
+import kau.CalmCafe.congestion.repository.CongestionInputRepository;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.repository.StoreRepository;
 import kau.CalmCafe.user.domain.Role;

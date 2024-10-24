@@ -2,7 +2,7 @@ package kau.CalmCafe.promotion.converter;
 
 import kau.CalmCafe.promotion.domain.Promotion;
 import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
-import kau.CalmCafe.store.dto.PromotionUsedState;
+import kau.CalmCafe.promotion.dto.PromotionUsedState;
 import kau.CalmCafe.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
