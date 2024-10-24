@@ -15,7 +15,7 @@ import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailResDto;
 import kau.CalmCafe.store.service.MenuService;
-import kau.CalmCafe.point.service.PointCouponService;
+import kau.CalmCafe.point.service.PointService;
 import kau.CalmCafe.store.service.StoreService;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.jwt.CustomUserDetails;
@@ -37,7 +37,7 @@ public class StoreController {
     private final StoreService storeService;
     private final UserService userService;
     private final MenuService menuService;
-    private final PointCouponService pointCouponService;
+    private final PointService pointService;
 
     @Operation(summary = "유저 측 매장 상세 정보 조회", description = "유저 측 화면에서 매장의 상세 정보를 조회하는 메서드입니다.")
     @ApiResponses(value = {

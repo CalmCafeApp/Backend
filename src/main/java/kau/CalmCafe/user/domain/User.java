@@ -2,7 +2,7 @@ package kau.CalmCafe.user.domain;
 
 import jakarta.persistence.*;
 import kau.CalmCafe.global.entity.BaseEntity;
-import kau.CalmCafe.store.domain.PointCoupon;
+import kau.CalmCafe.point.domain.PointCoupon;
 import kau.CalmCafe.promotion.domain.PromotionUsed;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.domain.StoreFavorite;

@@ -2,9 +2,9 @@ package kau.CalmCafe.store.domain;
 
 import jakarta.persistence.*;
 import kau.CalmCafe.global.entity.BaseEntity;
+import kau.CalmCafe.point.domain.PointCoupon;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

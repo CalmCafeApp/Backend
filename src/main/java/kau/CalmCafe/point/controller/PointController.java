@@ -5,11 +5,14 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
-import kau.CalmCafe.point.service.PointCouponService;
+import kau.CalmCafe.point.converter.PointConverter;
+import kau.CalmCafe.point.dto.PointResponseDto.PointCouponResListDto;
+import kau.CalmCafe.point.service.PointService;
 import kau.CalmCafe.store.domain.Menu;
-import kau.CalmCafe.store.domain.PointCoupon;
+import kau.CalmCafe.point.domain.PointCoupon;
 import kau.CalmCafe.store.service.MenuService;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.jwt.CustomUserDetails;
@@ -31,7 +34,7 @@ public class PointController {
 
     private final UserService userService;
     private final MenuService menuService;
-    private final PointCouponService pointCouponService;
+    private final PointService pointService;
 
     @Operation(summary = "포인트 스토어 내 상품 구매", description = "포인트 스토어 내 상품을 구매합니다.")
     @ApiResponses(value = {
@@ -48,9 +51,24 @@ public class PointController {
         User user = userService.findByUserName(customUserDetails.getUsername());
         Menu menu = menuService.findById(menuId);
 
-        PointCoupon pointCoupon = pointCouponService.createPointCoupon(user, menu);
+        PointCoupon pointCoupon = pointService.createPointCoupon(user, menu);
 
         return ApiResponse.onSuccess(SuccessCode.BUY_POINT_COUPON_SUCCESS, pointCoupon.getId());
+    }
+
+    @Operation(summary = "사용자 보유 포인트 쿠폰 리스트 반환", description = "사용자가 보유한 포인트 쿠폰 리스트를 반환합니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "POINT_2002", description = "사용자가 보유한 포인트 쿠폰 리스트가 완료되었습니다.")
+    })
+    @GetMapping("/list")
+    public ApiResponse<PointCouponResListDto> getMyPointCouponList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
+        List<PointCoupon> pointCouponList = pointService.getMyPointCouponList(user);
+
+        return ApiResponse.onSuccess(SuccessCode.MY_POINT_COUPON_LIST_SUCCESS, PointConverter.pointCouponResListDto(pointCouponList));
     }
 
 }
