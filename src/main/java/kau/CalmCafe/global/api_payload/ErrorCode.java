@@ -43,7 +43,11 @@ public enum ErrorCode implements BaseCode {
     // Cafe
     CAFE_NOT_FOUND(HttpStatus.NOT_FOUND, "CAFE_4041", "존재하지 않는 카페입니다."),
     NO_CAFES_FOUND(HttpStatus.NOT_FOUND, "CAFE_4042", "등록된 카페가 없습니다."),
-    CAFE_ALREADY_EXISTS(HttpStatus.CONFLICT, "CAFE_4043", "이미 존재하는 카페입니다.")
+    CAFE_ALREADY_EXISTS(HttpStatus.CONFLICT, "CAFE_4043", "이미 존재하는 카페입니다."),
+
+    // Promotion
+    PROMOTION_NOT_FOUND(HttpStatus.NOT_FOUND, "PROMOTION_4041", "존재하지 않는 프로모션입니다."),
+    PROMOTION_ALREADY_FAVORITE(HttpStatus.BAD_REQUEST, "PROMOTION_4001", "이미 이용 완료한 프로모션입니다."),
     ;
 
     private final HttpStatus httpStatus;

@@ -1,9 +1,11 @@
 package kau.CalmCafe.store.converter;
 
+import kau.CalmCafe.promotion.converter.PromotionConverter;
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.dto.MenuResponseDto.PointMenuDetailResDto;
 import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
+import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreRankingResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreRankingListResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.RecommendStoreResDto;
@@ -44,6 +46,10 @@ public class StoreConverter {
                 .map(MenuConverter::pointMenuDetailResDto)
                 .toList();
 
+        List<PromotionDetailResDto> promotionResponseDtoList = store.getPromotionList().stream()
+                .map(promotion -> PromotionConverter.promotionDetailResDto(user, promotion))
+                .toList();
+
         return StoreDetailResDto.builder()
                 .id(store.getId())
                 .name(store.getName())
@@ -60,6 +66,7 @@ public class StoreConverter {
                 .menuDetailResDtoList(menuDetailResDtoList)
                 .recommendStoreResDtoList(recommendStoreResDtoList)
                 .pointMenuDetailResDtoList(pointMenuDetailResDtoList)
+                .promotionDetailResDtoList(promotionResponseDtoList)
                 .build();
     }
 

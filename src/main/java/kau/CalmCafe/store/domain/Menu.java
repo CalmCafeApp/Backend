@@ -25,8 +25,7 @@ public class Menu extends BaseEntity {
 
     // 사용자들이 구매한 쿠폰 목록
     @OneToMany(mappedBy = "menu")
-    @Builder.Default
-    private List<PointCoupon> pointCouponList = new ArrayList<>();
+    private List<PointCoupon> pointCouponList;
 
     // 메뉴 이름
     @Column(nullable = false)

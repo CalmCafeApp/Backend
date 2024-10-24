@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import kau.CalmCafe.Congestion.domain.CongestionInput;
 import kau.CalmCafe.Congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.entity.BaseEntity;
+import kau.CalmCafe.promotion.domain.Promotion;
 import kau.CalmCafe.user.domain.User;
 import lombok.*;
 
@@ -45,6 +46,10 @@ public class Store extends BaseEntity {
     @OneToMany(mappedBy = "store")
     @Builder.Default
     private List<CongestionInput> congestionInputList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store")
+    @Builder.Default
+    private List<Promotion> promotionList = new ArrayList<>();
 
     // 위도
     private Double latitude;
