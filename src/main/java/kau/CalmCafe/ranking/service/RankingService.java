@@ -15,33 +15,35 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RankingService {
 
-    // Pagable 객체 수
+    // Pageable 객체 수
     private static final Integer TOP_COUNT = 100;
 
     private final StoreRepository storeRepository;
 
     @Transactional
     public List<Store> getRankingStoreListByCongestion(String location) {
-
-        Pageable pageable = PageRequest.of(0, TOP_COUNT);
-        return storeRepository.findRankingStoreListByCongestion(location, pageable);
-
+        String processedLocation = processLocation(location);
+        return storeRepository.findRankingStoreListByCongestion(processedLocation, createPageable());
     }
 
     @Transactional
     public List<Store> getRankingStoreListByTotalVisit(String location) {
-
-        Pageable pageable = PageRequest.of(0, TOP_COUNT);
-        return storeRepository.findRankingStoreListByTotalVisit(location, pageable);
-
+        String processedLocation = processLocation(location);
+        return storeRepository.findRankingStoreListByTotalVisit(processedLocation, createPageable());
     }
 
     @Transactional
     public List<Store> getRankingStoreListByFavorite(String location) {
+        String processedLocation = processLocation(location);
+        return storeRepository.findRankingStoreListByFavorite(processedLocation, createPageable());
+    }
 
-        Pageable pageable = PageRequest.of(0, TOP_COUNT);
-        return storeRepository.findRankingStoreListByFavorite(location, pageable);
+    private String processLocation(String location) {
+        return location.equals("전국") ? "" : location;
+    }
 
+    private Pageable createPageable() {
+        return PageRequest.of(0, TOP_COUNT);
     }
 
 }
