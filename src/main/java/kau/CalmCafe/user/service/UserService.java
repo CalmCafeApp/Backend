@@ -8,11 +8,14 @@ import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.entity.Uuid;
 import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.user.converter.UserConverter;
+import kau.CalmCafe.user.domain.Marriage;
 import kau.CalmCafe.user.domain.RefreshToken;
 import kau.CalmCafe.user.domain.Role;
+import kau.CalmCafe.user.domain.Sex;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.dto.JwtDto;
 import kau.CalmCafe.user.dto.UserRequestDto.UserReqDto;
+import kau.CalmCafe.user.dto.UserRequestDto.UserSurveyInfo;
 import kau.CalmCafe.user.jwt.JwtTokenUtils;
 import kau.CalmCafe.user.repository.RefreshTokenRepository;
 import kau.CalmCafe.user.repository.UserRepository;
@@ -39,6 +42,24 @@ public class UserService {
                 .orElseThrow(() -> GeneralException.of(ErrorCode.USER_NOT_FOUND));
 
         return user.getRole();
+    }
+
+    @Transactional
+    public Long saveSurveyInfo(User user, UserSurveyInfo userSurveyInfo){
+
+        Integer age = userSurveyInfo.getAge();
+
+        Sex sex = userSurveyInfo.getSex().equals("남") ? Sex.MALE : Sex.FEMALE;
+
+        String job = userSurveyInfo.getJob();
+
+        String residence = userSurveyInfo.getResidence();
+
+        Marriage marriage = userSurveyInfo.getMarriage().equals("미혼") ? Marriage.UNMARRIED : Marriage.MARRIED;
+
+        userRepository.saveSurveyInfo(user.getId(), age, sex, job, residence, marriage);
+
+        return user.getId();
     }
 
     public User findByUserName(String userName){

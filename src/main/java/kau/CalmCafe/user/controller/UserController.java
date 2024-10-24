@@ -9,6 +9,7 @@ import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.user.converter.UserConverter;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.dto.JwtDto;
+import kau.CalmCafe.user.dto.UserRequestDto.UserSurveyInfo;
 import kau.CalmCafe.user.dto.UserResponseDto.UserProfileResDto;
 import kau.CalmCafe.user.jwt.CustomUserDetails;
 import kau.CalmCafe.user.service.UserService;
@@ -17,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -61,4 +64,17 @@ public class UserController {
         return ApiResponse.onSuccess(SuccessCode.USER_PROFILE_GET_SUCCESS, UserConverter.userProfileResDto(user));
     }
 
+    @Operation(summary = "설문 조사를 통한 사용자 정보 저장", description = "설문 조사를 통한 사용자 정보를 저장합니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "USER_2004", description = "설문 조사를 통한 사용자 정보 저장이 완료되었습니다.")
+    })
+    @PatchMapping("/survey")
+    public ApiResponse<Long> saveUserSurveyInfo(
+            @RequestBody UserSurveyInfo userSurveyInfo,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
+        return ApiResponse.onSuccess(SuccessCode.USER_SURVEY_SUCCESS, userService.saveSurveyInfo(user, userSurveyInfo));
+    }
 }

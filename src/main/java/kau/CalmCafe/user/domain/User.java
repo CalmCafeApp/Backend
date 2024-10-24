@@ -10,6 +10,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
 
 @Entity
 @Getter
@@ -58,6 +59,13 @@ public class User extends BaseEntity {
     private String profileImage;
 
     private Integer point;
+
+    // 설문 조사를 통한 정보
+    private Integer age;
+    private Sex sex;
+    private String job;
+    private Marriage marriage;
+    private String residence;
 
     public User(String username, String nickname, String email, String provider, Role role) {
         this.username = username;
