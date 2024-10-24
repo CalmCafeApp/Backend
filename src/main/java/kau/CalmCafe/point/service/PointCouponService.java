@@ -1,12 +1,12 @@
-package kau.CalmCafe.store.service;
+package kau.CalmCafe.point.service;
 
 import jakarta.transaction.Transactional;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
-import kau.CalmCafe.store.converter.PointCouponConverter;
+import kau.CalmCafe.point.converter.PointCouponConverter;
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.PointCoupon;
-import kau.CalmCafe.store.repository.PointCouponRepository;
+import kau.CalmCafe.point.repository.PointCouponRepository;
 import kau.CalmCafe.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

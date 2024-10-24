@@ -1,4 +1,4 @@
-package kau.CalmCafe.Congestion.domain;
+package kau.CalmCafe.congestion.domain;
 
 import jakarta.persistence.*;
 import kau.CalmCafe.global.entity.BaseEntity;

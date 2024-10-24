@@ -1,4 +1,4 @@
-package kau.CalmCafe.store.converter;
+package kau.CalmCafe.point.converter;
 
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.PointCoupon;

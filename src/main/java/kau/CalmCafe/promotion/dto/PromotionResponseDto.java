@@ -3,7 +3,6 @@ package kau.CalmCafe.promotion.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalTime;
 import kau.CalmCafe.promotion.domain.PromotionType;
-import kau.CalmCafe.store.dto.PromotionUsedState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

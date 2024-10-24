@@ -29,13 +29,14 @@ public enum SuccessCode implements BaseCode {
     STORE_UNFAVORITE_SUCCESS(HttpStatus.OK, "STORE_2004", "매장 즐겨찾기 취소가 완료되었습니다."),
     STORE_CONGESTION_GET_SUCCESS(HttpStatus.OK, "STORE_2005", "유저 측 화면에서 매장 혼잡도 조회가 완료되었습니다."),
     STORE_NEAR_LIST_SUCCESS(HttpStatus.OK, "STORE_2006", "주변 매장 좌표 조회가 완료되었습니다."),
-    STORE_BUY_COUPON_POINT_SUCCESS(HttpStatus.OK, "STORE_2007", "포인트 스토어 내 상품 구매가 완료되었습니다."),
-    STORE_RANKING_CONGESTION_SUCCESS(HttpStatus.OK, "STORE_2008", "실시간 방문자 수 TOP 100 매장 리스트 반환이 완료되었습니다."),
-    STORE_RANKING_TOTAL_VISIT_SUCCESS(HttpStatus.OK, "STORE_2009", "누적 방문자 수 TOP 100 매장 리스트 반환이 완료되었습니다."),
-    STORE_RANKING_FAVORITE_SUCCESS(HttpStatus.OK, "STORE_2010", "즐겨찾기 수 TOP 100 매장 리스트 반환이 완료되었습니다."),
     STORE_TIME_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2011", "매장 이용 시간 수정이 완료되었습니다."),
     STORE_LAST_ORDER_TIME_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2012","마지막 주문 시간 수정이 완료되었습니다."),
     STORE_CAPACITY_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2013","매장의 최대 수용 인원 수정이 완료되었습니다."),
+
+    // Ranking
+    RANKING_CONGESTION_SUCCESS(HttpStatus.OK, "RANKING_2001", "실시간 방문자 수 TOP 100 매장 리스트 반환이 완료되었습니다."),
+    RANKING_TOTAL_VISIT_SUCCESS(HttpStatus.OK, "RANKING_2002", "누적 방문자 수 TOP 100 매장 리스트 반환이 완료되었습니다."),
+    RANKING_FAVORITE_SUCCESS(HttpStatus.OK, "RANKING_2003", "즐겨찾기 수 TOP 100 매장 리스트 반환이 완료되었습니다."),
 
     // Promotion
     PROMOTION_USE_SUCCESS(HttpStatus.OK, "PROMOTION_2001", "사용자의 특정 매장의 프로모션 이용이 완료되었습니다."),
@@ -43,6 +44,8 @@ public enum SuccessCode implements BaseCode {
     // Congestion
     CONGESTION_INPUT_SUCCESS(HttpStatus.OK, "CONGESTION_2011", "혼잡도 입력이 완료되었습니다."),
 
+    // Point
+    BUY_POINT_COUPON_SUCCESS(HttpStatus.OK, "POINT_2001", "포인트 스토어 내 상품 구매가 완료되었습니다."),
 
     ;
     private final HttpStatus httpStatus;

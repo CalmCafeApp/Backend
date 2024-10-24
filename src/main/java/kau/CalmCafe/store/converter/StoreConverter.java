@@ -6,8 +6,6 @@ import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.dto.MenuResponseDto.PointMenuDetailResDto;
 import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
 import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
-import kau.CalmCafe.store.dto.StoreResponseDto.StoreRankingResDto;
-import kau.CalmCafe.store.dto.StoreResponseDto.StoreRankingListResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.RecommendStoreResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosDto;
@@ -121,34 +119,8 @@ public class StoreConverter {
 
     }
 
-    public static StoreRankingResDto storeRankingResDto(Store store, User user) {
-
-        return StoreRankingResDto.builder()
-                .id(store.getId())
-                .name(store.getName())
-                .storeCongestionLevel(store.getStoreCongestionLevel())
-                .userCongestionLevel(store.getUserCongestionLevel())
-                .isFavorite(isFavorite(store, user))
-                .image(store.getImage())
-                .address(store.getAddress())
-                .build();
-
-    }
-
-    public static StoreRankingListResDto storeRankingListResDto(List<Store> storeList, User user) {
-
-        List<StoreRankingResDto> storeRankingResDtoList = storeList.stream()
-                .map(store -> storeRankingResDto(store, user))
-                .toList();
-
-        return StoreRankingListResDto.builder()
-                .StoreRankingResDtoList(storeRankingResDtoList)
-                .build();
-
-    }
-
     // 즐겨찾기 여부
-    private static Boolean isFavorite(Store store, User user) {
+    public static Boolean isFavorite(Store store, User user) {
         return store.getStoreFavoriteList().stream()
                 .anyMatch(storeFavorite -> storeFavorite.getUser().equals(user));
     }
