@@ -1,13 +1,29 @@
 package kau.CalmCafe.user.repository;
 
+import jakarta.transaction.Transactional;
+import kau.CalmCafe.user.domain.Marriage;
+import kau.CalmCafe.user.domain.Sex;
 import kau.CalmCafe.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    @Modifying(clearAutomatically = true) // 객체 영속성 유지
+    @Transactional
+    @Query("UPDATE User u "
+            + "SET u.age = :age, u.sex = :sex, u.job = :job, u.residence = :residence, u.marriage = :marriage "
+            + "WHERE u.id = :id")
+    void saveSurveyInfo(@Param("id") Long id, @Param("age") Integer age, @Param("sex") Sex sex, @Param("job") String job,
+                        @Param("residence") String residence, @Param("marriage") Marriage marriage);
+
     // 사용자 계정 이름으로 사용자 정보 탐색
     Optional<User> findByUsername(String username);
 
@@ -20,6 +36,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // 사용자 이메일을 가진 사용자 정보가 존재하는지 여부 탐색
     boolean existsByEmail(String email);
 
+
     // 닉네임이 사용중인지 여부 탐색
     boolean existsByNickname(String nickname);
+
 }

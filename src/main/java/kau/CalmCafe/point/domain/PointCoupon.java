@@ -1,7 +1,8 @@
-package kau.CalmCafe.store.domain;
+package kau.CalmCafe.point.domain;
 
 import jakarta.persistence.*;
 import kau.CalmCafe.global.entity.BaseEntity;
+import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.user.domain.User;
 import lombok.*;
 
