@@ -60,7 +60,7 @@ public class StoreFavoriteController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "FAVORITE_2003", description = "사용자가 즐겨찾기한 매장 리스트 반환이 완료되었습니다.")
     })
-    @DeleteMapping("/list")
+    @GetMapping("/list")
     public ApiResponse<FavoriteStoreDetailListResDto> getFavoriteStoreList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
