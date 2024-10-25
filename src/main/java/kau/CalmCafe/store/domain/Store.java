@@ -114,14 +114,12 @@ public class Store extends BaseEntity {
     }
 
     private CongestionLevel calculateCongestionLevel(Integer congestionValue) {
-        if (congestionValue <= 25) {
+        if (congestionValue <= 33) {
             return CongestionLevel.CALM;
-        } else if (congestionValue <= 50) {
+        } else if (congestionValue <= 66) {
             return CongestionLevel.NORMAL;
-        } else if (congestionValue <= 75) {
+        } else{
             return CongestionLevel.BUSY;
-        } else {
-            return CongestionLevel.VERY_BUSY;
         }
     }
     public void updateOpeningTime(LocalTime openingTime) {
