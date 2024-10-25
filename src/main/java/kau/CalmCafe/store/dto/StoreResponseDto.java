@@ -1,7 +1,8 @@
 package kau.CalmCafe.store.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kau.CalmCafe.Congestion.domain.CongestionLevel;
+import kau.CalmCafe.congestion.domain.CongestionLevel;
+import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -65,6 +66,9 @@ public class StoreResponseDto {
 
         @Schema(description = "포인트 상점 판매 메뉴 리스트")
         private List<PointMenuDetailResDto> pointMenuDetailResDtoList;
+
+        @Schema(description = "진행 중인 프로모션 리스트")
+        private List<PromotionDetailResDto> promotionDetailResDtoList;
 
     }
 
@@ -164,45 +168,36 @@ public class StoreResponseDto {
 
     }
 
-    @Schema(description = "StoreRankingResDto")
+    @Schema(description = "FavoriteStoreDetailDto")
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class StoreRankingResDto {
+    public static class FavoriteStoreDetailResDto {
 
         @Schema(description = "매장 id")
         private Long id;
 
-        @Schema(description = "매장 이름")
-        private String name;
-
-        @Schema(description = "매장 측 혼잡도")
-        private CongestionLevel storeCongestionLevel;
-
-        @Schema(description = "사용자 측 혼잡도")
-        private CongestionLevel userCongestionLevel;
-
-        @Schema(description = "즐겨찾기 여부")
-        private Boolean isFavorite;
-
-        @Schema(description = "매장 이미지")
-        private String image;
-
         @Schema(description = "매장 주소")
         private String address;
 
+        @Schema(description = "매장 측 혼잡도 등급")
+        private CongestionLevel storeCongestionLevel;
+
+        @Schema(description = "사용자 측 혼잡도 등급")
+        private CongestionLevel userCongestionLevel;
+
     }
 
-    @Schema(description = "StoreRankingListResDto")
+    @Schema(description = "StorePosListDto")
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class StoreRankingListResDto {
+    public static class FavoriteStoreDetailListResDto {
 
         @Schema(description = "주변 매장 리스트")
-        private List<StoreRankingResDto> StoreRankingResDtoList;
+        private List<FavoriteStoreDetailResDto> favoriteStoreDetailResDtoList;
 
     }
 

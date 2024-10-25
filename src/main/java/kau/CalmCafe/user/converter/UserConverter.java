@@ -4,6 +4,7 @@ import kau.CalmCafe.user.domain.Role;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.dto.JwtDto;
 import kau.CalmCafe.user.dto.UserRequestDto.UserReqDto;
+import kau.CalmCafe.user.dto.UserResponseDto.UserProfileResDto;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -28,4 +29,13 @@ public class UserConverter {
                 .role(role)
                 .build();
     }
+
+    public static UserProfileResDto userProfileResDto(User user) {
+        return UserProfileResDto.builder()
+                .nickname(user.getNickname())
+                .point(user.getPoint())
+                .profileImage(user.getProfileImage())
+                .build();
+    }
+
 }
