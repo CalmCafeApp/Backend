@@ -90,7 +90,7 @@ public class StoreService {
 
     // 혼잡도 상태가 혼잡 또는 매우 혼잡인지 확인
     private boolean isBusy(CongestionLevel level) {
-        return level == CongestionLevel.VERY_BUSY || level == CongestionLevel.BUSY;
+        return level == CongestionLevel.BUSY;
     }
 
     public Store updateStoreHours(Store store, String openingTimeStr, String closingTimeStr) {
