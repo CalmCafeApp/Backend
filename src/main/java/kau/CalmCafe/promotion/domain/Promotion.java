@@ -54,5 +54,4 @@ public class Promotion extends BaseEntity {
     // 프로모션 종류 (IN_STORE, TAKE_OUT)
     @Column(nullable = false)
     private PromotionType promotionType;
-
 }
