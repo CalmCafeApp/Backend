@@ -34,6 +34,9 @@ public class StoreResponseDto {
         @Schema(description = "사용자-매장 거리 (m)")
         private Integer distance;
 
+        @Schema(description = "사용자 보유 포인트")
+        private Integer point;
+
         @Schema(description = "즐겨찾기 수")
         private Integer favoriteCount;
 
