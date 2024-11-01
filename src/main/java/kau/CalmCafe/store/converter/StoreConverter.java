@@ -55,6 +55,7 @@ public class StoreConverter {
                 .distance(distance)
                 .favoriteCount(store.getFavoriteCount())
                 .isFavorite(isFavorite(store, user))
+                .point(user.getPoint())
                 .openingTime(store.getOpeningTime())
                 .closingTime(store.getClosingTime())
                 .lastOrderTime(store.getLastOrderTime())
