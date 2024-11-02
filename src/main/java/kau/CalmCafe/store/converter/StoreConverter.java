@@ -105,6 +105,7 @@ public class StoreConverter {
                 .latitude(store.getLatitude())
                 .longitude((store.getLongitude()))
                 .address(store.getAddress())
+                .name(store.getName())
                 .build();
     }
 

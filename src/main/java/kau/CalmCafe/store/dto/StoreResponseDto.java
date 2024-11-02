@@ -157,6 +157,9 @@ public class StoreResponseDto {
         @Schema(description = "매장 주소")
         private String address;
 
+        @Schema(description = "매장 이름")
+        private String name;
+
     }
 
     @Schema(description = "StorePosListDto")
