@@ -55,6 +55,7 @@ public class StoreConverter {
                 .distance(distance)
                 .favoriteCount(store.getFavoriteCount())
                 .isFavorite(isFavorite(store, user))
+                .point(user.getPoint())
                 .openingTime(store.getOpeningTime())
                 .closingTime(store.getClosingTime())
                 .lastOrderTime(store.getLastOrderTime())
@@ -104,6 +105,7 @@ public class StoreConverter {
                 .latitude(store.getLatitude())
                 .longitude((store.getLongitude()))
                 .address(store.getAddress())
+                .name(store.getName())
                 .build();
     }
 
