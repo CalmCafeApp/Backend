@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
+import kau.CalmCafe.promotion.dto.PromotionResponseDto;
 import kau.CalmCafe.promotion.service.PromotionService;
 import kau.CalmCafe.promotion.service.PromotionUsedService;
 import kau.CalmCafe.promotion.domain.Promotion;
@@ -15,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalTime;
+
 
 @Tag(name = "프로모션", description = "프로모션 관련 api입니다.")
 @Slf4j
@@ -43,5 +47,30 @@ public class PromotionController {
         return ApiResponse.onSuccess(SuccessCode.PROMOTION_USE_SUCCESS, promotionUsedService.createPromotionUsed(user, promotion));
     }
 
+    @Operation(summary = "프로모션 할인율 수정", description = "특정 프로모션의 할인율을 수정하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "PROMOTION_2002", description = "프로모션 할인율 수정이 완료되었습니다.")
+    })
+    @PatchMapping("/modify/discount")
+    public ApiResponse<PromotionResponseDto.PromotionDetailResDto> updatePromotionDiscount(
+            @RequestParam Long promotionId,
+            @RequestParam Integer discount
+    ) {
+        PromotionResponseDto.PromotionDetailResDto updatedPromotion = promotionService.updatePromotionDiscount(promotionId, discount);
+        return ApiResponse.onSuccess(SuccessCode.PROMOTION_UPDATE_SUCCESS, updatedPromotion);
+    }
 
+    @Operation(summary = "프로모션 사용기간 수정", description = "특정 프로모션의 사용기간을 수정하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "PROMOTION_2003", description = "프로모션 사용기간 수정이 완료되었습니다.")
+    })
+    @PatchMapping("/modify/period")
+    public ApiResponse<PromotionResponseDto.PromotionDetailResDto> updatePromotionPeriod(
+            @RequestParam Long promotionId,
+            @RequestParam String startTime,
+            @RequestParam String endTime
+    ) {
+        PromotionResponseDto.PromotionDetailResDto updatedPromotion = promotionService.updatePromotionPeriod(promotionId, startTime, endTime);
+        return ApiResponse.onSuccess(SuccessCode.PROMOTION_PERIOD_UPDATE_SUCCESS, updatedPromotion);
+    }
 }
