@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
 
+import static kau.CalmCafe.promotion.converter.PromotionConverter.convertToDetailResDto;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -46,13 +48,4 @@ public class PromotionService {
         return convertToDetailResDto(updatedPromotion);
     }
 
-    private PromotionResponseDto.PromotionDetailResDto convertToDetailResDto(Promotion promotion) {
-        return PromotionResponseDto.PromotionDetailResDto.builder()
-                .id(promotion.getId())
-                .startTime(promotion.getStartTime())
-                .endTime(promotion.getEndTime())
-                .discount(promotion.getDiscount())
-                .promotionType(promotion.getPromotionType())
-                .build();
-    }
 }

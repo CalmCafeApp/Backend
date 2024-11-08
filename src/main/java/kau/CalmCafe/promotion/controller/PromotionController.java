@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.promotion.dto.PromotionResponseDto;
+import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import kau.CalmCafe.promotion.service.PromotionService;
 import kau.CalmCafe.promotion.service.PromotionUsedService;
 import kau.CalmCafe.promotion.domain.Promotion;
@@ -16,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalTime;
 
 
 @Tag(name = "프로모션", description = "프로모션 관련 api입니다.")
@@ -56,7 +55,7 @@ public class PromotionController {
             @RequestParam Long promotionId,
             @RequestParam Integer discount
     ) {
-        PromotionResponseDto.PromotionDetailResDto updatedPromotion = promotionService.updatePromotionDiscount(promotionId, discount);
+        PromotionDetailResDto updatedPromotion = promotionService.updatePromotionDiscount(promotionId, discount);
         return ApiResponse.onSuccess(SuccessCode.PROMOTION_UPDATE_SUCCESS, updatedPromotion);
     }
 
@@ -70,7 +69,7 @@ public class PromotionController {
             @RequestParam String startTime,
             @RequestParam String endTime
     ) {
-        PromotionResponseDto.PromotionDetailResDto updatedPromotion = promotionService.updatePromotionPeriod(promotionId, startTime, endTime);
+        PromotionDetailResDto updatedPromotion = promotionService.updatePromotionPeriod(promotionId, startTime, endTime);
         return ApiResponse.onSuccess(SuccessCode.PROMOTION_PERIOD_UPDATE_SUCCESS, updatedPromotion);
     }
 }

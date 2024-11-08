@@ -1,6 +1,7 @@
 package kau.CalmCafe.promotion.converter;
 
 import kau.CalmCafe.promotion.domain.Promotion;
+import kau.CalmCafe.promotion.dto.PromotionResponseDto;
 import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import kau.CalmCafe.promotion.dto.PromotionUsedState;
 import kau.CalmCafe.user.domain.User;
@@ -25,6 +26,16 @@ public class PromotionConverter {
                 .endTime(promotion.getEndTime())
                 .discount(promotion.getDiscount())
                 .promotionUsedState(promotionUsedState)
+                .build();
+    }
+
+    public static PromotionResponseDto.PromotionDetailResDto convertToDetailResDto(Promotion promotion) {
+        return PromotionResponseDto.PromotionDetailResDto.builder()
+                .id(promotion.getId())
+                .startTime(promotion.getStartTime())
+                .endTime(promotion.getEndTime())
+                .discount(promotion.getDiscount())
+                .promotionType(promotion.getPromotionType())
                 .build();
     }
 
