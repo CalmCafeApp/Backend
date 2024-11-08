@@ -49,6 +49,9 @@ public enum SuccessCode implements BaseCode {
     BUY_POINT_COUPON_SUCCESS(HttpStatus.OK, "POINT_2001", "포인트 스토어 내 상품 구매가 완료되었습니다."),
     MY_POINT_COUPON_LIST_SUCCESS(HttpStatus.OK, "POINT_2002", "사용자가 보유한 포인트 쿠폰 리스트가 완료되었습니다."),
 
+    // Search
+    SEARCH_HOME_SUCCESS(HttpStatus.OK, "SEARCH_2001", "홈 화면 검색 결과 반환이 완료되었습니다."),
+
     ;
     private final HttpStatus httpStatus;
     private final String code;

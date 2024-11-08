@@ -48,6 +48,9 @@ public enum ErrorCode implements BaseCode {
     // Promotion
     PROMOTION_NOT_FOUND(HttpStatus.NOT_FOUND, "PROMOTION_4041", "존재하지 않는 프로모션입니다."),
     PROMOTION_ALREADY_FAVORITE(HttpStatus.BAD_REQUEST, "PROMOTION_4001", "이미 이용 완료한 프로모션입니다."),
+
+    // Research
+    HOME_RESEARCH_NOT_FOUND(HttpStatus.NOT_FOUND, "RESEARCH_404", "검색 키워드에 해당하는 매장이 존재하지 않습니다."),
     ;
 
     private final HttpStatus httpStatus;
