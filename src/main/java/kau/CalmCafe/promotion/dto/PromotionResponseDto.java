@@ -37,5 +37,4 @@ public class PromotionResponseDto {
         private PromotionUsedState promotionUsedState;
 
     }
-
 }

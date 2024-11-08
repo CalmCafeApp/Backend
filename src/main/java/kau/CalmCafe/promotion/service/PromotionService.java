@@ -3,11 +3,16 @@ package kau.CalmCafe.promotion.service;
 import jakarta.transaction.Transactional;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
+import kau.CalmCafe.promotion.dto.PromotionResponseDto;
 import kau.CalmCafe.promotion.repository.PromotionRepository;
 import kau.CalmCafe.promotion.domain.Promotion;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalTime;
+
+import static kau.CalmCafe.promotion.converter.PromotionConverter.convertToDetailResDto;
 
 @Service
 @RequiredArgsConstructor
@@ -21,4 +26,26 @@ public class PromotionService {
         return promotionRepository.findById(id)
                 .orElseThrow(() -> GeneralException.of(ErrorCode.PROMOTION_NOT_FOUND));
     }
+
+    @Transactional
+    public PromotionResponseDto.PromotionDetailResDto updatePromotionDiscount(Long promotionId, Integer discount) {
+        Promotion promotion = findById(promotionId);
+        promotion.updateDiscount(discount);
+        Promotion updatedPromotion = promotionRepository.save(promotion);
+
+        return convertToDetailResDto(updatedPromotion);
+    }
+
+    @Transactional
+    public PromotionResponseDto.PromotionDetailResDto updatePromotionPeriod(Long promotionId, String startTimeStr, String endTimeStr) {
+        LocalTime startTime = LocalTime.parse(startTimeStr);
+        LocalTime endTime = LocalTime.parse(endTimeStr);
+
+        Promotion promotion = findById(promotionId);
+        promotion.updatePeriod(startTime, endTime);
+        Promotion updatedPromotion = promotionRepository.save(promotion);
+
+        return convertToDetailResDto(updatedPromotion);
+    }
+
 }

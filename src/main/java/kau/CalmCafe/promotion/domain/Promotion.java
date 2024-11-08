@@ -55,4 +55,12 @@ public class Promotion extends BaseEntity {
     @Column(nullable = false)
     private PromotionType promotionType;
 
+    public void updateDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
+    public void updatePeriod(LocalTime startTime, LocalTime endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }
