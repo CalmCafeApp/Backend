@@ -184,8 +184,8 @@ public class StoreResponseDto {
         @Schema(description = "매장 id")
         private Long id;
 
-        @Schema(description = "매장 주소")
-        private String address;
+        @Schema(description = "매장 이름")
+        private String name;
 
         @Schema(description = "매장 측 혼잡도 등급")
         private CongestionLevel storeCongestionLevel;

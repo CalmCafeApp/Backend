@@ -23,7 +23,7 @@ public class StoreFavoriteConverter {
     public static FavoriteStoreDetailResDto favoriteStoreDetailResDto(Store store) {
         return FavoriteStoreDetailResDto.builder()
                 .id(store.getId())
-                .address(store.getAddress())
+                .name(store.getName())
                 .storeCongestionLevel(store.getStoreCongestionLevel())
                 .userCongestionLevel(store.getUserCongestionLevel())
                 .build();
