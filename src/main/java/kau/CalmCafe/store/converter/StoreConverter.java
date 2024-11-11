@@ -7,6 +7,7 @@ import kau.CalmCafe.store.dto.MenuResponseDto.PointMenuDetailResDto;
 import kau.CalmCafe.store.dto.MenuResponseDto.MenuDetailResDto;
 import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.RecommendStoreResDto;
+import kau.CalmCafe.store.dto.StoreResponseDto.SearchStoreResDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
@@ -119,6 +120,15 @@ public class StoreConverter {
                 .storePosDtoList(storePosDtoList)
                 .build();
 
+    }
+
+    public static SearchStoreResDto searchStoreResDto(Store store) {
+        return SearchStoreResDto.builder()
+                .id(store.getId())
+                .name(store.getName())
+                .image(store.getImage())
+                .address(store.getAddress())
+                .build();
     }
 
     // 즐겨찾기 여부

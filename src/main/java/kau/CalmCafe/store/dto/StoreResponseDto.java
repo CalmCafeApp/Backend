@@ -207,4 +207,23 @@ public class StoreResponseDto {
 
     }
 
+    @Schema(description = "SearchStoreResDto")
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class SearchStoreResDto {
+
+        @Schema(description = "매장 이름")
+        private String name;
+
+        @Schema(description = "매장 id")
+        private Long id;
+
+        @Schema(description = "매장 이미지")
+        private String image;
+
+        @Schema(description = "매장 주소")
+        private String address;
+    }
 }

@@ -30,4 +30,14 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
             "s.favoriteCount DESC ")
     List<Store> findRankingStoreListByFavorite(@Param("location")String location, Pageable pageable);
 
+    /*@Query("SELECT s FROM Store s WHERE s.address LIKE %:query% OR s.name LIKE %:query%")
+    List<Store> findHomeSearchStoreListByQuery(@Param("query")String query);*/
+
+    @Query("SELECT s FROM Store s WHERE s.name LIKE %:query% OR s.address LIKE %:query% " +
+            "ORDER BY (6371 * acos(cos(radians(:userLatitude)) * cos(radians(s.latitude)) * " +
+            "cos(radians(s.longitude) - radians(:userLongitude)) + sin(radians(:userLatitude)) * sin(radians(s.latitude)))) ASC")
+    List<Store> findHomeSearchStoreListByQueryOrderByDistance(@Param("query") String query,
+                                                              @Param("userLatitude") Double userLatitude,
+                                                              @Param("userLongitude") Double userLongitude,
+                                                              Pageable pageable);
 }
