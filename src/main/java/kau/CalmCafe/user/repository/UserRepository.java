@@ -15,15 +15,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
-    @Modifying(clearAutomatically = true) // 객체 영속성 유지
-    @Transactional
-    @Query("UPDATE User u "
-            + "SET u.age = :age, u.sex = :sex, u.job = :job, u.residence = :residence, u.marriage = :marriage "
-            + "WHERE u.id = :id")
-    void saveSurveyInfo(@Param("id") Long id, @Param("age") Integer age, @Param("sex") Sex sex, @Param("job") String job,
-                        @Param("residence") String residence, @Param("marriage") Marriage marriage);
-
     // 사용자 계정 이름으로 사용자 정보 탐색
     Optional<User> findByUsername(String username);
 

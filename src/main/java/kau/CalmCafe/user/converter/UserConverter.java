@@ -1,9 +1,11 @@
 package kau.CalmCafe.user.converter;
 
 import kau.CalmCafe.user.domain.Role;
+import kau.CalmCafe.user.domain.Survey;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.dto.JwtDto;
 import kau.CalmCafe.user.dto.UserRequestDto.UserReqDto;
+import kau.CalmCafe.user.dto.UserRequestDto.UserSurveyInfo;
 import kau.CalmCafe.user.dto.UserResponseDto.UserProfileResDto;
 import lombok.NoArgsConstructor;
 
@@ -35,6 +37,24 @@ public class UserConverter {
                 .nickname(user.getNickname())
                 .point(user.getPoint())
                 .profileImage(user.getProfileImage())
+                .build();
+    }
+
+    public static Survey saveSurvey(User user, UserSurveyInfo userSurveyInfo) {
+        return Survey.builder()
+                .user(user)
+                .gender(userSurveyInfo.getGender())
+                .age(userSurveyInfo.getAge())
+                .job(userSurveyInfo.getJob())
+                .location(userSurveyInfo.getLocation())
+                .marriage(userSurveyInfo.getMarriage())
+                .hobby(userSurveyInfo.getHobby())
+                .favoriteMenu(userSurveyInfo.getFavoriteMenu())
+                .cafeUsingPurpose(userSurveyInfo.getCafeUsingPurpose())
+                .cafeChooseCause(userSurveyInfo.getCafeChooseCause())
+                .cafeVisitedFrequency(userSurveyInfo.getCafeVisitedFrequency())
+                .isUsingSNS(userSurveyInfo.getIsUsingSNS())
+                .convenienceFacilityPrefer(userSurveyInfo.getConvenienceFacilityPrefer())
                 .build();
     }
 
