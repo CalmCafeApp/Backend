@@ -28,6 +28,10 @@ public class User extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "survey_id")
+    private Survey survey;
+
     // 보유 포인트 쿠폰 목록
     @OneToMany(mappedBy = "user")
     @Builder.Default
@@ -59,13 +63,6 @@ public class User extends BaseEntity {
     private String profileImage;
 
     private Integer point;
-
-    // 설문 조사를 통한 정보
-    private Integer age;
-    private Sex sex;
-    private String job;
-    private Marriage marriage;
-    private String residence;
 
     public User(String username, String nickname, String email, String provider, Role role) {
         this.username = username;

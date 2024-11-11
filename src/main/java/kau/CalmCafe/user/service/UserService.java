@@ -12,12 +12,14 @@ import kau.CalmCafe.user.domain.Marriage;
 import kau.CalmCafe.user.domain.RefreshToken;
 import kau.CalmCafe.user.domain.Role;
 import kau.CalmCafe.user.domain.Sex;
+import kau.CalmCafe.user.domain.Survey;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.dto.JwtDto;
 import kau.CalmCafe.user.dto.UserRequestDto.UserReqDto;
 import kau.CalmCafe.user.dto.UserRequestDto.UserSurveyInfo;
 import kau.CalmCafe.user.jwt.JwtTokenUtils;
 import kau.CalmCafe.user.repository.RefreshTokenRepository;
+import kau.CalmCafe.user.repository.SurveyRepository;
 import kau.CalmCafe.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final SurveyRepository surveyRepository;
     private final JpaUserDetailsManager manager;
     private final JwtTokenUtils jwtTokenUtils;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -46,20 +49,10 @@ public class UserService {
 
     @Transactional
     public Long saveSurveyInfo(User user, UserSurveyInfo userSurveyInfo){
+        Survey survey = UserConverter.saveSurvey(user, userSurveyInfo);
+        surveyRepository.save(survey);
 
-        Integer age = userSurveyInfo.getAge();
-
-        Sex sex = userSurveyInfo.getSex().equals("남") ? Sex.MALE : Sex.FEMALE;
-
-        String job = userSurveyInfo.getJob();
-
-        String residence = userSurveyInfo.getResidence();
-
-        Marriage marriage = userSurveyInfo.getMarriage().equals("미혼") ? Marriage.UNMARRIED : Marriage.MARRIED;
-
-        userRepository.saveSurveyInfo(user.getId(), age, sex, job, residence, marriage);
-
-        return user.getId();
+        return survey.getId();
     }
 
     public User findByUserName(String userName){
