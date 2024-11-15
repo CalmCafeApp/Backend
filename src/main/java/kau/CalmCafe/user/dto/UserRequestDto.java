@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import kau.CalmCafe.user.domain.Role;
 import kau.CalmCafe.user.domain.User;
 import lombok.AllArgsConstructor;
@@ -54,11 +56,14 @@ public class UserRequestDto {
     @NoArgsConstructor
     public static class UserSurveyInfo {
         @Schema(description = "성별")
+        @NotBlank(message = "성별은 필수 입력값입니다.")
         private String gender;
 
+        @NotBlank(message = "나이은 필수 입력값입니다.")
         @Schema(description = "나이")
         private String age;
 
+        @NotBlank(message = "나이은 필수 입력값입니다.")
         @Schema(description = "직업")
         private String job;
 

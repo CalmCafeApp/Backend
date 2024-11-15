@@ -1,6 +1,7 @@
 package kau.CalmCafe.user.domain;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,10 +31,13 @@ public class Survey extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false)
     private String gender;
 
+    @Column(nullable = false)
     private String age;
 
+    @Column(nullable = false)
     private String job;
 
     private String location;
