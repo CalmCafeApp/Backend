@@ -27,7 +27,7 @@ public enum SuccessCode implements BaseCode {
     STORE_LAST_ORDER_TIME_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2006","마지막 주문 시간 수정이 완료되었습니다."),
     STORE_CAPACITY_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2007","매장의 최대 수용 인원 수정이 완료되었습니다."),
 
-    // Strore Favorite
+    // Store Favorite
     STORE_FAVORITE_SUCCESS(HttpStatus.OK, "FAVORITE_2001", "매장 즐겨찾기가 완료되었습니다."),
     STORE_UNFAVORITE_SUCCESS(HttpStatus.OK, "FAVORITE_2002", "매장 즐겨찾기 취소가 완료되었습니다."),
     STORE_FAVORITE_LIST_SUCCESS(HttpStatus.OK, "FAVORITE_2003", "사용자가 즐겨찾기한 매장 리스트 반환이 완료되었습니다."),
@@ -52,6 +52,8 @@ public enum SuccessCode implements BaseCode {
     // Search
     SEARCH_HOME_SUCCESS(HttpStatus.OK, "SEARCH_2001", "홈 화면 검색 결과 반환이 완료되었습니다."),
 
+    // Menu
+    MENU_DELETE_SUCCESS(HttpStatus.OK,"MENU_2001","메뉴 삭제가 완료되었습니다."),
     ;
     private final HttpStatus httpStatus;
     private final String code;
