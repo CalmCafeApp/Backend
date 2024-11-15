@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.user.converter.UserConverter;
 import kau.CalmCafe.user.domain.User;
@@ -68,9 +69,9 @@ public class UserController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "USER_2004", description = "설문 조사를 통한 사용자 정보 저장이 완료되었습니다.")
     })
-    @PatchMapping("/survey")
+    @PostMapping("/survey")
     public ApiResponse<Long> saveUserSurveyInfo(
-            @RequestBody UserSurveyInfo userSurveyInfo,
+            @Valid @RequestBody UserSurveyInfo userSurveyInfo,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
         User user = userService.findByUserName(customUserDetails.getUsername());
