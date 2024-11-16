@@ -3,6 +3,8 @@ package kau.CalmCafe.user.service;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import java.util.Objects;
+import java.util.stream.Stream;
 import kau.CalmCafe.global.UuidRepository;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.entity.Uuid;
@@ -32,6 +34,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private static final int SURVEY_INFO_ADDITIONAL_ENTRY_COUNT = 9;
+    private static final int SURVEY_INFO_ADDITIONAL_POINT = 300;
+    private static final int SURVEY_INFO_ESSENTIAL_POINT = 2000;
+
     private final UserRepository userRepository;
     private final SurveyRepository surveyRepository;
     private final JpaUserDetailsManager manager;
@@ -49,8 +55,31 @@ public class UserService {
 
     @Transactional
     public Long saveSurveyInfo(User user, UserSurveyInfo userSurveyInfo){
+        boolean hasCompletedSurvey = surveyRepository.existsByUserId(user.getId());
+        if (hasCompletedSurvey) {
+            throw new GeneralException(ErrorCode.ALREADY_SURVEY);
+        }
+
         Survey survey = UserConverter.saveSurvey(user, userSurveyInfo);
         surveyRepository.save(survey);
+
+        // 추가 필드 입력 여부 체크
+        long surveyInfoBlankCount = Stream.of(
+                userSurveyInfo.getLocation(),
+                userSurveyInfo.getMarriage(),
+                userSurveyInfo.getHobby(),
+                userSurveyInfo.getFavoriteMenu(),
+                userSurveyInfo.getCafeUsingPurpose(),
+                userSurveyInfo.getCafeChooseCause(),
+                userSurveyInfo.getCafeVisitedFrequency(),
+                userSurveyInfo.getIsUsingSNS(),
+                userSurveyInfo.getConvenienceFacilityPrefer()
+        ).filter(String::isBlank).count();
+
+
+        int surveyInfoEntryCount = SURVEY_INFO_ADDITIONAL_ENTRY_COUNT - (int) surveyInfoBlankCount;
+
+        user.addPoint(SURVEY_INFO_ESSENTIAL_POINT + SURVEY_INFO_ADDITIONAL_POINT * surveyInfoEntryCount);
 
         return survey.getId();
     }

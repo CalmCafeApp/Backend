@@ -131,6 +131,9 @@ public class StoreController {
 
         Store updatedStore = storeService.updateStoreHours(user.getStore(), openingTime, closingTime);
 
+        // 영업 수정에 따른 스케쥴러 조정
+        storeService.updateStoreSchedule(updatedStore);
+
         return ApiResponse.onSuccess(SuccessCode.STORE_TIME_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
     }
 

@@ -1,6 +1,12 @@
 package kau.CalmCafe.store.service;
 
 import jakarta.transaction.Transactional;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledFuture;
 import kau.CalmCafe.congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
@@ -8,8 +14,7 @@ import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -22,7 +27,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class StoreService {
 
+    private final ThreadPoolTaskScheduler taskScheduler;
     private final StoreRepository storeRepository;
+    private final Map<Long, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
 
     @Transactional
     public Store findByAddress(String address) {
@@ -116,5 +123,68 @@ public class StoreService {
     public Store updateMaxCapacity(Store store, Integer maxCapacity) {
         store.updateMaxCustomerCount(maxCapacity);
         return storeRepository.save(store);
+    }
+
+    public void scheduleStoreTasks() {
+        List<Store> storeList = storeRepository.findAll();
+
+        storeList.forEach(store -> {
+            validateClosingTime(store);
+            LocalDateTime closingTime = LocalDateTime.of(LocalDateTime.now().toLocalDate(), store.getClosingTime());
+            Duration delay = Duration.between(LocalDateTime.now(), closingTime);
+
+            // 현재 시간 이후로 스케줄링되지 않은 경우 다음날로 설정
+            if (delay.isNegative() || delay.isZero()) {
+                closingTime = closingTime.plusDays(1);
+            }
+
+            taskScheduler.schedule(() -> updateUserCongestionInputTime(store),
+                    closingTime.atZone(java.time.ZoneId.systemDefault()).toInstant());
+        });
+    }
+
+    public void updateStoreSchedule(Store store) {
+        // 기존 작업이 있다면 취소
+        ScheduledFuture<?> existingTask = scheduledTasks.get(store.getId());
+        if (existingTask != null && !existingTask.isCancelled()) {
+            existingTask.cancel(false); // 취소
+        }
+
+        // 새로운 Closing Time에 작업 등록
+        LocalDateTime closingTime = LocalDateTime.of(LocalDateTime.now().toLocalDate(), store.getClosingTime());
+        if (Duration.between(LocalDateTime.now(), closingTime).isNegative()) {
+            closingTime = closingTime.plusDays(1); // Closing Time이 지났다면 다음날로 이동
+        }
+
+        ScheduledFuture<?> newTask = taskScheduler.schedule(() -> updateUserCongestionInputTime(store),
+                closingTime.atZone(ZoneId.systemDefault()).toInstant());
+
+        // 새 작업을 저장
+        scheduledTasks.put(store.getId(), newTask);
+    }
+
+    private void updateUserCongestionInputTime(Store store) {
+        store.updateUserCongestionInputTime(
+                getClosestOpeningTime(store.getOpeningTime()));
+        storeRepository.save(store);
+    }
+
+    private void validateClosingTime(Store store) {
+        if (store.getClosingTime() == null) {
+            throw new IllegalArgumentException("Store closing time must not be null: " + store.getId());
+        }
+    }
+
+    private LocalDateTime getClosestOpeningTime(LocalTime openingTime) {
+        LocalDateTime todayOpening = LocalDateTime.of(LocalDateTime.now().toLocalDate(), openingTime);
+
+        // 현재 시간이 오늘의 OpeningTime 이전이면 오늘을 반환
+        if (LocalDateTime.now().isBefore(todayOpening)) {
+            return todayOpening;
+        }
+        // 현재 시간이 오늘의 OpeningTime 이후면 내일의 OpeningTime 반환
+        else {
+            return todayOpening.plusDays(1);
+        }
     }
 }

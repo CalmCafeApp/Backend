@@ -71,4 +71,8 @@ public class User extends BaseEntity {
         this.provider = provider;
         this.role = role;
     }
+
+    public void addPoint(int point) {
+        this.point += point;
+    }
 }
