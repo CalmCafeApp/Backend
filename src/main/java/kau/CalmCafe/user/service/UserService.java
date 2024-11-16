@@ -55,6 +55,11 @@ public class UserService {
 
     @Transactional
     public Long saveSurveyInfo(User user, UserSurveyInfo userSurveyInfo){
+        boolean hasCompletedSurvey = surveyRepository.existsByUserId(user.getId());
+        if (hasCompletedSurvey) {
+            throw new GeneralException(ErrorCode.ALREADY_SURVEY);
+        }
+
         Survey survey = UserConverter.saveSurvey(user, userSurveyInfo);
         surveyRepository.save(survey);
 
