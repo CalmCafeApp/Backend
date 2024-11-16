@@ -142,4 +142,8 @@ public class Store extends BaseEntity {
     public void updateMaxCustomerCount(Integer maxCustomerCount) {
         this.maxCustomerCount = maxCustomerCount;
     }
+
+    public void updateUserCongestionInputTime(LocalDateTime updateTime) {
+        this.userCongestionInputTime = updateTime;
+    }
 }
