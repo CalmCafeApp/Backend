@@ -13,4 +13,23 @@ public class MenuModifyConverter {
                 .name(menu.getName())
                 .build();
     }
+
+    public MenuModifyResponseDto toUpdateResponseDto(Menu menu) {
+        return MenuModifyResponseDto.builder()
+                .id(menu.getId())
+                .name(menu.getName())
+                .image(menu.getImage())
+                .price(menu.getPrice())
+                .build();
+    }
+
+    public MenuModifyResponseDto toResponseDto(Menu menu) {
+        return MenuModifyResponseDto.builder()
+                .id(menu.getId())
+                .name(menu.getName())
+                .image(menu.getImage())
+                .price(menu.getPrice())
+                .pointPrice(menu.getPointPrice())
+                .build();
+    }
 }

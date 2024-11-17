@@ -44,4 +44,12 @@ public class Menu extends BaseEntity {
     // 현재 메뉴 포인트 스토어 판매 가격
     private Integer pointPrice;
 
+
+    public void setImage(String image) {
+        this.image = image != null ? image : this.image;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price != null ? price : this.price;
+    }
 }
