@@ -37,6 +37,7 @@ public enum ErrorCode implements BaseCode {
 
     // Menu
     MENU_NOT_FOUND(HttpStatus.NOT_FOUND, "MENU_4041", "존재하지 않는 메뉴입니다."),
+    MENU_IMAGE_UPLOAD_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "MENU_5001", "메뉴 이미지 업로드에 실패하였습니다."),
 
     // Point
     POINT_BUY_FAILED(HttpStatus.BAD_REQUEST, "POINT_4001", "포인트가 부족합니다."),

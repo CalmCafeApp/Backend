@@ -54,6 +54,8 @@ public enum SuccessCode implements BaseCode {
 
     // Menu
     MENU_DELETE_SUCCESS(HttpStatus.OK,"MENU_2001","메뉴 삭제가 완료되었습니다."),
+    MENU_UPDATE_SUCCESS(HttpStatus.OK,"MENU_2002", "메뉴 수정이 완료되었습니다."),
+    MENU_REGISTER_SUCCESS(HttpStatus.OK,"MENU_2003","메뉴 등록이 완료되었습니다."),
     ;
     private final HttpStatus httpStatus;
     private final String code;
