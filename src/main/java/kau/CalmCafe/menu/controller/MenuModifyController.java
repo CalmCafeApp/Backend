@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.io.IOException;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.menu.dto.MenuModifyResponseDto;
@@ -11,6 +12,7 @@ import kau.CalmCafe.menu.service.MenuModifyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "메뉴", description = "메뉴 관련 api입니다.")
 @Slf4j
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/menu")
 public class MenuModifyController {
-
     private final MenuModifyService menuModifyService;
 
     @Operation(summary = "메뉴 삭제", description = "특정 메뉴를 삭제하는 메서드입니다.")
@@ -37,13 +38,13 @@ public class MenuModifyController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MENU_2002", description = "메뉴 수정이 완료되었습니다.")
     })
-    @PatchMapping("/{menu-id}/update")
+    @PatchMapping(value = "/{menu-id}/menu-image/update", consumes = {"multipart/form-data"})
     public ApiResponse<MenuModifyResponseDto> updateMenu(
             @PathVariable(name = "menu-id") Long menuId,
-            @RequestParam(required = false) String image,
+            @RequestPart(value = "menuImage", required = false) MultipartFile menuImage,
             @RequestParam(required = false) Integer price
-    ) {
-        MenuModifyResponseDto updatedMenu = menuModifyService.updateMenu(menuId, image, price);
+    ) throws IOException {
+        MenuModifyResponseDto updatedMenu = menuModifyService.updateMenu(menuId, menuImage, price);
         return ApiResponse.onSuccess(SuccessCode.MENU_UPDATE_SUCCESS, updatedMenu);
     }
 
@@ -51,14 +52,14 @@ public class MenuModifyController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MENU_2003", description = "메뉴 등록이 완료되었습니다.")
     })
-    @PostMapping("/register")
+    @PostMapping(value = "/menu-image/register/", consumes = {"multipart/form-data"})
     public ApiResponse<MenuModifyResponseDto> registerMenu(
-            @Parameter(description = "매장 ID", required = true) @RequestParam Long storeId,
-            @Parameter(description = "메뉴 이름", required = true) @RequestParam String name,
-            @Parameter(description = "메뉴 가격", required = true) @RequestParam Integer price,
-            @Parameter(description = "메뉴 이미지 URL") @RequestParam(required = false) String image
-    ) {
-        MenuModifyResponseDto registeredMenu = menuModifyService.registerMenu(storeId, name, price, image);
+            @RequestParam Long storeId,
+            @RequestParam String name,
+            @RequestParam Integer price,
+            @RequestPart(value = "menuImage") MultipartFile menuImage
+    ) throws IOException {
+        MenuModifyResponseDto registeredMenu = menuModifyService.registerMenu(storeId, name, price, menuImage);
         return ApiResponse.onSuccess(SuccessCode.MENU_REGISTER_SUCCESS, registeredMenu);
     }
 }
