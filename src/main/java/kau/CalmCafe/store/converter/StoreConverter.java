@@ -88,6 +88,12 @@ public class StoreConverter {
                 .storeName(store.getName())
                 .storeCongestionLevel(store.getStoreCongestionLevel())
                 .userCongestionLevel(store.getUserCongestionLevel())
+                .address(store.getAddress())
+                .image(store.getImage())
+                .openingTime(store.getOpeningTime())
+                .closingTime(store.getClosingTime())
+                .maxCustomerCount(store.getMaxCustomerCount())
+                .lastOrderTime(store.getLastOrderTime())
                 .build();
     }
 

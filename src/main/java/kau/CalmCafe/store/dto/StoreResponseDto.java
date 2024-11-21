@@ -112,14 +112,32 @@ public class StoreResponseDto {
         @Schema(description = "매장 id")
         private Long storeId;
 
-        @Schema(description = "매장 이름")
+        @Schema(description = "매장 아름")
         private String storeName;
 
         @Schema(description = "매장 측 혼잡도")
         private CongestionLevel storeCongestionLevel;
 
-        @Schema(description = "사용자 측 혼잡도")
+        @Schema(description = "유저 측 혼잡도")
         private CongestionLevel userCongestionLevel;
+
+        @Schema(description = "매장 주소")
+        private String address;
+
+        @Schema(description = "매장 이미지")
+        private String image;
+
+        @Schema(description = "매장 개장 시간")
+        private LocalTime openingTime;
+
+        @Schema(description = "매장 폐장 시간")
+        private LocalTime closingTime;
+
+        @Schema(description = "매장 최대 수용 인원")
+        private Integer maxCustomerCount;
+
+        @Schema(description = "매장 마지막 주문 시간")
+        private LocalTime lastOrderTime;
 
     }
 
