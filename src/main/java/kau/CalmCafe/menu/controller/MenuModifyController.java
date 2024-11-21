@@ -2,11 +2,16 @@ package kau.CalmCafe.menu.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
+import java.util.List;
+
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
+import kau.CalmCafe.menu.dto.DiscountedMenuDto;
 import kau.CalmCafe.menu.dto.MenuModifyResponseDto;
 import kau.CalmCafe.menu.service.MenuModifyService;
 import lombok.RequiredArgsConstructor;
@@ -61,5 +66,18 @@ public class MenuModifyController {
     ) throws IOException {
         MenuModifyResponseDto registeredMenu = menuModifyService.registerMenu(storeId, name, price, menuImage);
         return ApiResponse.onSuccess(SuccessCode.MENU_REGISTER_SUCCESS, registeredMenu);
+    }
+
+    @Operation(summary = "포인트 메뉴 조회", description = "매장의 포인트 메뉴를 조회합니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MENU_2004", description = "매장의 포인트 메뉴 조회가 완료되었습니다.")
+    })
+    @GetMapping("/discounted/{storeId}")
+    public ApiResponse<List<DiscountedMenuDto>> getDiscountedMenus(
+            @Parameter(description = "조회할 매장의 ID", required = true)
+            @PathVariable Long storeId
+    ) {
+        List<DiscountedMenuDto> discountedMenus = menuModifyService.getDiscountedMenus(storeId);
+        return ApiResponse.onSuccess(SuccessCode.POINT_MENU_INQUIRY_SUCCESS, discountedMenus);
     }
 }

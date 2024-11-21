@@ -18,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Tag(name = "프로모션", description = "프로모션 관련 api입니다.")
 @Slf4j
@@ -71,5 +73,17 @@ public class PromotionController {
     ) {
         PromotionDetailResDto updatedPromotion = promotionService.updatePromotionPeriod(promotionId, startTime, endTime);
         return ApiResponse.onSuccess(SuccessCode.PROMOTION_PERIOD_UPDATE_SUCCESS, updatedPromotion);
+    }
+
+    @Operation(summary = "매장의 프로모션 조회", description = "매장의 프로모션을 조회하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "PROMOTION_2004", description = "매장의 프로모션 조회가 완료되었습니다.")
+    })
+    @GetMapping("/store/{store-id}")
+    public ApiResponse<List<PromotionResponseDto.PromotionDetailResDto>> getStorePromotions(
+            @PathVariable(name = "store-id") Long storeId
+    ) {
+        List<PromotionDetailResDto> promotions = promotionService.getPromotionsByStoreId(storeId);
+        return ApiResponse.onSuccess(SuccessCode.PROMOTION_RETRIEVE_SUCCESS, promotions);
     }
 }

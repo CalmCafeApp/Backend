@@ -3,11 +3,13 @@ package kau.CalmCafe.menu.service;
 import static org.apache.logging.log4j.util.Strings.isEmpty;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.global.s3.AmazonS3Manager;
 import kau.CalmCafe.menu.converter.MenuModifyConverter;
+import kau.CalmCafe.menu.dto.DiscountedMenuDto;
 import kau.CalmCafe.menu.dto.MenuModifyResponseDto;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.repository.MenuRepository;
@@ -101,5 +103,11 @@ public class MenuModifyService {
 
         Menu savedMenu = menuRepository.save(newMenu);
         return menuModifyConverter.toResponseDto(savedMenu);
+    }
+
+    @Transactional(readOnly = true)
+    public List<DiscountedMenuDto> getDiscountedMenus(Long storeId) {
+        List<Menu> discountedMenus = menuRepository.findDiscountedMenusByStoreId(storeId);
+        return menuModifyConverter.toDiscountedMenuDtoList(discountedMenus);
     }
 }

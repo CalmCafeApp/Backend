@@ -10,7 +10,9 @@ import java.util.concurrent.ScheduledFuture;
 import kau.CalmCafe.congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
+import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.StoreResponseDto;
 import kau.CalmCafe.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -186,5 +188,29 @@ public class StoreService {
         else {
             return todayOpening.plusDays(1);
         }
+    }
+
+    @Transactional
+    public StoreResponseDto.StoreMenuResponseDto getStoreMenus(Long storeId) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new GeneralException(ErrorCode.STORE_NOT_FOUND));
+
+        List<StoreResponseDto.StoreMenuResponseDto.MenuInfo> menuInfos = store.getMenuList().stream()
+                .map(this::convertToMenuInfo)
+                .collect(Collectors.toList());
+
+        return StoreResponseDto.StoreMenuResponseDto.builder()
+                .storeId(store.getId())
+                .menus(menuInfos)
+                .build();
+    }
+
+    private StoreResponseDto.StoreMenuResponseDto.MenuInfo convertToMenuInfo(Menu menu) {
+        return StoreResponseDto.StoreMenuResponseDto.MenuInfo.builder()
+                .id(menu.getId())
+                .name(menu.getName())
+                .price(menu.getPrice())
+                .image(menu.getImage())
+                .build();
     }
 }
