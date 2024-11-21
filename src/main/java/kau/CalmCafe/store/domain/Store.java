@@ -1,6 +1,8 @@
 package kau.CalmCafe.store.domain;
 
 import jakarta.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 import kau.CalmCafe.congestion.domain.CongestionInput;
 import kau.CalmCafe.congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.entity.BaseEntity;
@@ -20,6 +22,8 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "store")
 public class Store extends BaseEntity {
+    private static final int PERCENT_HUNDRED = 100;
+    private static final String MAX_CUSTOMER_ERROR_MESSAGE = "Max customer count must be set.";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -111,13 +115,6 @@ public class Store extends BaseEntity {
         return this.userCongestionLevel;
     }
 
-    public CongestionLevel updateStoreCongestion(Integer congestionValue) {
-        this.storeCongestionValue = congestionValue;
-        this.storeCongestionLevel = calculateCongestionLevel(congestionValue);
-
-        return this.storeCongestionLevel;
-    }
-
     private CongestionLevel calculateCongestionLevel(Integer congestionValue) {
         if (congestionValue <= 33) {
             return CongestionLevel.CALM;
@@ -145,5 +142,16 @@ public class Store extends BaseEntity {
 
     public void updateUserCongestionInputTime(LocalDateTime updateTime) {
         this.userCongestionInputTime = updateTime;
+    }
+
+    public void updatePredictedCongestion(Integer predictedPeople) {
+        if (this.maxCustomerCount == null || this.maxCustomerCount == 0) {
+            throw new IllegalStateException(MAX_CUSTOMER_ERROR_MESSAGE);
+        }
+        this.storeCongestionValue = Math.min(
+                (int) ((predictedPeople / (double) this.maxCustomerCount) * PERCENT_HUNDRED),
+                PERCENT_HUNDRED
+        );
+        this.storeCongestionLevel = calculateCongestionLevel(this.storeCongestionValue);
     }
 }
