@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import kau.CalmCafe.global.entity.BaseEntity;
 import kau.CalmCafe.point.domain.PointCoupon;
 import kau.CalmCafe.promotion.domain.PromotionUsed;
+import kau.CalmCafe.search.domain.SearchLog;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.domain.StoreFavorite;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
 
 @Entity
 @Getter
@@ -44,6 +44,10 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     @Builder.Default
+    private List<SearchLog> searchLogList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
     private List<StoreFavorite> storeFavoriteList = new ArrayList<>();
 
     @Column(nullable = false, unique = true)
@@ -74,5 +78,9 @@ public class User extends BaseEntity {
 
     public void addPoint(int point) {
         this.point += point;
+    }
+
+    public void minusPoint(int point) {
+        this.point -= point;
     }
 }
