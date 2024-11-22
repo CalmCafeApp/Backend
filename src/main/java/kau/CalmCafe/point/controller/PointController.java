@@ -36,7 +36,7 @@ public class PointController {
     private final MenuService menuService;
     private final PointService pointService;
 
-    @Operation(summary = "포인트 스토어 내 상품 구매", description = "포인트 스토어 내 상품을 구매합니다.")
+    @Operation(summary = "포인트 스토어 내 상품 구매", description = "포인트 스토어 내 상품을 구매합니다. (잔여 포인트 반환)")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "POINT_2001", description = "포인트 스토어 내 상품 구매가 완료되었습니다.")
     })
@@ -44,16 +44,16 @@ public class PointController {
             @Parameter(name = "menuId", description = "메뉴 id")
     })
     @GetMapping("/buy")
-    public ApiResponse<Long> buyCPointCoupon(
+    public ApiResponse<Integer> buyCPointCoupon(
             @RequestParam(name = "menuId") Long menuId,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
         User user = userService.findByUserName(customUserDetails.getUsername());
         Menu menu = menuService.findById(menuId);
 
-        PointCoupon pointCoupon = pointService.createPointCoupon(user, menu);
+        pointService.createPointCoupon(user, menu);
 
-        return ApiResponse.onSuccess(SuccessCode.BUY_POINT_COUPON_SUCCESS, pointCoupon.getId());
+        return ApiResponse.onSuccess(SuccessCode.BUY_POINT_COUPON_SUCCESS, user.getPoint());
     }
 
     @Operation(summary = "사용자 보유 포인트 쿠폰 리스트 반환", description = "사용자가 보유한 포인트 쿠폰 리스트를 반환합니다.")
