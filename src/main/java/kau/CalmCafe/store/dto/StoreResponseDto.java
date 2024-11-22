@@ -244,4 +244,34 @@ public class StoreResponseDto {
         @Schema(description = "매장 주소")
         private String address;
     }
+
+    @Schema(description = "StoreMenuResponseDto")
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    public static class StoreMenuResponseDto {
+
+        @Schema(description = "매장 ID")
+        private Long storeId;
+
+        @Schema(description = "매장 메뉴 목록")
+        private List<MenuInfo> menus;
+
+        @Getter
+        @AllArgsConstructor
+        @Builder
+        public static class MenuInfo {
+            @Schema(description = "메뉴 ID")
+            private Long id;
+
+            @Schema(description = "메뉴 이름")
+            private String name;
+
+            @Schema(description = "메뉴 가격")
+            private Integer price;
+
+            @Schema(description = "메뉴 이미지 URL")
+            private String image;
+        }
+    }
 }

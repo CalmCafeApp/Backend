@@ -3,14 +3,19 @@ package kau.CalmCafe.promotion.service;
 import jakarta.transaction.Transactional;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
+import kau.CalmCafe.promotion.converter.PromotionConverter;
 import kau.CalmCafe.promotion.dto.PromotionResponseDto;
 import kau.CalmCafe.promotion.repository.PromotionRepository;
 import kau.CalmCafe.promotion.domain.Promotion;
+import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static kau.CalmCafe.promotion.converter.PromotionConverter.convertToDetailResDto;
 
@@ -20,6 +25,7 @@ import static kau.CalmCafe.promotion.converter.PromotionConverter.convertToDetai
 public class PromotionService {
 
     private final PromotionRepository promotionRepository;
+    private final StoreRepository storeRepository;
 
     @Transactional
     public Promotion findById(Long id) {
@@ -48,4 +54,13 @@ public class PromotionService {
         return convertToDetailResDto(updatedPromotion);
     }
 
+    @Transactional
+    public List<PromotionResponseDto.PromotionDetailResDto> getPromotionsByStoreId(Long storeId) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new GeneralException(ErrorCode.STORE_NOT_FOUND));
+
+        return store.getPromotionList().stream()
+                .map(PromotionConverter::convertToDetailResDto)
+                .collect(Collectors.toList());
+    }
 }

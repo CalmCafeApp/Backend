@@ -10,6 +10,7 @@ import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.store.converter.StoreConverter;
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.StoreResponseDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreDetailFromCafeDto;
@@ -169,6 +170,19 @@ public class StoreController {
         return ApiResponse.onSuccess(SuccessCode.STORE_CAPACITY_UPDATE_SUCCESS, StoreConverter.storeDetailFromCafeDto(updatedStore));
     }
 
-
+    @Operation(summary = "매장 메뉴 조회", description = "특정 매장의 모든 메뉴 정보를 조회하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2008", description = "매장 메뉴 조회가 완료되었습니다.")
+    })
+    @Parameters({
+            @Parameter(name = "storeId", description = "매장 ID", required = true)
+    })
+    @GetMapping("/{storeId}/menus")
+    public ApiResponse<StoreResponseDto.StoreMenuResponseDto> getStoreMenus(
+            @PathVariable Long storeId
+    ) {
+        StoreResponseDto.StoreMenuResponseDto responseDto = storeService.getStoreMenus(storeId);
+        return ApiResponse.onSuccess(SuccessCode.STORE_MENU_GET_SUCCESS, responseDto);
+    }
 }
 

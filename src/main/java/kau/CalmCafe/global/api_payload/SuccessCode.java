@@ -26,6 +26,7 @@ public enum SuccessCode implements BaseCode {
     STORE_TIME_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2005", "매장 이용 시간 수정이 완료되었습니다."),
     STORE_LAST_ORDER_TIME_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2006","마지막 주문 시간 수정이 완료되었습니다."),
     STORE_CAPACITY_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2007","매장의 최대 수용 인원 수정이 완료되었습니다."),
+    STORE_MENU_GET_SUCCESS(HttpStatus.OK,"STORE_2008","매장 메뉴 조회가 완료되었습니다."),
 
     // Store Favorite
     STORE_FAVORITE_SUCCESS(HttpStatus.OK, "FAVORITE_2001", "매장 즐겨찾기가 완료되었습니다."),
@@ -41,6 +42,7 @@ public enum SuccessCode implements BaseCode {
     PROMOTION_USE_SUCCESS(HttpStatus.OK, "PROMOTION_2001", "사용자의 특정 매장의 프로모션 이용이 완료되었습니다."),
     PROMOTION_UPDATE_SUCCESS(HttpStatus.OK, "PROMOTION_2002","프로모션 할인율 수정이 완료되었습니다."),
     PROMOTION_PERIOD_UPDATE_SUCCESS(HttpStatus.OK, "PROMOTION_2003", "프로모션 사용 기간 수정이 완료되었습니다."),
+    PROMOTION_RETRIEVE_SUCCESS(HttpStatus.OK,"PROMOTION_2004", "매장의 프로모션 조회가 완료되었습니다."),
 
     // Congestion
     CONGESTION_INPUT_SUCCESS(HttpStatus.OK, "CONGESTION_2011", "혼잡도 입력이 완료되었습니다."),
@@ -56,6 +58,7 @@ public enum SuccessCode implements BaseCode {
     MENU_DELETE_SUCCESS(HttpStatus.OK,"MENU_2001","메뉴 삭제가 완료되었습니다."),
     MENU_UPDATE_SUCCESS(HttpStatus.OK,"MENU_2002", "메뉴 수정이 완료되었습니다."),
     MENU_REGISTER_SUCCESS(HttpStatus.OK,"MENU_2003","메뉴 등록이 완료되었습니다."),
+    POINT_MENU_INQUIRY_SUCCESS(HttpStatus.OK,"MENU_2004","포인트 메뉴 조회가 완료되었습니다."),
     ;
     private final HttpStatus httpStatus;
     private final String code;
