@@ -25,7 +25,7 @@ public class CongestionPredictService {
     private final CsvParser csvParser;
     private final StoreRepository storeRepository;
 
-    @Scheduled(fixedRate = 600000) // 1분마다 실행
+    @Scheduled(fixedRate = 600000) // 10분마다 실행
     @Transactional
     public void updateCongestionPredictions() {
         System.out.println("스케줄 실행!!");

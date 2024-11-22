@@ -8,9 +8,7 @@
     import kau.CalmCafe.congestion.repository.CongestionInputRepository;
     import kau.CalmCafe.store.domain.Store;
     import kau.CalmCafe.store.repository.StoreRepository;
-    import kau.CalmCafe.user.domain.Role;
     import kau.CalmCafe.user.domain.User;
-    import kau.CalmCafe.user.repository.UserRepository;
     import lombok.RequiredArgsConstructor;
     import lombok.extern.slf4j.Slf4j;
     import org.springframework.stereotype.Service;
