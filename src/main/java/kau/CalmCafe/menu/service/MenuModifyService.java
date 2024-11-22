@@ -1,5 +1,6 @@
 package kau.CalmCafe.menu.service;
 
+import static kau.CalmCafe.menu.converter.MenuModifyConverter.*;
 import static org.apache.logging.log4j.util.Strings.isEmpty;
 
 import java.io.IOException;
@@ -8,14 +9,12 @@ import java.util.Objects;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.global.s3.AmazonS3Manager;
-import kau.CalmCafe.menu.converter.MenuModifyConverter;
 import kau.CalmCafe.menu.dto.DiscountedMenuDto;
 import kau.CalmCafe.menu.dto.MenuModifyResponseDto;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.repository.MenuRepository;
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.repository.StoreRepository;
-import kau.CalmCafe.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class MenuModifyService {
     private final AmazonS3Manager amazonS3Manager;
     private final MenuRepository menuRepository;
-    private final MenuModifyConverter menuModifyConverter;
     private final StoreRepository storeRepository;
 
     @Transactional
@@ -36,7 +34,7 @@ public class MenuModifyService {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> GeneralException.of(ErrorCode.MENU_NOT_FOUND));
         menuRepository.delete(menu);
-        return menuModifyConverter.toDeleteResponseDto(menu);
+        return toDeleteResponseDto(menu);
     }
 
     @Transactional
@@ -49,7 +47,7 @@ public class MenuModifyService {
         menu.setPrice(price);
 
         menuRepository.save(menu);
-        return menuModifyConverter.toUpdateResponseDto(menu);
+        return toUpdateResponseDto(menu);
     }
 
     @Transactional
@@ -102,12 +100,12 @@ public class MenuModifyService {
         updateMenuImage(menuImage, newMenu);
 
         Menu savedMenu = menuRepository.save(newMenu);
-        return menuModifyConverter.toResponseDto(savedMenu);
+        return toResponseDto(savedMenu);
     }
 
     @Transactional(readOnly = true)
     public List<DiscountedMenuDto> getDiscountedMenus(Long storeId) {
         List<Menu> discountedMenus = menuRepository.findDiscountedMenusByStoreId(storeId);
-        return menuModifyConverter.toDiscountedMenuDtoList(discountedMenus);
+        return toDiscountedMenuDtoList(discountedMenus);
     }
 }

@@ -11,14 +11,14 @@ import java.util.stream.Collectors;
 @Component
 public class MenuModifyConverter {
 
-    public MenuModifyResponseDto toDeleteResponseDto(Menu menu) {
+    public static MenuModifyResponseDto toDeleteResponseDto(Menu menu) {
         return MenuModifyResponseDto.builder()
                 .id(menu.getId())
                 .name(menu.getName())
                 .build();
     }
 
-    public MenuModifyResponseDto toUpdateResponseDto(Menu menu) {
+    public static MenuModifyResponseDto toUpdateResponseDto(Menu menu) {
         return MenuModifyResponseDto.builder()
                 .id(menu.getId())
                 .name(menu.getName())
@@ -27,7 +27,7 @@ public class MenuModifyConverter {
                 .build();
     }
 
-    public MenuModifyResponseDto toResponseDto(Menu menu) {
+    public static MenuModifyResponseDto toResponseDto(Menu menu) {
         return MenuModifyResponseDto.builder()
                 .id(menu.getId())
                 .name(menu.getName())
@@ -37,7 +37,7 @@ public class MenuModifyConverter {
                 .build();
     }
 
-    public List<DiscountedMenuDto> toDiscountedMenuDtoList(List<Menu> menus) {
+    public static List<DiscountedMenuDto> toDiscountedMenuDtoList(List<Menu> menus) {
         return menus.stream()
                 .map(menu -> DiscountedMenuDto.builder()
                         .name(menu.getName())
