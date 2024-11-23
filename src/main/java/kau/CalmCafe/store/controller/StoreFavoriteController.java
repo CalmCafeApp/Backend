@@ -66,7 +66,7 @@ public class StoreFavoriteController {
     ) {
         User user = userService.findByUserName(customUserDetails.getUsername());
 
-        return ApiResponse.onSuccess(SuccessCode.STORE_FAVORITE_LIST_SUCCESS, StoreFavoriteConverter.favoriteStoreDetailListResDto(user.getStoreFavoriteList()));
+        return ApiResponse.onSuccess(SuccessCode.STORE_FAVORITE_LIST_SUCCESS, StoreFavoriteConverter.favoriteStoreDetailListResDto(user.getStoreFavoriteList(), user));
     }
 
 }

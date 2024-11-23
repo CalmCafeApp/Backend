@@ -208,6 +208,12 @@ public class StoreResponseDto {
         @Schema(description = "매장 이름")
         private String name;
 
+        @Schema(description = "사용자 즐겨찾기 여부")
+        private Boolean isFavorite;
+
+        @Schema(description = "매장 이미지")
+        private String image;
+
         @Schema(description = "매장 측 혼잡도 등급")
         private CongestionLevel storeCongestionLevel;
 

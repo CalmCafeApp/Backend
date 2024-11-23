@@ -20,18 +20,23 @@ public class StoreFavoriteConverter {
                 .build();
     }
 
-    public static FavoriteStoreDetailResDto favoriteStoreDetailResDto(Store store) {
+    public static FavoriteStoreDetailResDto favoriteStoreDetailResDto(Store store, User user) {
+        Boolean isFavorite = user.getStoreFavoriteList().stream()
+                .anyMatch(storeFavorite -> storeFavorite.getUser() == user);
+
         return FavoriteStoreDetailResDto.builder()
                 .id(store.getId())
                 .name(store.getName())
+                .image(store.getImage())
+                .isFavorite(isFavorite)
                 .storeCongestionLevel(store.getStoreCongestionLevel())
                 .userCongestionLevel(store.getUserCongestionLevel())
                 .build();
     }
 
-    public static FavoriteStoreDetailListResDto favoriteStoreDetailListResDto (List<StoreFavorite> storeFavoriteList) {
+    public static FavoriteStoreDetailListResDto favoriteStoreDetailListResDto (List<StoreFavorite> storeFavoriteList, User user) {
         List<FavoriteStoreDetailResDto> favoriteStoreDetailResDtoList = storeFavoriteList.stream()
-                .map(storeFavorite -> favoriteStoreDetailResDto(storeFavorite.getStore()))
+                .map(storeFavorite -> favoriteStoreDetailResDto(storeFavorite.getStore(), user))
                 .toList();
 
         return FavoriteStoreDetailListResDto.builder()
