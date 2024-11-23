@@ -61,6 +61,9 @@ public class StoreResponseDto {
         @Schema(description = "사용자 측 혼잡도")
         private CongestionLevel userCongestionLevel;
 
+        @Schema(description = "혼잡도 큰 차이 여부")
+        private Boolean isCongestionMismatch;
+
         @Schema(description = "메뉴 상세 리스트")
         private List<MenuDetailResDto> menuDetailResDtoList;
 

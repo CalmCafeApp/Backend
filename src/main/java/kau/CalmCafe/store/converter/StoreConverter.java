@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StoreConverter {
 
-    public static StoreDetailResDto storeDetailResDto(Store store, Integer distance, List<Menu> menuList, List<Store> recommendStoreList, List<Menu> pointMenuList, User user) {
+    public static StoreDetailResDto storeDetailResDto(Store store, Integer distance, List<Menu> menuList, List<Store> recommendStoreList, List<Menu> pointMenuList, User user, Boolean isCongestionMisMatch) {
 
         // 현재 시간
         LocalTime now = LocalTime.now();
@@ -63,6 +63,7 @@ public class StoreConverter {
                 .storeState(storeState)
                 .storeCongestionLevel(store.getStoreCongestionLevel())
                 .userCongestionLevel(store.getUserCongestionLevel())
+                .isCongestionMismatch(isCongestionMisMatch)
                 .menuDetailResDtoList(menuDetailResDtoList)
                 .recommendStoreResDtoList(recommendStoreResDtoList)
                 .pointMenuDetailResDtoList(pointMenuDetailResDtoList)
