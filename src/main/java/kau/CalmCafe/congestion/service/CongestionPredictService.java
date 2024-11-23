@@ -28,7 +28,7 @@ public class CongestionPredictService {
     @Scheduled(fixedRate = 600000) // 10분마다 실행
     @Transactional
     public void updateCongestionPredictions() {
-        System.out.println("스케줄 실행!!");
+        System.out.println("Update Congestion Success!");
         List<Store> stores = storeRepository.findAll();
 
         // 현재 날짜와 시간 정보
@@ -46,16 +46,16 @@ public class CongestionPredictService {
 
                 // S3 파일 존재 여부 확인
                 if (!s3Service.doesFileExist(filePath)) {
-                    // log.info("File not found for store ID {}: {}", store.getId(), filePath);
+                     log.info("File not found for store ID {}: {}", store.getId(), filePath);
                     continue; // 파일이 없으면 다음 매장으로 넘어감
                 }
 
                 InputStream csvInputStream = s3Service.downloadFile(filePath);
-                // log.info("S3 파일 가져오기 성공! Store ID: {}", store.getId());
+                 log.info("AWS S3 File Download Success! Store ID: {}", store.getId());
 
                 // CSV 데이터 파싱
                 Map<String, Map<Integer, Integer>> congestionData = csvParser.parse(csvInputStream);
-                // log.info("CSV 파싱 성공! Store ID: {}", store.getId());
+                 log.info("CSV Parsing Success! Store ID: {}", store.getId());
 
                 // 현재 요일과 시간에 맞는 값으로 업데이트
                 Map<Integer, Integer> hourlyData = congestionData.get(currentWeekday);
