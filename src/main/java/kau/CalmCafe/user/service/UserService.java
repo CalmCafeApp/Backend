@@ -54,6 +54,14 @@ public class UserService {
     }
 
     @Transactional
+    public Role changeRole(User user) {
+        user.changeRole();
+        userRepository.save(user);
+
+        return user.getRole();
+    }
+
+    @Transactional
     public Long saveSurveyInfo(User user, UserSurveyInfo userSurveyInfo){
         boolean hasCompletedSurvey = surveyRepository.existsByUserId(user.getId());
         if (hasCompletedSurvey) {

@@ -17,6 +17,7 @@ public enum SuccessCode implements BaseCode {
     USER_REISSUE_SUCCESS(HttpStatus.OK, "USER_2002", "토큰 재발급이 완료되었습니다."),
     USER_PROFILE_GET_SUCCESS(HttpStatus.OK, "USER_2003", "유저 프로필 정보 반환이 완료되었습니다."),
     USER_SURVEY_SUCCESS(HttpStatus.OK, "USER_2004", "설문 조사를 통한 사용자 정보 저장이 완료되었습니다."),
+    USER_CHANGE_ROLE_SUCCESS(HttpStatus.OK, "USER_2005", "유저 역할 변경이 완료되었습니다."),
 
     // Store
     STORE_DETAIL_FROM_USER_SUCCESS(HttpStatus.OK, "STORE_2001", "유저 측 화면에서 매장 상세 정보 조회가 완료되었습니다."),

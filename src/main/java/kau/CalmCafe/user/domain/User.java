@@ -83,4 +83,13 @@ public class User extends BaseEntity {
     public void minusPoint(int point) {
         this.point -= point;
     }
+
+    public void changeRole() {
+        if (this.role == Role.USER) {
+            this.role = Role.CAFE;
+        }
+        else {
+            this.role = Role.USER;
+        }
+    }
 }

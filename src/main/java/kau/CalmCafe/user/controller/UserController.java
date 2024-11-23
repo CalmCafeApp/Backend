@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.user.converter.UserConverter;
+import kau.CalmCafe.user.domain.Role;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.dto.JwtDto;
 import kau.CalmCafe.user.dto.UserRequestDto.UserSurveyInfo;
@@ -77,5 +78,18 @@ public class UserController {
         User user = userService.findByUserName(customUserDetails.getUsername());
 
         return ApiResponse.onSuccess(SuccessCode.USER_SURVEY_SUCCESS, userService.saveSurveyInfo(user, userSurveyInfo));
+    }
+
+    @Operation(summary = "유저 역할 변경", description = "유저의 현재 역할을 변경하는 메서드입니다. (User -> Cafe 또는 Cafe -> User)")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "USER_2005", description = "유저 역할 변경이 완료되었습니다.")
+    })
+    @GetMapping("/role")
+    public ApiResponse<Role> changeUserRole(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+
+        return ApiResponse.onSuccess(SuccessCode.USER_CHANGE_ROLE_SUCCESS, userService.changeRole(user));
     }
 }
