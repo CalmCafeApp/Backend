@@ -38,7 +38,6 @@ public class StoreController {
     private final StoreService storeService;
     private final UserService userService;
     private final MenuService menuService;
-    private final PointService pointService;
 
     @Operation(summary = "유저 측 매장 상세 정보 조회", description = "유저 측 화면에서 매장의 상세 정보를 조회하는 메서드입니다.")
     @ApiResponses(value = {
@@ -68,7 +67,9 @@ public class StoreController {
 
         List<Menu> pointMenuList = menuService.getPointMenuList(store);
 
-        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance, menuList, recommendStoreList, pointMenuList, user));
+        Boolean isCongestionMismatch = storeService.getIsCongestionMismatch(store);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_DETAIL_FROM_USER_SUCCESS, StoreConverter.storeDetailResDto(store, distance, menuList, recommendStoreList, pointMenuList, user, isCongestionMismatch));
     }
 
     @Operation(summary = "카페 측 매장 상세 정보 조회", description = "카페 측 화면에서 상세 정보를 조회하는 메서드입니다.")

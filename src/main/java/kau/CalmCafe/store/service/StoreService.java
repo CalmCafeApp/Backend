@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class StoreService {
+    private static final int CONGESTION_BIG_GAP = 30;
 
     private final ThreadPoolTaskScheduler taskScheduler;
     private final StoreRepository storeRepository;
@@ -212,5 +213,11 @@ public class StoreService {
                 .price(menu.getPrice())
                 .image(menu.getImage())
                 .build();
+    }
+
+    public Boolean getIsCongestionMismatch(Store store) {
+        int congestionGap = Math.abs(store.getStoreCongestionValue() - store.getUserCongestionValue());
+
+        return congestionGap >= CONGESTION_BIG_GAP;
     }
 }
