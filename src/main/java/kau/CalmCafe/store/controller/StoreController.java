@@ -50,8 +50,8 @@ public class StoreController {
     })
     @GetMapping(value = "/detail/user")
     public ApiResponse<StoreDetailResDto> getStoreDetailFromUSer(
-            @RequestParam(name = "storeId") Long storeId,
-            @RequestParam(name = "userLatitude") Double userLatitude,
+                @RequestParam(name = "storeId") Long storeId,
+                @RequestParam(name = "userLatitude") Double userLatitude,
             @RequestParam(name = "userLongitude") Double userLongitude,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ){
@@ -114,9 +114,7 @@ public class StoreController {
     public ApiResponse<StorePosListDto> getNearStorePosList(
             @RequestParam(name = "userAddress") String userAddress
     ) {
-        List<Store> storeList = storeService.getNearStoreList(userAddress);
-
-        return ApiResponse.onSuccess(SuccessCode.STORE_NEAR_LIST_SUCCESS, StoreConverter.storePosListDto(storeList));
+        return ApiResponse.onSuccess(SuccessCode.STORE_NEAR_LIST_SUCCESS, storeService.getStorePosListDto(userAddress));
     }
 
     @Operation(summary = "매장 영업 시간 수정", description = "사장님이 매장의 영업 시간을 수정하는 메서드입니다.")

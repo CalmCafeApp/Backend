@@ -115,7 +115,7 @@ public class Store extends BaseEntity {
         return this.userCongestionLevel;
     }
 
-    private CongestionLevel calculateCongestionLevel(Integer congestionValue) {
+    public static CongestionLevel calculateCongestionLevel(Integer congestionValue) {
         if (congestionValue <= 33) {
             return CongestionLevel.CALM;
         } else if (congestionValue <= 66) {

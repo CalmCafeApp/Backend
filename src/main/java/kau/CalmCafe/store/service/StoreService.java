@@ -10,9 +10,12 @@ import java.util.concurrent.ScheduledFuture;
 import kau.CalmCafe.congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
+import kau.CalmCafe.store.converter.StoreConverter;
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.dto.StoreResponseDto;
+import kau.CalmCafe.store.dto.StoreResponseDto.StorePosDto;
+import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +36,21 @@ public class StoreService {
     private final ThreadPoolTaskScheduler taskScheduler;
     private final StoreRepository storeRepository;
     private final Map<Long, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
+
+    public StorePosListDto getStorePosListDto(String userAddress) {
+        List<Store> storeList = getNearStoreList(userAddress);
+        List<StorePosDto> storePosDtoList = storeList.stream()
+                .map(this::getStorePosDto)
+                .toList();
+        return StoreConverter.storePosListDto(storePosDtoList);
+    }
+
+    private StorePosDto getStorePosDto(Store store) {
+        Integer congestionValueAverage = (store.getStoreCongestionValue() + store.getUserCongestionValue()) / 2;
+        CongestionLevel congestionLevelAverage = Store.calculateCongestionLevel(congestionValueAverage);
+
+        return StoreConverter.storePosDto(store, congestionLevelAverage);
+    }
 
     @Transactional
     public Store findByAddress(String address) {
@@ -64,7 +82,6 @@ public class StoreService {
         return (int) Math.round(EARTH_RADIUS * c * 1000);
     }
 
-    @Transactional
     public List<Store> getNearStoreList(String address) {
         return storeRepository.findByAddressContaining(address);
     }
