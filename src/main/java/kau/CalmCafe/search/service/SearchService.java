@@ -3,6 +3,7 @@ package kau.CalmCafe.search.service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import kau.CalmCafe.congestion.domain.CongestionLevel;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.search.converter.SearchConverter;
@@ -12,6 +13,7 @@ import kau.CalmCafe.search.repository.SearchLogRepository;
 import kau.CalmCafe.store.converter.StoreConverter;
 import kau.CalmCafe.store.domain.Store;
 import kau.CalmCafe.store.dto.StoreResponseDto.SearchStoreResDto;
+import kau.CalmCafe.store.dto.StoreResponseDto.StorePosDto;
 import kau.CalmCafe.store.repository.StoreRepository;
 import kau.CalmCafe.store.service.StoreService;
 import kau.CalmCafe.user.domain.User;
@@ -41,12 +43,19 @@ public class SearchService {
         }
 
         List<SearchStoreResDto> searchStoreResDtoList = storeList.stream()
-                .map(StoreConverter::searchStoreResDto)
+                .map(this::getSearchStoreResDto)
                 .toList();
 
         Store storeNearest = storeList.get(0);
 
         return SearchConverter.homeSearchResDto(storeNearest, searchStoreResDtoList);
+    }
+
+    private SearchStoreResDto getSearchStoreResDto(Store store) {
+        Integer congestionValueAverage = (store.getStoreCongestionValue() + store.getUserCongestionValue()) / 2;
+        CongestionLevel congestionLevelAverage = Store.calculateCongestionLevel(congestionValueAverage);
+
+        return StoreConverter.searchStoreResDto(store, congestionLevelAverage);
     }
 
     public void saveResearchLog(final String query, User user) {

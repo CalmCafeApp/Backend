@@ -255,6 +255,15 @@ public class StoreResponseDto {
 
         @Schema(description = "매장 주소")
         private String address;
+
+        @Schema(description = "평균 매장 혼잡도 등급")
+        private CongestionLevel congestionLevel;
+
+        @Schema(description = "매장 위도")
+        private Double latitude;
+
+        @Schema(description = "매장 경도")
+        private Double longitude;
     }
 
     @Schema(description = "StoreMenuResponseDto")

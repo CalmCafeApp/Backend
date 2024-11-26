@@ -124,12 +124,15 @@ public class StoreConverter {
 
     }
 
-    public static SearchStoreResDto searchStoreResDto(Store store) {
+    public static SearchStoreResDto searchStoreResDto(Store store, CongestionLevel congestionLevel) {
         return SearchStoreResDto.builder()
                 .id(store.getId())
                 .name(store.getName())
                 .image(store.getImage())
                 .address(store.getAddress())
+                .congestionLevel(congestionLevel)
+                .latitude(store.getLatitude())
+                .longitude(store.getLongitude())
                 .build();
     }
 
