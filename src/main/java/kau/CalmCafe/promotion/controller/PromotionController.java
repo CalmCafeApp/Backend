@@ -1,10 +1,12 @@
 package kau.CalmCafe.promotion.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
+import kau.CalmCafe.promotion.domain.PromotionType;
 import kau.CalmCafe.promotion.dto.PromotionResponseDto;
 import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import kau.CalmCafe.promotion.service.PromotionService;
@@ -18,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -85,5 +89,38 @@ public class PromotionController {
     ) {
         List<PromotionDetailResDto> promotions = promotionService.getPromotionsByStoreId(storeId);
         return ApiResponse.onSuccess(SuccessCode.PROMOTION_RETRIEVE_SUCCESS, promotions);
+    }
+
+    @Operation(summary = "프로모션 등록", description = "매장에 새로운 프로모션을 등록하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "PROMOTION_2005", description = "프로모션 등록이 완료되었습니다.")
+    })
+    @PostMapping
+    public ApiResponse<PromotionResponseDto.PromotionDetailResDto> createPromotion(
+            @Parameter(description = "매장 ID", required = true) @RequestParam Long storeId,
+            @Parameter(description = "할인율", required = true) @RequestParam Integer discount,
+            @Parameter(description = "프로모션 시작 시간", required = true) @RequestParam String startTime,
+            @Parameter(description = "프로모션 종료 시간", required = true) @RequestParam String endTime,
+            @Parameter(description = "프로모션 유형 (0: TAKE_OUT, 1: IN_STORE)", required = true) @RequestParam Integer promotionTypeValue
+    ) {
+        LocalTime parsedStartTime = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime parsedEndTime = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));
+        PromotionType promotionType = PromotionType.values()[promotionTypeValue];
+
+        PromotionResponseDto.PromotionDetailResDto responseDto = promotionService.createPromotion(storeId, discount, parsedStartTime, parsedEndTime, promotionType);
+        return ApiResponse.onSuccess(SuccessCode.PROMOTION_CREATE_SUCCESS, responseDto);
+    }
+
+    @Operation(summary = "프로모션 삭제", description = "지정된 ID의 프로모션을 삭제하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "PROMOTION_2006", description = "프로모션 삭제가 완료되었습니다.")
+    })
+    @DeleteMapping("/{promotionId}")
+    public ApiResponse<String> deletePromotion(
+            @Parameter(description = "삭제할 프로모션의 ID", required = true)
+            @PathVariable Long promotionId
+    ) {
+        promotionService.deletePromotion(promotionId);
+        return ApiResponse.onSuccess(SuccessCode.PROMOTION_DELETE_SUCCESS, "프로모션 삭제가 완료되었습니다.");
     }
 }

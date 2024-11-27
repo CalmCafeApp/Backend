@@ -44,6 +44,8 @@ public enum SuccessCode implements BaseCode {
     PROMOTION_UPDATE_SUCCESS(HttpStatus.OK, "PROMOTION_2002","프로모션 할인율 수정이 완료되었습니다."),
     PROMOTION_PERIOD_UPDATE_SUCCESS(HttpStatus.OK, "PROMOTION_2003", "프로모션 사용 기간 수정이 완료되었습니다."),
     PROMOTION_RETRIEVE_SUCCESS(HttpStatus.OK,"PROMOTION_2004", "매장의 프로모션 조회가 완료되었습니다."),
+    PROMOTION_CREATE_SUCCESS(HttpStatus.OK,"PROMOTION_2005","프로모션 등록이 완료되었습니다."),
+    PROMOTION_DELETE_SUCCESS(HttpStatus.OK,"PROMOTION_2006","프로모션 삭제가 완료되었습니다."),
 
     // Congestion
     CONGESTION_INPUT_SUCCESS(HttpStatus.OK, "CONGESTION_2011", "혼잡도 입력이 완료되었습니다."),
