@@ -173,13 +173,13 @@ public class StoreController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2008", description = "매장 메뉴 조회가 완료되었습니다.")
     })
-    @Parameters({
-            @Parameter(name = "storeId", description = "매장 ID", required = true)
-    })
-    @GetMapping("/{storeId}/menus")
+    @GetMapping("/menus")
     public ApiResponse<StoreResponseDto.StoreMenuResponseDto> getStoreMenus(
-            @PathVariable Long storeId
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+        Long storeId = user.getStore().getId();
+
         StoreResponseDto.StoreMenuResponseDto responseDto = storeService.getStoreMenus(storeId);
         return ApiResponse.onSuccess(SuccessCode.STORE_MENU_GET_SUCCESS, responseDto);
     }

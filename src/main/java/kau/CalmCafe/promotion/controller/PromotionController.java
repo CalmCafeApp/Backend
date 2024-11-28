@@ -12,6 +12,8 @@ import kau.CalmCafe.promotion.dto.PromotionResponseDto.PromotionDetailResDto;
 import kau.CalmCafe.promotion.service.PromotionService;
 import kau.CalmCafe.promotion.service.PromotionUsedService;
 import kau.CalmCafe.promotion.domain.Promotion;
+import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.service.StoreService;
 import kau.CalmCafe.user.domain.User;
 import kau.CalmCafe.user.jwt.CustomUserDetails;
 import kau.CalmCafe.user.service.UserService;
@@ -35,6 +37,7 @@ public class PromotionController {
     private final UserService userService;
     private final PromotionService promotionService;
     private final PromotionUsedService promotionUsedService;
+    private final StoreService storeService;
 
     @Operation(summary = "프로모션 이용", description = "사용자가 특정 매장의 프로모션을 이용하는 메서드입니다.")
     @ApiResponses(value = {
@@ -83,10 +86,13 @@ public class PromotionController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "PROMOTION_2004", description = "매장의 프로모션 조회가 완료되었습니다.")
     })
-    @GetMapping("/store/{store-id}")
+    @GetMapping("/store")
     public ApiResponse<List<PromotionResponseDto.PromotionDetailResDto>> getStorePromotions(
-            @PathVariable(name = "store-id") Long storeId
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+        Long storeId = user.getStore().getId();
+
         List<PromotionDetailResDto> promotions = promotionService.getPromotionsByStoreId(storeId);
         return ApiResponse.onSuccess(SuccessCode.PROMOTION_RETRIEVE_SUCCESS, promotions);
     }
