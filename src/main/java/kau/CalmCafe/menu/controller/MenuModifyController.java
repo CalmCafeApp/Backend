@@ -12,8 +12,12 @@ import kau.CalmCafe.global.api_payload.SuccessCode;
 import kau.CalmCafe.menu.dto.DiscountedMenuDto;
 import kau.CalmCafe.menu.dto.MenuModifyResponseDto;
 import kau.CalmCafe.menu.service.MenuModifyService;
+import kau.CalmCafe.user.domain.User;
+import kau.CalmCafe.user.jwt.CustomUserDetails;
+import kau.CalmCafe.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/menu")
 public class MenuModifyController {
     private final MenuModifyService menuModifyService;
+    private final UserService userService;
 
     @Operation(summary = "메뉴 삭제", description = "특정 메뉴를 삭제하는 메서드입니다.")
     @ApiResponses(value = {
@@ -70,11 +75,13 @@ public class MenuModifyController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MENU_2004", description = "매장의 포인트 메뉴 조회가 완료되었습니다.")
     })
-    @GetMapping("/discounted/{storeId}")
+    @GetMapping("/discounted/")
     public ApiResponse<List<DiscountedMenuDto>> getDiscountedMenus(
-            @Parameter(description = "조회할 매장의 ID", required = true)
-            @PathVariable Long storeId
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+        Long storeId = user.getStore().getId();
+
         List<DiscountedMenuDto> discountedMenus = menuModifyService.getDiscountedMenus(storeId);
         return ApiResponse.onSuccess(SuccessCode.POINT_MENU_INQUIRY_SUCCESS, discountedMenus);
     }
