@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.promotion.converter.PromotionConverter;
+import kau.CalmCafe.promotion.domain.PromotionType;
 import kau.CalmCafe.promotion.dto.PromotionResponseDto;
 import kau.CalmCafe.promotion.repository.PromotionRepository;
 import kau.CalmCafe.promotion.domain.Promotion;
@@ -62,5 +63,29 @@ public class PromotionService {
         return store.getPromotionList().stream()
                 .map(PromotionConverter::convertToDetailResDto)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public PromotionResponseDto.PromotionDetailResDto createPromotion(Long storeId, Integer discount, LocalTime startTime, LocalTime endTime, PromotionType promotionType) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new GeneralException(ErrorCode.STORE_NOT_FOUND));
+
+        Promotion promotion = Promotion.builder()
+                .store(store)
+                .discount(discount)
+                .startTime(startTime)
+                .endTime(endTime)
+                .promotionType(promotionType)
+                .build();
+
+        Promotion savedPromotion = promotionRepository.save(promotion);
+        return convertToDetailResDto(savedPromotion);
+    }
+
+    @Transactional
+    public void deletePromotion(Long promotionId) {
+        Promotion promotion = promotionRepository.findById(promotionId)
+                .orElseThrow(() -> new GeneralException(ErrorCode.PROMOTION_NOT_FOUND));
+        promotionRepository.delete(promotion);
     }
 }
