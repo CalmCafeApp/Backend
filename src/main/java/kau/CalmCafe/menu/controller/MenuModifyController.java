@@ -62,11 +62,14 @@ public class MenuModifyController {
     })
     @PostMapping(value = "/menu-image/register/", consumes = {"multipart/form-data"})
     public ApiResponse<MenuModifyResponseDto> registerMenu(
-            @RequestParam Long storeId,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam String name,
             @RequestParam Integer price,
             @RequestPart(value = "menuImage") MultipartFile menuImage
     ) throws IOException {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+        Long storeId = user.getStore().getId();
+
         MenuModifyResponseDto registeredMenu = menuModifyService.registerMenu(storeId, name, price, menuImage);
         return ApiResponse.onSuccess(SuccessCode.MENU_REGISTER_SUCCESS, registeredMenu);
     }

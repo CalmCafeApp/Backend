@@ -103,12 +103,15 @@ public class PromotionController {
     })
     @PostMapping
     public ApiResponse<PromotionResponseDto.PromotionDetailResDto> createPromotion(
-            @Parameter(description = "매장 ID", required = true) @RequestParam Long storeId,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Parameter(description = "할인율", required = true) @RequestParam Integer discount,
             @Parameter(description = "프로모션 시작 시간", required = true) @RequestParam String startTime,
             @Parameter(description = "프로모션 종료 시간", required = true) @RequestParam String endTime,
             @Parameter(description = "프로모션 유형 (0: TAKE_OUT, 1: IN_STORE)", required = true) @RequestParam Integer promotionTypeValue
     ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+        Long storeId = user.getStore().getId();
+
         LocalTime parsedStartTime = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
         LocalTime parsedEndTime = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));
         PromotionType promotionType = PromotionType.values()[promotionTypeValue];
