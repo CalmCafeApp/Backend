@@ -52,4 +52,12 @@ public class Menu extends BaseEntity {
     public void setPrice(Integer price) {
         this.price = price != null ? price : this.price;
     }
+
+    public void setPointDiscount(Integer pointDiscount) {
+        this.pointDiscount = pointDiscount != null ? pointDiscount : this.pointDiscount;
+    }
+
+    public void setPointPrice(Integer pointPrice) {
+        this.pointPrice = pointPrice != null ? pointPrice : this.pointPrice;
+    }
 }

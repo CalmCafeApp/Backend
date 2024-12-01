@@ -7,9 +7,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kau.CalmCafe.global.api_payload.ApiResponse;
 import kau.CalmCafe.global.api_payload.SuccessCode;
+import kau.CalmCafe.store.converter.MenuConverter;
 import kau.CalmCafe.store.converter.StoreConverter;
 import kau.CalmCafe.store.domain.Menu;
 import kau.CalmCafe.store.domain.Store;
+import kau.CalmCafe.store.dto.MenuResponseDto;
 import kau.CalmCafe.store.dto.StoreResponseDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StorePosListDto;
 import kau.CalmCafe.store.dto.StoreResponseDto.StoreCongestionFromUserDto;
@@ -182,6 +184,37 @@ public class StoreController {
 
         StoreResponseDto.StoreMenuResponseDto responseDto = storeService.getStoreMenus(storeId);
         return ApiResponse.onSuccess(SuccessCode.STORE_MENU_GET_SUCCESS, responseDto);
+    }
+
+    @Operation(summary = "포인트 메뉴 등록", description = "특정 메뉴를 포인트 스토어에 등록하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2009", description = "메뉴가 포인트 스토어에 등록 완료되었습니다.")
+    })
+    @PatchMapping("/create/point-details")
+    public ApiResponse<MenuResponseDto.PointMenuDetailResDto> updateMenuPointDetails(
+            @RequestParam Long menuId,
+            @RequestParam Integer pointDiscount,
+            @RequestParam Integer pointPrice
+    ) {
+
+        Menu updatedMenu = menuService.updateMenuPointDetails(menuId, pointDiscount, pointPrice);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_POINT_MENU_CREATE_SUCCESS,
+                MenuConverter.pointMenuDetailResDto(updatedMenu));
+    }
+
+    @Operation(summary = "포인트 메뉴 제거", description = "특정 메뉴를 포인트 스토어에서 제거하는 메서드입니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "STORE_2010", description = "메뉴가 포인트 스토어에서 제거되었습니다.")
+    })
+    @PatchMapping("/remove/point-details")
+    public ApiResponse<MenuResponseDto.PointMenuDetailResDto> removeMenuPointDetails(
+            @RequestParam Long menuId
+    ) {
+        Menu updatedMenu = menuService.removeMenuFromPointStore(menuId);
+
+        return ApiResponse.onSuccess(SuccessCode.STORE_POINT_MENU_REMOVE_SUCCESS,
+                MenuConverter.pointMenuDetailResDto(updatedMenu));
     }
 }
 

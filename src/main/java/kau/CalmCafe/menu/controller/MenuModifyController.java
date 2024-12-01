@@ -1,7 +1,6 @@
 package kau.CalmCafe.menu.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
@@ -88,4 +87,6 @@ public class MenuModifyController {
         List<DiscountedMenuDto> discountedMenus = menuModifyService.getDiscountedMenus(storeId);
         return ApiResponse.onSuccess(SuccessCode.POINT_MENU_INQUIRY_SUCCESS, discountedMenus);
     }
+
+
 }
