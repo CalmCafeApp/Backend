@@ -6,9 +6,12 @@ import static org.apache.logging.log4j.util.Strings.isEmpty;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 import kau.CalmCafe.global.api_payload.ErrorCode;
 import kau.CalmCafe.global.exception.GeneralException;
 import kau.CalmCafe.global.s3.AmazonS3Manager;
+import kau.CalmCafe.menu.converter.MenuModifyConverter;
 import kau.CalmCafe.menu.dto.DiscountedMenuDto;
 import kau.CalmCafe.menu.dto.MenuModifyResponseDto;
 import kau.CalmCafe.store.domain.Store;
@@ -107,5 +110,13 @@ public class MenuModifyService {
     public List<DiscountedMenuDto> getDiscountedMenus(Long storeId) {
         List<Menu> discountedMenus = menuRepository.findDiscountedMenusByStoreId(storeId);
         return toDiscountedMenuDtoList(discountedMenus);
+    }
+
+    @Transactional(readOnly = true)
+    public List<MenuModifyResponseDto> getNonDiscountedMenus(Long storeId) {
+        List<Menu> nonDiscountedMenus = menuRepository.findNonDiscountedMenusByStoreId(storeId);
+        return nonDiscountedMenus.stream()
+                .map(MenuModifyConverter::toResponseDto)
+                .collect(Collectors.toList());
     }
 }
