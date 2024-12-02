@@ -39,4 +39,19 @@ public class MenuService {
                 .orElseThrow(() -> GeneralException.of(ErrorCode.MENU_NOT_FOUND));
     }
 
+    @Transactional
+    public Menu updateMenuPointDetails(Long menuId, Integer pointDiscount, Integer pointPrice) {
+        Menu menu = findById(menuId);
+        menu.setPointDiscount(pointDiscount);
+        menu.setPointPrice(pointPrice);
+        return menuRepository.save(menu);
+    }
+
+    @Transactional
+    public Menu removeMenuFromPointStore(Long menuId) {
+        Menu menu = findById(menuId);
+        menu.setPointDiscount(0);
+        menu.setPointPrice(0);
+        return menuRepository.save(menu);
+    }
 }

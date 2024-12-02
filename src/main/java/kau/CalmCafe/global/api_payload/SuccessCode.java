@@ -28,6 +28,8 @@ public enum SuccessCode implements BaseCode {
     STORE_LAST_ORDER_TIME_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2006","마지막 주문 시간 수정이 완료되었습니다."),
     STORE_CAPACITY_UPDATE_SUCCESS(HttpStatus.OK,"STORE_2007","매장의 최대 수용 인원 수정이 완료되었습니다."),
     STORE_MENU_GET_SUCCESS(HttpStatus.OK,"STORE_2008","매장 메뉴 조회가 완료되었습니다."),
+    STORE_POINT_MENU_CREATE_SUCCESS(HttpStatus.OK,"STORE_2009","스토어 상품 등록이 완료되었습니다."),
+    STORE_POINT_MENU_REMOVE_SUCCESS(HttpStatus.OK,"STORE_2010", "메뉴가 포인트 스토어에서 제거되었습니다."),
 
     // Store Favorite
     STORE_FAVORITE_SUCCESS(HttpStatus.OK, "FAVORITE_2001", "매장 즐겨찾기가 완료되었습니다."),
