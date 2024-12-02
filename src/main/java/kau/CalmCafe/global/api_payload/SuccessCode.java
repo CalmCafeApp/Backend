@@ -64,6 +64,11 @@ public enum SuccessCode implements BaseCode {
     MENU_UPDATE_SUCCESS(HttpStatus.OK,"MENU_2002", "메뉴 수정이 완료되었습니다."),
     MENU_REGISTER_SUCCESS(HttpStatus.OK,"MENU_2003","메뉴 등록이 완료되었습니다."),
     POINT_MENU_INQUIRY_SUCCESS(HttpStatus.OK,"MENU_2004","포인트 메뉴 조회가 완료되었습니다."),
+
+    // Data Analysis
+    DATA_ANALYSIS_ABOUT_VISIT(HttpStatus.OK, "ANALYSIS_2001", "카페 방문자 관련 데이터 분석 이미지를 반환이 완료되었습니다."),
+    DATA_ANALYSIS_ABOUT_FAVORITE(HttpStatus.OK, "ANALYSIS_2002", "카페 즐겨찾기 관련 데이터 분석 이미지를 반환이 완료되었습니다."),
+    DATA_ANALYSIS_ABOUT_CONGESTION(HttpStatus.OK, "ANALYSIS_2003", "카페 혼잡도 관련 데이터 분석 이미지를 반환이 완료되었습니다.")
     ;
     private final HttpStatus httpStatus;
     private final String code;
