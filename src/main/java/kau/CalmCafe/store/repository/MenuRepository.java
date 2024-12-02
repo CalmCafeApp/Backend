@@ -14,4 +14,7 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     List<Menu> findDiscountedMenusByStoreId(Long storeId);
 
     List<Menu> findAllByStore(Store store);
+
+    @Query("SELECT m FROM Menu m WHERE m.store.id = :storeId AND m.pointDiscount = 0")
+    List<Menu> findNonDiscountedMenusByStoreId(Long storeId);
 }

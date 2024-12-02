@@ -88,5 +88,18 @@ public class MenuModifyController {
         return ApiResponse.onSuccess(SuccessCode.POINT_MENU_INQUIRY_SUCCESS, discountedMenus);
     }
 
+    @Operation(summary = "포인트 스토어 미등록 상품 조회", description = "포인트 스토어에 미등록된 상품들을 조회합니다.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MENU_2005", description = "포인트 스토어 미등록 상품 반환이 완료되었습니다.")
+    })
+    @GetMapping("/non-discounted/")
+    public ApiResponse<List<MenuModifyResponseDto>> getNonDiscountedMenus(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        User user = userService.findByUserName(customUserDetails.getUsername());
+        Long storeId = user.getStore().getId();
 
+        List<MenuModifyResponseDto> nonDiscountedMenus = menuModifyService.getNonDiscountedMenus(storeId);
+        return ApiResponse.onSuccess(SuccessCode.UNREGISTERED_MENU_INQUIRY_SUCCESS, nonDiscountedMenus);
+    }
 }
