@@ -18,17 +18,20 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     @Query("SELECT s FROM Store s WHERE " +
             "(:location = '' OR s.address LIKE %:location% OR " +
-            "(:location = '전라' AND (s.address LIKE '%전라남도%' OR s.address LIKE '%전북특별자치도%')))")
+            "(:location = '전라' AND (s.address LIKE '%전라남도%' OR s.address LIKE '%전북특별자치도%')))"
+            + "ORDER BY s.storeCongestionValue DESC, s.userCongestionValue DESC")
     List<Store> findRankingStoreListByCongestion(@Param("location")String location, Pageable pageable);
 
     @Query("SELECT s FROM Store s WHERE " +
             "(:location = '' OR s.address LIKE %:location% OR " +
-            "(:location = '전라' AND (s.address LIKE '%전라남도%' OR s.address LIKE '%전북특별자치도%')))")
+            "(:location = '전라' AND (s.address LIKE '%전라남도%' OR s.address LIKE '%전북특별자치도%')))"
+            + "ORDER BY SIZE(s.congestionInputList) DESC")
     List<Store> findRankingStoreListByTotalVisit(@Param("location")String location, Pageable pageable);
 
     @Query("SELECT s FROM Store s WHERE " +
             "(:location = '' OR s.address LIKE %:location% OR " +
-            "(:location = '전라' AND (s.address LIKE '%전라남도%' OR s.address LIKE '%전북특별자치도%')))")
+            "(:location = '전라' AND (s.address LIKE '%전라남도%' OR s.address LIKE '%전북특별자치도%')))"
+            + "ORDER BY s.favoriteCount DESC")
     List<Store> findRankingStoreListByFavorite(@Param("location")String location, Pageable pageable);
 
     @Query("SELECT s FROM Store s WHERE s.name LIKE %:query% OR s.address LIKE %:query% " +
