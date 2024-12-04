@@ -22,6 +22,9 @@ public class AnalysisResponseDto {
 
         @Schema(description = "카페 방문별 성별 분포 이미지")
         private String genderImageUrl;
+
+        @Schema(description = "선호 메뉴 분포 이미지")
+        private String favoriteMenuDistributionImageUrl;
     }
 
     @Schema(description = "AnalysisAboutFavoriteResDto")
