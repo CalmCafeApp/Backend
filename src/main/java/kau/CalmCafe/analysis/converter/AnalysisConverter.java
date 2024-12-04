@@ -8,6 +8,7 @@ import kau.CalmCafe.analysis.dto.AnalysisResponseDto.AnalysisAboutVisitResDto;
 public class AnalysisConverter {
     private static final String AGE_IMAGE_URL = "http://3.36.174.88:5001/static/age_distribution_target_store.png";
     private static final String GENDER_IMAGE_URL = "http://3.36.174.88:5001/static/gender_distribution_target_store.png";
+    private static final String FAVORITE_MENU_DISTRIBUTION = "http://3.36.174.88:5001/static/favorite_menu_distribution_target_store.png";
     private static final String AGE_DISTRIBUTION_IMAGE_URL = "http://3.36.174.88:5001/static/age_distribution.png";
     private static final String GENDER_DISTRIBUTION_IMAGE_URL = "http://3.36.174.88:5001/static/gender_distribution.png?cache_buster=12345";
     private static final String AVERAGE_CONGESTION_IMAGE_URL = "http://3.36.174.88:5001/static/average_congestion.png";
@@ -17,6 +18,7 @@ public class AnalysisConverter {
         return AnalysisAboutVisitResDto.builder()
                 .ageImageUrl(AGE_IMAGE_URL)
                 .genderImageUrl(GENDER_IMAGE_URL)
+                .favoriteMenuDistributionImageUrl(FAVORITE_MENU_DISTRIBUTION)
                 .build();
     }
 
