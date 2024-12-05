@@ -36,10 +36,11 @@ public class MenuModifyConverter {
                 .pointPrice(menu.getPointPrice())
                 .build();
     }
-
+    
     public static List<DiscountedMenuDto> toDiscountedMenuDtoList(List<Menu> menus) {
         return menus.stream()
                 .map(menu -> DiscountedMenuDto.builder()
+                        .id(menu.getId())
                         .name(menu.getName())
                         .pointDiscount(menu.getPointDiscount())
                         .build())
