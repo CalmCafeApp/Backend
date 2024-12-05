@@ -8,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class DiscountedMenuDto {
+    private Long id;
     private String name;
     private Integer pointDiscount;
 }
